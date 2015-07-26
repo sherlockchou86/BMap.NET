@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BMap.NET.Properties" GeneratedClassName="BMap">
+  <Profiles />
+  <Settings>
+    <Setting Name="ServiceAK" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ygqnmYUFx7C6wW2xIcqpNrP2</Value>
+    </Setting>
+    <Setting Name="ServiceSK" Type="System.String" Scope="User">
+      <Value Profile="(Default)">FE2I50qobewXb2t8fOLjQ7pS788gj9pE</Value>
+    </Setting>
+    <Setting Name="VerificationMode" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
