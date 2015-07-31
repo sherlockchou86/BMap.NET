@@ -27,7 +27,7 @@ namespace BMap.NET.HTTPService
         {
             try
             {
-                if (_vm == 0)  //IP 白名单校验
+                if (_vm == VerificationMode.IPWhiteList)  //IP 白名单校验
                 {
                     string url = _direction_url + "?origin=" + origin + "&destination=" + destination + "&origin_region=" + origin_region + "&destination_region=" + destination_region + "&tactics=" + tactics + "&output=json&mode=driving&ak=" + _ak;
                     string json = DownloadString(url);
@@ -60,7 +60,7 @@ namespace BMap.NET.HTTPService
         {
             try
             {
-                if (_vm == 0)  //IP 白名单校验
+                if (_vm == VerificationMode.IPWhiteList)  //IP 白名单校验
                 {
                     string url = _direction_url + "?origin=" + origin + "&destination=" + destination + "&region=" + region + "&tactics=" + tactics + "&output=json&mode=walking&ak=" + _ak;
                     string json = DownloadString(url);
@@ -93,7 +93,7 @@ namespace BMap.NET.HTTPService
         {
             try
             {
-                if (_vm == 0)  //IP 白名单校验
+                if (_vm == VerificationMode.IPWhiteList)  //IP 白名单校验
                 {
                     string url = _direction_url + "?origin=" + origin + "&destination=" + destination + "&region=" + region + "&tactics=" + tactics + "&output=json&mode=transit&ak=" + _ak;
                     string json = DownloadString(url);

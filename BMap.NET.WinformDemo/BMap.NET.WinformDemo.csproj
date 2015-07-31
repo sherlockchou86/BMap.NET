@@ -83,6 +83,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BMap.NET.WindowsForm\BMap.NET.WindowsForm.csproj">
+      <Project>{1B32D6FD-3C74-40DC-9D43-102B19D40785}</Project>
+      <Name>BMap.NET.WindowsForm</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BMap.NET\BMap.NET.csproj">
       <Project>{AFFEB71C-54B6-4A9B-A445-BB287EDBAC19}</Project>
       <Name>BMap.NET</Name>

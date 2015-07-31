@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BMapConfiguration.cs" />
     <Compile Include="HTTPService\AKSNCaculater.cs" />
     <Compile Include="HTTPService\DirectionService.cs" />
     <Compile Include="HTTPService\GeocodingService.cs" />
@@ -54,12 +55,15 @@
     <Compile Include="HTTPService\PlaceService.cs" />
     <Compile Include="HTTPService\PlaceSuggestionService.cs" />
     <Compile Include="HTTPService\ServiceBase.cs" />
+    <Compile Include="LoadMapMode.cs" />
+    <Compile Include="MapMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\BMap.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>BMap.settings</DependentUpon>
     </Compile>
+    <Compile Include="VerificationMode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

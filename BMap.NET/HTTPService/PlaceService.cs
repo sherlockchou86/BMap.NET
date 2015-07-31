@@ -27,7 +27,7 @@ namespace BMap.NET.HTTPService
         {
             try
             {
-                if (_vm == 0)  //IP 白名单校验
+                if (_vm == VerificationMode.IPWhiteList)  //IP 白名单校验
                 {                    
                     string url = _search_url + "?query=" + query + "&region=" + region + "&output=json&scope=2&ak=" + _ak;
                     string json = DownloadString(url);
@@ -57,7 +57,7 @@ namespace BMap.NET.HTTPService
         {
             try
             {
-                if (_vm == 0) //IP 白名单校验
+                if (_vm == VerificationMode.IPWhiteList) //IP 白名单校验
                 {
                     string url = _search_url + "?query=" + query + "&bounds=" + bounds + "&output=json&scope=2&ak=" + _ak;
                     string json = DownloadString(url);
@@ -88,7 +88,7 @@ namespace BMap.NET.HTTPService
         {
             try
             {
-                if (_vm == 0) //IP 白名单校验
+                if (_vm == VerificationMode.IPWhiteList) //IP 白名单校验
                 {
                     string url = _search_url + "?query=" + query + "&location=" + location + "&radius=" + radius + "&output=json&scope=2&ak=" + _ak;
                     string json = DownloadString(url);
@@ -117,7 +117,7 @@ namespace BMap.NET.HTTPService
         {
             try
             {
-                if (_vm == 0) //IP 白名单校验
+                if (_vm == VerificationMode.IPWhiteList) //IP 白名单校验
                 {
                     string url = _detail_url + "?uid=" + uid + "&output=json&scope=2&ak=" + _ak;
                     string json = DownloadString(url);
@@ -149,7 +149,7 @@ namespace BMap.NET.HTTPService
         {
             try
             {
-                if (_vm == 0) //IP 白名单校验
+                if (_vm == VerificationMode.IPWhiteList) //IP 白名单校验
                 {
                     string url = _eventsearch_url + "?query=" + query + "&event=" + events + "&region=" + region + "&bounds=" + bounds + "&output=json&scope=2&ak=" + _ak;
                     string json = DownloadString(url);
@@ -182,7 +182,7 @@ namespace BMap.NET.HTTPService
         {
             try
             {
-                if (_vm == 0) //IP 白名单校验
+                if (_vm == VerificationMode.IPWhiteList) //IP 白名单校验
                 {
                     string url = _eventsearch_url + "?query=" + query + "&event=" + events + "&region=" + region + "&location=" + location + "&radius=" + radius + "&output=json&scope=2&ak=" + _ak;
                     string json = DownloadString(url);
@@ -211,7 +211,7 @@ namespace BMap.NET.HTTPService
         {
             try
             {
-                if (_vm == 0) //IP 白名单校验
+                if (_vm == VerificationMode.IPWhiteList) //IP 白名单校验
                 {
                     string url = _eventdetail_url + "?uid=" + uid + "&output=json&scope=2&ak=" + _ak;
                     string json = DownloadString(url);

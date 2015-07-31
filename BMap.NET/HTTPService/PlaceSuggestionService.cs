@@ -24,7 +24,7 @@ namespace BMap.NET.HTTPService
         {
             try
             {
-                if (_vm == 0)  //IP 白名单校验
+                if (_vm == VerificationMode.IPWhiteList)  //IP 白名单校验
                 {
                     string url = _suggestion_url + "?query=" + query + "&region=" + region + "&output=json&ak=" + _ak;
                     string json = DownloadString(url);

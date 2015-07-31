@@ -21,8 +21,23 @@ namespace BMap.NET.WinformDemo
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            DirectionService ds = new DirectionService();
-            JObject o = ds.DirectionByTransit("天津城建大学", "海光寺", "天津");
+
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                bMapControl1.Mode = MapMode.Normal;
+            }
+            if (radioButton2.Checked)
+            {
+                bMapControl1.Mode = MapMode.Satellite;
+            }
+            if (radioButton3.Checked)
+            {
+                bMapControl1.Mode = MapMode.Sate_RoadNet;
+            }
         }
     }
 }

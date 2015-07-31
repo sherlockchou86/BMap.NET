@@ -31,8 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,7 +46,119 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BCityControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BCityControl.Designer.cs">
+      <DependentUpon>BCityControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BDirectionBoard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BDirectionBoard.Designer.cs">
+      <DependentUpon>BDirectionBoard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BMapControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BMapControl.Designer.cs">
+      <DependentUpon>BMapControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BPOITipEditorControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BPOITipEditorControl.Designer.cs">
+      <DependentUpon>BPOITipEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BQuickSearchControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BQuickSearchControl.Designer.cs">
+      <DependentUpon>BQuickSearchControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BPlaceBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BPlaceBox.Designer.cs">
+      <DependentUpon>BPlaceBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BPlacesBoard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BPlacesBoard.Designer.cs">
+      <DependentUpon>BPlacesBoard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BPOITipControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BPOITipControl.Designer.cs">
+      <DependentUpon>BPOITipControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BScreenshotMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BScreenshotMenu.Designer.cs">
+      <DependentUpon>BScreenshotMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BMapElements\BBound.cs" />
+    <Compile Include="BMapElements\BDistance.cs" />
+    <Compile Include="BMapElements\BMapElement.cs" />
+    <Compile Include="BMapElements\BNearBy.cs" />
+    <Compile Include="BMapElements\BPOI.cs" />
+    <Compile Include="BMapElements\BRoute.cs" />
+    <Compile Include="BMapElements\BTile.cs" />
+    <Compile Include="FunctionalControls\CityList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FunctionalControls\CityList.Designer.cs">
+      <DependentUpon>CityList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LatLngPoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\BMap.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BMap.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BCityControl.resx">
+      <DependentUpon>BCityControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BMapControl.resx">
+      <DependentUpon>BMapControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BPlaceBox.resx">
+      <DependentUpon>BPlaceBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FunctionalControls\CityList.resx">
+      <DependentUpon>CityList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\BMap.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BMap.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BMap.NET\BMap.NET.csproj">
+      <Project>{AFFEB71C-54B6-4A9B-A445-BB287EDBAC19}</Project>
+      <Name>BMap.NET</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="libs\Newtonsoft.Json.dll" />
+    <None Include="Resources\ico_close.gif" />
+    <None Include="Resources\baidu_citys.txt" />
+    <None Include="Resources\ico_search.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

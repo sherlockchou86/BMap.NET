@@ -23,7 +23,7 @@ namespace BMap.NET.HTTPService
         {
             try
             {
-                if (_vm == 0)  //IP 白名单校验
+                if (_vm == VerificationMode.IPWhiteList)  //IP 白名单校验
                 {
                     string url = _ip_url + "?ip=" + (ip == null ? "" : ip) + "&coor=bd09ll&output=json&ak=" + _ak;
                     string json = DownloadString(url);

@@ -13,7 +13,7 @@ namespace BMap.NET.HTTPService
     {
         protected static string _ak = Properties.BMap.Default.ServiceAK;  //AK
         protected static string _sk = Properties.BMap.Default.ServiceSK;  //SK
-        protected static int _vm = Properties.BMap.Default.VerificationMode;  //校验方式 0表示IP白名单校验（忽略SK）   1表示SN校验（需要SK）
+        protected static VerificationMode _vm = (VerificationMode)Properties.BMap.Default.VerificationMode;  //校验方式 0表示IP白名单校验（忽略SK）   1表示SN校验（需要SK）
         /// <summary>
         /// 从服务器上下载字符串
         /// </summary>
