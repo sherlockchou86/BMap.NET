@@ -15,7 +15,7 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="MapCachePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">F:\</Value>
+      <Value Profile="(Default)">E:\</Value>
     </Setting>
   </Settings>
 </SettingsFile>

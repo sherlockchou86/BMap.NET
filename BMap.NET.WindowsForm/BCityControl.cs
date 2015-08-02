@@ -13,7 +13,7 @@ namespace BMap.NET.WindowsForm
     /// <summary>
     /// 城市切换控件
     /// </summary>
-    public partial class BCityControl : UserControl
+    partial class BCityControl : UserControl
     {
         public event SelectedCityChangedEventHandler SelectedCityChanged;
         private string _currentCity = "";
@@ -270,7 +270,11 @@ namespace BMap.NET.WindowsForm
             {
                 cityList1.Mode = CityListMode.Organization;
             }
+            rdo_by_pinyin.Enabled = false;
+            rdo_by_province.Enabled = false;
             cityList1.RefreshList();
+            rdo_by_province.Enabled = true;
+            rdo_by_pinyin.Enabled = true;
         }
         /// <summary>
         /// 选择城市变化

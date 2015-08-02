@@ -58,6 +58,12 @@
     <Compile Include="BDirectionBoard.Designer.cs">
       <DependentUpon>BDirectionBoard.cs</DependentUpon>
     </Compile>
+    <Compile Include="BLoadMapModeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BLoadMapModeControl.Designer.cs">
+      <DependentUpon>BLoadMapModeControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="BMapControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -107,6 +113,12 @@
     <Compile Include="BMapElements\BPOI.cs" />
     <Compile Include="BMapElements\BRoute.cs" />
     <Compile Include="BMapElements\BTile.cs" />
+    <Compile Include="DrawingObjects\BCircle.cs" />
+    <Compile Include="DrawingObjects\BLine.cs" />
+    <Compile Include="DrawingObjects\BPolygon.cs" />
+    <Compile Include="DrawingObjects\BRectangle.cs" />
+    <Compile Include="DrawingObjects\BScreenShotRectangle.cs" />
+    <Compile Include="DrawingObjects\DrawingObject.cs" />
     <Compile Include="FunctionalControls\CityList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -129,6 +141,9 @@
   <ItemGroup>
     <EmbeddedResource Include="BCityControl.resx">
       <DependentUpon>BCityControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BLoadMapModeControl.resx">
+      <DependentUpon>BLoadMapModeControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BMapControl.resx">
       <DependentUpon>BMapControl.cs</DependentUpon>
@@ -156,10 +171,26 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="libs\Newtonsoft.Json.dll" />
+    <None Include="Resources\ico_cursor_locate.png" />
+    <None Include="Resources\ico_setmarker.png" />
+    <None Include="Resources\ico_search_in_bound.png" />
+    <None Include="Resources\ico_screenshot.png" />
+    <None Include="Resources\ico_rectangle.png" />
+    <None Include="Resources\ico_polygon.png" />
+    <None Include="Resources\ico_location.png" />
+    <None Include="Resources\ico_line.png" />
+    <None Include="Resources\ico_distance.png" />
+    <None Include="Resources\ico_circle.png" />
+    <None Include="Resources\ico_server.png" />
+    <None Include="Resources\ico_sateshot.png" />
+    <None Include="Resources\ico_mapshot.png" />
+    <None Include="Resources\ico_cachefirst.png" />
+    <None Include="Resources\ico_cache.png" />
     <None Include="Resources\ico_close.gif" />
     <None Include="Resources\baidu_citys.txt" />
     <None Include="Resources\ico_search.gif" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

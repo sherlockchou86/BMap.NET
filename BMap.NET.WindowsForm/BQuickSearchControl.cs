@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace BMap.NET.WindowsForm
 {
-    public partial class BQuickSearchControl : UserControl
+    partial class BQuickSearchControl : UserControl
     {
         public BQuickSearchControl()
         {

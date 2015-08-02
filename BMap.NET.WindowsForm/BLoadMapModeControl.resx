@@ -117,59 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="baidu_citys" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\baidu_citys.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="ico_cache" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_cache.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_cachefirst" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_cachefirst.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_close" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_close.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_cursor_locate" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_cursor_locate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_distance" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_distance.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_line" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_location" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_location.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_mapshot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_mapshot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_polygon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_polygon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_rectangle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_rectangle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_sateshot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_sateshot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_screenshot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_screenshot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_search" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_search.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_search_in_bound" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_search_in_bound.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_server" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_server.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ico_setmarker" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ico_setmarker.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        R0lGODlhDQANAIEBAAkkPP///wAAAAAAACH/C05FVFNDQVBFMi4wAwEBAAAh+QQBAAABACwAAAAADQAN
+        AAAIMQADBABAsGBBgQMNKgSQcKFDhg0FLkQIsaFBhBIfUtSI0SHFjRcjWnx4kSRBkBMDBAQAOw==
+</value>
   </data>
 </root>

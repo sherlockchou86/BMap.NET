@@ -22,7 +22,7 @@ namespace BMap.NET.WindowsForm
         private const double DISTANCE = 111319.49; //每（经纬）度距离m
 
         #region 属性
-        private LatLngPoint _center = new LatLngPoint(117.176937, 39.109557); 
+        private LatLngPoint _center = new LatLngPoint(0, 0); 
         /// <summary>
         /// 地图显示中心经纬度坐标
         /// </summary>
@@ -87,6 +87,11 @@ namespace BMap.NET.WindowsForm
             set
             {
                 _loadmode = value;
+                foreach(KeyValuePair<string,BTile> p in _tiles)
+                {
+                    p.Value.LoadMode = _loadmode;
+                }
+                Invalidate();
             }
         }
 
@@ -103,6 +108,22 @@ namespace BMap.NET.WindowsForm
 
         #region 字段
         /// <summary>
+        /// 当前光标
+        /// </summary>
+        private Cursor _current_cursor_cache = Cursors.Arrow;
+        /// <summary>
+        /// 地图中提示
+        /// </summary>
+        private Label _toolTip = new Label();
+        /// <summary>
+        /// 地图加载模式选择控件
+        /// </summary>
+        private BLoadMapModeControl _bLoadMapModeControl = new BLoadMapModeControl();
+        /// <summary>
+        /// 显示路网复选框
+        /// </summary>
+        private CheckBox _chkShowRoadNet = new CheckBox();
+        /// <summary>
         /// 城市切换控件
         /// </summary>
         private BCityControl _bCityControl = new BCityControl();
@@ -110,6 +131,10 @@ namespace BMap.NET.WindowsForm
         /// 当前城市
         /// </summary>
         private string _currentCity = "";
+        /// <summary>
+        /// 鼠标是否定位
+        /// </summary>
+        private bool _cursor_located = false;
         /// <summary>
         /// 鼠标移动前一点缓存
         /// </summary>
@@ -119,7 +144,7 @@ namespace BMap.NET.WindowsForm
         /// </summary>
         private MouseType _mouse_type = MouseType.None;
         /// <summary>
-        /// 地图中唯一的矩形（没有则为null）
+        /// 地图中唯一的搜索区域矩形（没有则为null）
         /// </summary>
         private BBound _b_bound;
         /// <summary>
@@ -177,10 +202,14 @@ namespace BMap.NET.WindowsForm
             {
                 //瓦片
                 DrawTiles(e.Graphics);
+                //鼠标定位效果
+                DrawCursor(e.Graphics);
                 //地图信息
                 DrawMapInfo(e.Graphics);
                 //当前城市
                 DrawCurrentCity(e.Graphics);
+                //工具栏
+                DrawToolsBar(e.Graphics);
             }
         }
         /// <summary>
@@ -191,27 +220,194 @@ namespace BMap.NET.WindowsForm
         {
             base.OnMouseDown(e);
             //检查设置鼠标工作方式
-            if (_mouse_type == MouseType.None)
+            if (new Rectangle(Width - 384 + 26 * 8, 10, 26, 26).Contains(PointToClient(Cursor.Position))) //鼠标定位
             {
-                if (new Rectangle(10, 10, 90, 25).Contains(e.Location))  //打开城市切换窗体
+                _cursor_located = !_cursor_located;
+                Invalidate();
+                return;
+            }
+            else if (new Rectangle(Width - 384 + 26 * 7, 10, 26, 26).Contains(PointToClient(Cursor.Position))) //绘制多边形
+            {
+                if (_mouse_type == MouseType.DrawPolygon)
                 {
-                    if (_bCityControl.Visible)
+                    _mouse_type = MouseType.None;
+                    _current_cursor_cache = Cursor = Cursors.Arrow;
+                }
+                else
+                {
+                    _mouse_type = MouseType.DrawPolygon;
+                    _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                }
+                Invalidate();
+                return;
+            }
+            else if (new Rectangle(Width - 384 + 26 * 6, 10, 26, 26).Contains(PointToClient(Cursor.Position))) //绘制直线
+            {
+                if (_mouse_type == MouseType.DrawLine)
+                {
+                    _mouse_type = MouseType.None;
+                    _current_cursor_cache = Cursor = Cursors.Arrow;
+                }
+                else
+                {
+                    _mouse_type = MouseType.DrawLine;
+                    _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                }
+                Invalidate();
+                return;
+            }
+            else if (new Rectangle(Width - 384 + 26 * 5, 10, 26, 26).Contains(PointToClient(Cursor.Position))) //绘制椭圆
+            {
+                if (_mouse_type == MouseType.DrawCircle)
+                {
+                    _mouse_type = MouseType.None;
+                    _current_cursor_cache = Cursor = Cursors.Arrow;
+                }
+                else
+                {
+                    _mouse_type = MouseType.DrawCircle;
+                    _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                }
+                Invalidate();
+                return;
+            }
+            else if (new Rectangle(Width - 384 + 26 * 4, 10, 26, 26).Contains(PointToClient(Cursor.Position))) //绘制矩形
+            {
+                if (_mouse_type == MouseType.DrawRectange)
+                {
+                    _mouse_type = MouseType.None;
+                    _current_cursor_cache = Cursor = Cursors.Arrow;
+                }
+                else
+                {
+                    _mouse_type = MouseType.DrawRectange;
+                    _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                }
+                Invalidate();
+                return;
+            }
+            else if (new Rectangle(Width - 384 + 26 * 3, 10, 26, 26).Contains(PointToClient(Cursor.Position))) //添加标记点
+            {
+                if (_mouse_type == MouseType.DrawMarker)
+                {
+                    _mouse_type = MouseType.None;
+                    _current_cursor_cache = Cursor = Cursors.Arrow;
+                }
+                else
+                {
+                    _mouse_type = MouseType.DrawMarker;
+                    _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                }
+                Invalidate();
+                return;
+            }
+            else if (new Rectangle(Width - 384 + 26 * 2, 10, 26, 26).Contains(PointToClient(Cursor.Position))) //截图
+            {
+                if (_mouse_type == MouseType.DragScreenshotArea)
+                {
+                    _mouse_type = MouseType.None;
+                    _current_cursor_cache = Cursor = Cursors.Arrow;
+                }
+                else
+                {
+                    _mouse_type = MouseType.DrawScreenshotArea;
+                    _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                }
+                Invalidate();
+                return;
+            }
+            else if (new Rectangle(Width - 384 + 26 * 1, 10, 26, 26).Contains(PointToClient(Cursor.Position))) //测量距离
+            {
+                if (_mouse_type == MouseType.DrawDistance)
+                {
+                    _mouse_type = MouseType.None;
+                    _current_cursor_cache = Cursor = Cursors.Arrow;
+                }
+                else
+                {
+                    _mouse_type = MouseType.DrawDistance;
+                    _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                }
+                Invalidate();
+                return;
+            }
+            else if (new Rectangle(Width - 384, 10, 26, 26).Contains(PointToClient(Cursor.Position))) //矩形区域搜索
+            {
+                if (_mouse_type == MouseType.DrawBound)
+                {
+                    _mouse_type = MouseType.None;
+                    _current_cursor_cache = Cursor = Cursors.Arrow;
+                }
+                else
+                {
+                    _mouse_type = MouseType.DrawBound;
+                    _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                }
+                Invalidate();
+                return;
+            }
+            if (new Rectangle(10, 10, 90, 25).Contains(e.Location))  //打开城市切换窗体
+            {
+                if (_bCityControl.Visible)
+                {
+                    _bCityControl.Visible = false;
+                }
+                else
+                {
+                    _bCityControl.Location = new Point(10, 38);
+                    _bCityControl.Visible = true;
+                    _bCityControl.CurrentCity = _currentCity;
+                }
+                Invalidate();
+                return;
+            }
+            else if (new Rectangle(Width - 124, 10, 52, 52).Contains(e.Location)) //打开地图加载模式窗体
+            {
+                if (_bLoadMapModeControl.Visible)
+                {
+                    _bLoadMapModeControl.Visible = false;
+                }
+                else
+                {
+                    _bLoadMapModeControl.Location = new Point(Width - 124 + 52 - _bLoadMapModeControl.Width, 10 + 55);
+                    _bLoadMapModeControl.LoadMode = _loadmode;
+                    _bLoadMapModeControl.Visible = true;
+                }
+                Invalidate();
+                return;
+            }
+            else if (new Rectangle(Width - 62, 10, 52, 52).Contains(e.Location)) //切换地图模式
+            {
+                if (_mode == MapMode.Normal)
+                {
+                    if (_chkShowRoadNet.Checked)
                     {
-                        _bCityControl.Visible = false;
+                        Mode = MapMode.Sate_RoadNet;
                     }
                     else
                     {
-                        _bCityControl.Location = new Point(10, 38);
-                        _bCityControl.Visible = true;
+                        Mode = MapMode.Satellite;
                     }
-                    Invalidate();
+                    _chkShowRoadNet.Location = new Point(Width - 62, 65);
+                    _chkShowRoadNet.Visible = true;
                 }
-                else  //拖拽地图
+                else
                 {
-                    _mouse_type = MouseType.DragMap;
-                    Cursor = Cursors.SizeAll;
-                    _previous_point_cache = e.Location;
+                    Mode = MapMode.Normal;
+                    _chkShowRoadNet.Visible = false;
                 }
+                return;
+            }
+
+
+            if (_mouse_type == MouseType.None)  //拖拽地图
+            {
+                //判断是否拖拽其他物体
+                _bCityControl.Visible = false;
+                _bLoadMapModeControl.Visible = false;
+                _mouse_type = MouseType.DragMap;
+                _current_cursor_cache = Cursor = Cursors.SizeAll;
+                _previous_point_cache = e.Location;
             }
         }
         /// <summary>
@@ -221,14 +417,102 @@ namespace BMap.NET.WindowsForm
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
+            //提示信息
+            if (new Rectangle(Width - 62, 10, 52, 52).Contains(PointToClient(Cursor.Position)))
+            {
+                _toolTip.Text = "切换地图模式";
+                _toolTip.Location = new Point(Width - 10 - _toolTip.Width, 65 + 25);
+                _toolTip.Visible = true;
+            }
+            else if (new Rectangle(Width - 62 - 62, 10, 52, 52).Contains(PointToClient(Cursor.Position)))
+            {
+                _toolTip.Text = "切换加载模式";
+                _toolTip.Location = new Point(Width - 62 - 62 - _toolTip.Width, 62 - _toolTip.Height);
+                _toolTip.Visible = true;
+            }
+            else if (new Rectangle(Width - 384, 10, 26, 26).Contains(PointToClient(Cursor.Position)))
+            {
+                _toolTip.Text = "区域搜索";
+                _toolTip.Location = new Point(Width - 384, 36 + 10);
+                _toolTip.Visible = true;
+            }
+            else if (new Rectangle(Width - 384 + 26 * 1, 10, 26, 26).Contains(PointToClient(Cursor.Position)))
+            {
+                _toolTip.Text = "距离测量";
+                _toolTip.Location = new Point(Width - 384 + 26 * 1, 36 + 10);
+                _toolTip.Visible = true;
+            }
+            else if (new Rectangle(Width - 384 + 26 * 2, 10, 26, 26).Contains(PointToClient(Cursor.Position)))
+            {
+                _toolTip.Text = "截图";
+                _toolTip.Location = new Point(Width - 384 + 26 * 2, 36 + 10);
+                _toolTip.Visible = true;
+            }
+            else if (new Rectangle(Width - 384 + 26 * 3, 10, 26, 26).Contains(PointToClient(Cursor.Position)))
+            {
+                _toolTip.Text = "标记";
+                _toolTip.Location = new Point(Width - 384 + 26 * 3, 36 + 10);
+                _toolTip.Visible = true;
+            }
+            else if (new Rectangle(Width - 384 + 26 * 4, 10, 26, 26).Contains(PointToClient(Cursor.Position)))
+            {
+                _toolTip.Text = "绘制矩形";
+                _toolTip.Location = new Point(Width - 384 + 26 * 4, 36 + 10);
+                _toolTip.Visible = true;
+            }
+            else if (new Rectangle(Width - 384 + 26 * 5, 10, 26, 26).Contains(PointToClient(Cursor.Position)))
+            {
+                _toolTip.Text = "绘制椭圆";
+                _toolTip.Location = new Point(Width - 384 + 26 * 5, 36 + 10);
+                _toolTip.Visible = true;
+            }
+            else if (new Rectangle(Width - 384 + 26 * 6, 10, 26, 26).Contains(PointToClient(Cursor.Position)))
+            {
+                _toolTip.Text = "绘制直线";
+                _toolTip.Location = new Point(Width - 384 + 26 * 6, 36 + 10);
+                _toolTip.Visible = true;
+            }
+            else if (new Rectangle(Width - 384 + 26 * 7, 10, 26, 26).Contains(PointToClient(Cursor.Position)))
+            {
+                _toolTip.Text = "绘制多边形";
+                _toolTip.Location = new Point(Width - 384 + 26 * 7, 36 + 10);
+                _toolTip.Visible = true;
+            }
+            else if (new Rectangle(Width - 384 + 26 * 8, 10, 26, 26).Contains(PointToClient(Cursor.Position)))
+            {
+                _toolTip.Text = "鼠标定位";
+                _toolTip.Location = new Point(Width - 384 + 26 * 8, 36 + 10);
+                _toolTip.Visible = true;
+            }
+            else
+            {
+                _toolTip.Visible = false;
+            }
+            //鼠标形状
+            if (new Rectangle(Width - 384, 10, 234, 26).Contains(e.Location)
+                || new Rectangle(Width - 124, 10, 52, 52).Contains(e.Location)
+                || new Rectangle(Width - 62, 10, 52, 52).Contains(e.Location))
+            {
+                Cursor = Cursors.Hand;
+            }
+            else
+            {
+                Cursor = _current_cursor_cache;
+            }
+
+            if (_mouse_type == MouseType.None)  //  鼠标无任何工作
+            {
+
+            }
             if (_mouse_type == MouseType.DragMap)  //拖拽地图
             {
                 int deltax = e.Location.X - _previous_point_cache.X;
                 int deltay = e.Location.Y - _previous_point_cache.Y;
                 Center = new LatLngPoint(_center.Lng - (double)deltax / (DISTANCE / Math.Pow(2, 18 - _zoom)), _center.Lat + (double)deltay / (DISTANCE / Math.Pow(2, 18 - _zoom)));
                 _previous_point_cache = e.Location;
-                Invalidate();
+                Locate(false);
             }
+            Invalidate();
         }
         /// <summary>
         /// 鼠标在地图上弹起
@@ -240,7 +524,7 @@ namespace BMap.NET.WindowsForm
             if (_mouse_type == MouseType.DragMap)
             {
                 _mouse_type = MouseType.None;
-                Cursor = Cursors.Arrow;
+                _current_cursor_cache = Cursor = Cursors.Arrow;
             }
         }
         /// <summary>
@@ -262,6 +546,7 @@ namespace BMap.NET.WindowsForm
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
+            Invalidate();
         }
         /// <summary>
         /// 地图大小发生变化
@@ -271,6 +556,14 @@ namespace BMap.NET.WindowsForm
         {
             base.OnResize(e);
             Invalidate();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnMouseHover(EventArgs e)
+        {
+            base.OnMouseHover(e);
         }
         #endregion
 
@@ -282,32 +575,80 @@ namespace BMap.NET.WindowsForm
         {
             if (!DesignMode)
             {
-                //定位当前位置
-                ((Action)(delegate()
+                //定位自己
+                Locate(true);
+
+                //初始化功能控件
+                //城市切换控件
+                _bCityControl.Size = new Size(560, 400);
+                _bCityControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                Controls.Add(_bCityControl);
+                _bCityControl.Visible = false;
+                _bCityControl.SelectedCityChanged += new SelectedCityChangedEventHandler(_bCityControl_SelectedCityChanged);
+                //显示路网控件
+                _chkShowRoadNet.Text = "道路网";
+                _chkShowRoadNet.Visible = false;
+                Controls.Add(_chkShowRoadNet);
+                _chkShowRoadNet.CheckedChanged += new EventHandler(_chkShowRoadNet_CheckedChanged);
+                _chkShowRoadNet.Anchor = AnchorStyles.Right | AnchorStyles.Top;
+                _chkShowRoadNet.BackColor = Color.White;
+                //地图加载模式控件
+                _bLoadMapModeControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                _bLoadMapModeControl.Visible = false;
+                Controls.Add(_bLoadMapModeControl);
+                _bLoadMapModeControl.LoadMapModeChanged += new LoadMapModeChangedEventHandler(_bLoadMapModeControl_LoadMapModeChanged);
+                _bLoadMapModeControl.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                _bLoadMapModeControl.BackColor = Color.White;
+                //信息提示
+                _toolTip.BackColor = Color.White;
+                _toolTip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                _toolTip.Visible = false;
+                _toolTip.TextAlign = ContentAlignment.MiddleLeft;
+                _toolTip.AutoSize = true;
+                _toolTip.Font = new System.Drawing.Font("微软雅黑", 9);
+                _toolTip.Padding = new System.Windows.Forms.Padding(1);
+                Controls.Add(_toolTip);
+                _toolTip.BringToFront();
+            }
+        }
+        /// <summary>
+        /// 定位
+        /// </summary>
+        /// <param name="mylocation">为true表示定位自己 否则定位当前地图中的城市</param>
+        private void Locate(bool mylocation)
+        {
+            //定位位置
+            ((Action)(delegate()
+            {
+                if (mylocation)  //定位自己
                 {
                     IPService ips = new IPService();
                     JObject _location = ips.LocationByIP();
                     if (_location != null)
                     {
                         _currentCity = (string)(_location["content"]["address_detail"]["city"]); //返回JSON结构请参见百度API文档
-                    }
-                    this.Invoke((Action)delegate()
-                    {
-                        Invalidate();
-                        if (BPlaceBox != null)
-                        {
-                            BPlaceBox.CurrentCity = _currentCity;
-                        }
-                    });
-                })).BeginInvoke(null, null);
+                        _center = new LatLngPoint(double.Parse((string)_location["content"]["point"]["x"]), double.Parse((string)_location["content"]["point"]["y"]));
 
-                //初始化功能控件
-                _bCityControl.Size = new Size(560, 400);
-                _bCityControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-                Controls.Add(_bCityControl);
-                _bCityControl.Visible = false;
-                _bCityControl.SelectedCityChanged += new SelectedCityChangedEventHandler(_bCityControl_SelectedCityChanged);
-            }
+                    }
+                }
+                else  //定位地图中心点
+                {
+                    GeocodingService gs = new GeocodingService();
+                    JObject _location = gs.DeGeocoding(_center.Lat + "," + _center.Lng);
+                    if (_location != null)
+                    {
+                        _currentCity = (string)(_location["result"]["addressComponent"]["city"]);  //返回JSON结构请参见百度API文档
+                    }
+                }
+                this.Invoke((Action)delegate()
+                {
+                    Invalidate();
+                    if (BPlaceBox != null)
+                    {
+                        BPlaceBox.CurrentCity = _currentCity;
+                    }
+                });
+            })).BeginInvoke(null, null);
         }
         /// <summary>
         /// 初始化瓦片
@@ -350,7 +691,7 @@ namespace BMap.NET.WindowsForm
             }
         }
         /// <summary>
-        /// 绘制地图的一些附加信息 如当前坐标、地图级别、logo、版权等
+        /// 绘制地图左下角的一些附加信息 如当前坐标、地图级别、logo、版权等
         /// </summary>
         /// <param name="g"></param>
         private void DrawMapInfo(Graphics g)
@@ -385,7 +726,12 @@ namespace BMap.NET.WindowsForm
             g.DrawRectangle(Pens.DarkGray, new Rectangle(10, 10, 90, 25));
             using (Font f = new Font("微软雅黑", 9))
             {
-                g.DrawString(_currentCity.Length <= 4 ? _currentCity : _currentCity.Substring(0, 4), f, Brushes.DarkGray, new PointF(20, 15));
+                string info = _currentCity;
+                if (_currentCity == "")
+                {
+                    info = "定位失败";
+                }
+                g.DrawString(info.Length <= 4 ? info : info.Substring(0, 4), f, Brushes.DarkGray, new PointF(20, 15));
             }
             if (!_bCityControl.Visible)  //城市切换窗体关闭
             {
@@ -394,6 +740,129 @@ namespace BMap.NET.WindowsForm
             else
             {
                 g.FillPolygon(Brushes.Gray, new Point[] { new Point(74, 26), new Point(88, 26), new Point(81, 19) });
+            }
+        }
+        /// <summary>
+        /// 绘制右上角工具栏
+        /// </summary>
+        /// <param name="g"></param>
+        private void DrawToolsBar(Graphics g)
+        {
+            //工具
+            //g.FillRectangle(Brushes.White, new Rectangle(Width - 384, 10, 234, 26));
+
+            using (SolidBrush sb = new SolidBrush(Color.FromArgb(120, Color.Black)))
+            {
+                g.DrawImage(Properties.BMap.ico_search_in_bound, new Rectangle(Width - 384, 10, 26, 26)); //矩形区域搜索
+                if (_mouse_type == MouseType.DrawBound)
+                {
+                    g.FillRectangle(sb, new Rectangle(Width - 384, 10, 26, 26));
+                }
+                g.DrawImage(Properties.BMap.ico_distance, new Rectangle(Width - 384 + 26, 10, 26, 26)); //测量距离
+                if (_mouse_type == MouseType.DrawDistance)
+                {
+                    g.FillRectangle(sb, new Rectangle(Width - 384 + 26 * 1, 10, 26, 26));
+                }
+                g.DrawImage(Properties.BMap.ico_screenshot, new Rectangle(Width - 384 + 26 * 2, 10, 26, 26)); //截图
+                if (_mouse_type == MouseType.DrawScreenshotArea)
+                {
+                    g.FillRectangle(sb, new Rectangle(Width - 384 + 26 * 2, 10, 26, 26));
+                }
+                g.DrawImage(Properties.BMap.ico_setmarker, new Rectangle(Width - 384 + 26 * 3, 10, 26, 26)); //添加标记
+                if (_mouse_type == MouseType.DrawMarker)
+                {
+                    g.FillRectangle(sb, new Rectangle(Width - 384 + 26 * 3, 10, 26, 26));
+                }
+                g.DrawImage(Properties.BMap.ico_rectangle, new Rectangle(Width - 384 + 26 * 4, 10, 26, 26)); //绘制矩形
+                if (_mouse_type == MouseType.DrawRectange)
+                {
+                    g.FillRectangle(sb, new Rectangle(Width - 384 + 26 * 4, 10, 26, 26));
+                }
+                g.DrawImage(Properties.BMap.ico_circle, new Rectangle(Width - 384 + 26 * 5, 10, 26, 26)); //绘制椭圆
+                if (_mouse_type == MouseType.DrawCircle)
+                {
+                    g.FillRectangle(sb, new Rectangle(Width - 384 + 26 * 5, 10, 26, 26));
+                }
+                g.DrawImage(Properties.BMap.ico_line, new Rectangle(Width - 384 + 26 * 6, 10, 26, 26)); //绘制直线
+                if (_mouse_type == MouseType.DrawLine)
+                {
+                    g.FillRectangle(sb, new Rectangle(Width - 384 + 26 * 6, 10, 26, 26));
+                }
+                g.DrawImage(Properties.BMap.ico_polygon, new Rectangle(Width - 384 + 26 * 7, 10, 26, 26));  //绘制多边形
+                if (_mouse_type == MouseType.DrawPolygon)
+                {
+                    g.FillRectangle(sb, new Rectangle(Width - 384 + 26 * 7, 10, 26, 26));
+                }
+                g.DrawImage(Properties.BMap.ico_cursor_locate, new Rectangle(Width - 384 + 26 * 8, 10, 26, 26));//鼠标定位效果
+                if (_cursor_located)
+                {
+                    g.FillRectangle(sb, new Rectangle(Width - 384 + 26 * 8, 10, 26, 26));
+                }
+            }
+            g.DrawRectangle(Pens.DarkGray, new Rectangle(Width - 384, 10, 234, 26));
+            for (int i = 0; i < 8; ++i)
+            {
+                g.DrawLine(Pens.LightGray, new Point(Width - 384 + (i + 1) * 26, 10), new Point(Width - 384 + (i + 1) * 26, 10 + 26));
+            }
+
+            //地图加载模式
+            Image mode_image = ((Func<LoadMapMode, Image>)((LoadMapMode m) =>   //临时调用匿名方法
+                {
+                    if (_loadmode == LoadMapMode.Cache)
+                    {
+                        return Properties.BMap.ico_cache;
+                    }
+                    if (_loadmode == LoadMapMode.CacheServer)
+                    {
+                        return Properties.BMap.ico_cachefirst;
+                    }
+                    if (_loadmode == LoadMapMode.Server)
+                    {
+                        return Properties.BMap.ico_server;
+                    }
+                    return null;
+                }))(_loadmode);
+            g.DrawImage(mode_image, new Rectangle(Width - 124, 10, 52, 52));
+            using (SolidBrush sb = new SolidBrush(Color.FromArgb(180, Color.White)))
+            {
+                g.FillRectangle(sb, new Rectangle(Width - 124, 10 + 30, 52, 22));
+            }
+            using (Font f = new System.Drawing.Font("微软雅黑", 8))
+            {
+                g.DrawString(MapHelper.GetLoadMapModeTitle(_loadmode), f, Brushes.Black, new PointF(Width - 124 + 3, 10 + 30 + 5));
+            }
+            g.DrawRectangle(Pens.DarkGray, new Rectangle(Width - 124, 10, 52, 52));
+            
+            //地图模式
+            g.DrawImage(_mode == MapMode.Normal ? Properties.BMap.ico_sateshot : Properties.BMap.ico_mapshot, new Rectangle(Width - 62, 10, 52, 52));
+            using (SolidBrush sb = new SolidBrush(Color.FromArgb(180, Color.White)))
+            {
+                g.FillRectangle(sb, new Rectangle(Width - 62, 10 + 30, 52, 22));
+            }
+            using (Font f = new Font("微软雅黑", 9))
+            {
+                g.DrawString(_mode == MapMode.Normal ? "卫星" : "地图", f, Brushes.Black, new PointF(Width - 62 + 12, 10 + 30 + 4));
+            }
+            g.DrawRectangle(Pens.DarkGray, new Rectangle(Width - 62, 10, 52, 52));
+        }
+        /// <summary>
+        /// 绘制鼠标定位效果
+        /// </summary>
+        /// <param name="g"></param>
+        private void DrawCursor(Graphics g)
+        {
+            Point p = PointToClient(Cursor.Position);
+            if (ClientRectangle.Contains(p))
+            {
+                if (_cursor_located)
+                {
+                    using (Pen pen = new Pen(Color.FromArgb(200, _mode == MapMode.Normal ? Color.Blue : Color.White), 2))
+                    {
+                        pen.DashStyle = DashStyle.Dash;
+                        g.DrawLine(pen, new Point(0, p.Y), new Point(ClientSize.Width, p.Y));
+                        g.DrawLine(pen, new Point(p.X, 0), new Point(p.X, ClientSize.Height));
+                    }
+                }
             }
         }
         #endregion
@@ -410,6 +879,10 @@ namespace BMap.NET.WindowsForm
         {
             _bCityControl.Visible = false;
             _currentCity = cityName;
+            if (BPlaceBox != null)  //关联的位置输入框
+            {
+                BPlaceBox.CurrentCity = cityName;
+            }
             Invalidate();
             ((Action)delegate()  //定位到指定城市
             {
@@ -424,6 +897,33 @@ namespace BMap.NET.WindowsForm
                     Invalidate();
                 });
             }).BeginInvoke(null, null);
+        }
+        /// <summary>
+        /// 卫星图模式下是否显示路网
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void _chkShowRoadNet_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_mode != MapMode.Normal)
+            {
+                if (_chkShowRoadNet.Checked)
+                {
+                    Mode = MapMode.Sate_RoadNet;
+                }
+                else
+                {
+                    Mode = MapMode.Satellite;
+                }
+            }
+        }
+        /// <summary>
+        /// 加载地图模式改变
+        /// </summary>
+        /// <param name="loadMode"></param>
+        void _bLoadMapModeControl_LoadMapModeChanged(LoadMapMode loadMode)
+        {
+            LoadMode = loadMode;
         }
         #endregion
     }
@@ -508,7 +1008,7 @@ namespace BMap.NET.WindowsForm
         {
             // DISTANCE / Math.Pow(2, 18 - zoom) 每度占用像素
             int x = (int)(p.Lng * (DISTANCE / Math.Pow(2, 18 - zoom)));
-            int y = (int)((p.Lat) * (DISTANCE / Math.Pow(2, 18 - zoom)));
+            int y = (int)(p.Lat * (DISTANCE / Math.Pow(2, 18 - zoom)));
             return new Point(x, y);  //返回像素坐标
         }
         /// <summary>
@@ -586,8 +1086,14 @@ namespace BMap.NET.WindowsForm
         None,  //无
         DragMap,  //拖拽地图
         DragNearby,  //拖拽周边区域
-        DragBound,  //拖拽矩形区域
-        DrawBound,  //绘制矩形区域
-        DrawDistance //绘制测量线条
+        DrawBound,  //绘制矩形搜索区域
+        DrawDistance, //绘制测量线条
+        DrawScreenshotArea,  //绘制截图矩形
+        DragScreenshotArea,  //拖拽截图矩形
+        DrawMarker, //绘制标记点
+        DrawRectange,  //绘制矩形
+        DrawCircle, //绘制圆形
+        DrawLine, //绘制直线
+        DrawPolygon  //绘制多边形
     }
 }

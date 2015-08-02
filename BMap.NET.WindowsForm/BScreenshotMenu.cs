@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace BMap.NET.WindowsForm
 {
-    public partial class BScreenshotMenu : UserControl
+    partial class BScreenshotMenu : UserControl
     {
         public BScreenshotMenu()
         {

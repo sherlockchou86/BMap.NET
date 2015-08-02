@@ -47,29 +47,55 @@ namespace BMap.NET.WindowsForm.BMapElements
             set;
         }
 
+        private MapMode _mode;
         /// <summary>
         /// 地图模式
         /// </summary>
         [DefaultValue(MapMode.Normal)]
         public MapMode Mode
         {
-            get;
-            set;
+            get
+            {
+                return _mode;
+            }
+            set
+            {
+                if (value != _mode)
+                {
+                    _mode = value;
+                }
+            }
         }
+        private LoadMapMode _loadMode;
         /// <summary>
         /// 瓦片加载模式
         /// </summary>
         [DefaultValue(LoadMapMode.CacheServer)]
         public LoadMapMode LoadMode
         {
-            get;
-            set;
+            get
+            {
+                return _loadMode;
+            }
+            set
+            {
+                if (_loadMode != value)
+                {
+                    _loadMode = value;
+                    _loading = false;
+                    _load_error = false;
+                    _normal = null;
+                    _sate = null;
+                    _road_net = null;
+                }
+            }
         }
 
         private Bitmap _normal;
         private Bitmap _sate;
         private Bitmap _road_net;
         private bool _loading = false;
+        private bool _load_error = false;
 
         /// <summary>
         /// 构造方法
@@ -109,26 +135,36 @@ namespace BMap.NET.WindowsForm.BMapElements
             if (Mode == MapMode.Normal && _normal == null && !_loading)  //开始下载普通瓦片
             {
                 _loading = true;
-                ((Action)(delegate()
-                {
-                    MapService ms = new MapService();
-                    _normal = ms.LoadMapTile(X, Y, Zoom, Mode, LoadMode);
-                    _loading = false;
-                    BMapControl.Invoke((Action)delegate()
+                if (!_load_error)
+                    ((Action)(delegate()
                     {
-                        BMapControl.Invalidate();
-                    });
+                        MapService ms = new MapService();
+                        _normal = ms.LoadMapTile(X, Y, Zoom, Mode, LoadMode);
+                        _loading = false;
+                        if (_normal == null)
+                        {
+                            _load_error = true;
+                        }
+                        BMapControl.Invoke((Action)delegate()
+                        {
+                            BMapControl.Invalidate();
+                        });
 
-                })).BeginInvoke(null, null);
+                    })).BeginInvoke(null, null);
             }
             if (Mode == MapMode.RoadNet && _road_net == null && !_loading)  //开始下载道路网瓦片
             {
                 _loading = true;
+                if (!_load_error)
                 ((Action)(delegate()
                 {
                     MapService ms = new MapService();
                     _road_net = ms.LoadMapTile(X, Y, Zoom, Mode, LoadMode);
                     _loading = false;
+                    if (_road_net == null)
+                    {
+                        _load_error = true;
+                    }
                     BMapControl.Invoke((Action)delegate()
                     {
                         BMapControl.Invalidate();
@@ -139,11 +175,16 @@ namespace BMap.NET.WindowsForm.BMapElements
             if (Mode == MapMode.Satellite && _sate == null && !_loading)  //开始下载卫星图瓦片
             {
                 _loading = true;
+                if (!_load_error)
                 ((Action)(delegate()
                 {
                     MapService ms = new MapService();
                     _sate = ms.LoadMapTile(X, Y, Zoom, Mode, LoadMode);
                     _loading = false;
+                    if (_sate == null)
+                    {
+                        _load_error = true;
+                    }
                     BMapControl.Invoke((Action)delegate()
                     {
                         BMapControl.Invalidate();
@@ -154,11 +195,16 @@ namespace BMap.NET.WindowsForm.BMapElements
             if (Mode == MapMode.Sate_RoadNet && _sate == null && !_loading)  //开始下载卫星图瓦片
             {
                 _loading = true;
+                if (!_load_error)
                 ((Action)(delegate()
                 {
                     MapService ms = new MapService();
                     _sate = ms.LoadMapTile(X, Y, Zoom, MapMode.Satellite, LoadMode);
                     _loading = false;
+                    if (_sate == null)
+                    {
+                        _load_error = true;
+                    }
                     BMapControl.Invoke((Action)delegate()
                     {
                         BMapControl.Invalidate();
@@ -169,11 +215,16 @@ namespace BMap.NET.WindowsForm.BMapElements
             if (Mode == MapMode.Sate_RoadNet && _road_net == null && !_loading) //开始下载道路网瓦片
             {
                 _loading = true;
+                if (!_load_error)
                 ((Action)(delegate()
                 {
                     MapService ms = new MapService();
                     _road_net = ms.LoadMapTile(X, Y, Zoom, MapMode.RoadNet, LoadMode);
                     _loading = false;
+                    if (_road_net == null)
+                    {
+                        _load_error = true;
+                    }
                     BMapControl.Invoke((Action)delegate()
                     {
                         BMapControl.Invalidate();
@@ -182,7 +233,11 @@ namespace BMap.NET.WindowsForm.BMapElements
                 })).BeginInvoke(null, null);
             }
 
-            string error = _loading ? "正在加载图片...(zhouzhi)" : "图片加载失败";
+            string error = "正在加载图片...";
+            if (_load_error)
+            {
+                error = "图片加载失败...";
+            }
             if (Mode == MapMode.Normal)  //绘制普通地图
             {
                 if (_normal == null)
@@ -191,7 +246,7 @@ namespace BMap.NET.WindowsForm.BMapElements
                     g.DrawRectangle(Pens.Gray, p.X, p.Y, 256, 256);
                     using (Font f = new Font("微软雅黑", 10))
                     {
-                        g.DrawString(error, f, Brushes.Red, new PointF(p.X + 50, p.Y + 100));
+                        g.DrawString(error, f, Brushes.Red, new PointF(p.X + 60, p.Y + 100));
                     }
                 }
                 else
@@ -207,7 +262,7 @@ namespace BMap.NET.WindowsForm.BMapElements
                     g.DrawRectangle(Pens.Gray, p.X, p.Y, 256, 256);
                     using (Font f = new Font("微软雅黑", 10))
                     {
-                        g.DrawString(error, f, Brushes.Red, new PointF(p.X + 50, p.Y + 100));
+                        g.DrawString(error, f, Brushes.Red, new PointF(p.X + 60, p.Y + 100));
                     }
                 }
                 else
@@ -223,7 +278,7 @@ namespace BMap.NET.WindowsForm.BMapElements
                     g.DrawRectangle(Pens.Gray, p.X, p.Y, 256, 256);
                     using (Font f = new Font("微软雅黑", 10))
                     {
-                        g.DrawString(error, f, Brushes.Red, new PointF(p.X + 50, p.Y + 100));
+                        g.DrawString(error, f, Brushes.Red, new PointF(p.X + 60, p.Y + 100));
                     }
                 }
                 else
@@ -239,7 +294,7 @@ namespace BMap.NET.WindowsForm.BMapElements
                     g.DrawRectangle(Pens.Gray, p.X, p.Y, 256, 256);
                     using (Font f = new Font("微软雅黑", 10))
                     {
-                        g.DrawString(error, f, Brushes.Red, new PointF(p.X + 50, p.Y + 100));
+                        g.DrawString(error, f, Brushes.Red, new PointF(p.X + 60, p.Y + 100));
                     }
                 }
                 else
