@@ -538,7 +538,10 @@ namespace BMap.NET.WindowsForm
             //缩放
             int z = _zoom + e.Delta / 100;
             if (z >= 3 && z <= 18)
+            {
                 Zoom = z;
+                Locate(false);
+            }
         }
         /// <summary>
         /// 鼠标离开地图控件区域
@@ -634,11 +637,18 @@ namespace BMap.NET.WindowsForm
                 }
                 else  //定位地图中心点
                 {
-                    GeocodingService gs = new GeocodingService();
-                    JObject _location = gs.DeGeocoding(_center.Lat + "," + _center.Lng);
-                    if (_location != null)
+                    if (_zoom <= 10)
                     {
-                        _currentCity = (string)(_location["result"]["addressComponent"]["city"]);  //返回JSON结构请参见百度API文档
+                        _currentCity = "中国";
+                    }
+                    else
+                    {
+                        GeocodingService gs = new GeocodingService();
+                        JObject _location = gs.DeGeocoding(_center.Lat + "," + _center.Lng);
+                        if (_location != null)
+                        {
+                            _currentCity = (string)(_location["result"]["addressComponent"]["city"]);  //返回JSON结构请参见百度API文档
+                        }
                     }
                 }
                 this.Invoke((Action)delegate()
@@ -895,6 +905,7 @@ namespace BMap.NET.WindowsForm
                 }
                 this.Invoke((Action)delegate()
                 {
+                    Zoom = 12;
                     Invalidate();
                 });
             }).BeginInvoke(null, null);
@@ -997,13 +1008,13 @@ namespace BMap.NET.WindowsForm
 
             double c = (2 * Math.PI * EARTH_RADIUS * 1000) / Math.Pow(2, 18 - zoom);//地图背景宽高
 
-            double y = 2 * Math.PI * (1 - (c/2 - dp.Y) / (c / 2));
+            double y = 2 * Math.PI * (1 - (c / 2 - dp.Y) / (c / 2));
             double z = Math.Pow(Math.E, y);
             double siny = (z - 1) / (z + 1);
             
 
             //转换成经纬度坐标 并返回
-            return new LatLngPoint(dp.X / (c / 360), Math.Asin(siny) * 180 / Math.PI);
+            return new LatLngPoint(dp.X / (c / 360), Math.Asin(siny) * 180 / Math.PI + 0.17);
         }
         /// <summary>
         /// 根据经纬度坐标计算该点的像素坐标
@@ -1017,9 +1028,9 @@ namespace BMap.NET.WindowsForm
 
             int x = (int)(p.Lng * (c / 360));  //X像素坐标   经度均匀分布
 
-            double siny = Math.Sin(p.Lat * Math.PI / 180);
+            double siny = Math.Sin((p.Lat-0.17) * Math.PI / 180);
             double a = Math.Log((1 + siny) / (1 - siny));
-            int y = (int)(c/2 - (c / 2) * (1 - a / (2 * Math.PI)));  //Y像素坐标
+            int y = (int)(c / 2 - (c / 2) * (1 - a / (2 * Math.PI)));  //Y像素坐标
 
             return new Point(x, y);
         }
