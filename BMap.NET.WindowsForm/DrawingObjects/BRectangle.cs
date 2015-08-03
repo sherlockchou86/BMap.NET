@@ -36,18 +36,19 @@ namespace BMap.NET.WindowsForm.DrawingObjects
         /// <param name="screen_size"></param>
         public override void Draw(System.Drawing.Graphics g, LatLngPoint center, int zoom, System.Drawing.Size screen_size)
         {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             Point theScreenLeftTop = MapHelper.GetScreenLocationByLatLng(LeftTop, center, zoom, screen_size);  //矩形左上角屏幕坐标
             Point theScreenRightBottom = MapHelper.GetScreenLocationByLatLng(RightBottom, center, zoom, screen_size);  //矩形右下角屏幕坐标
 
-            int width = theScreenRightBottom.X - theScreenLeftTop.X;
-            int height = theScreenRightBottom.Y - theScreenLeftTop.Y;
+            int width = Math.Abs(theScreenRightBottom.X - theScreenLeftTop.X);
+            int height = Math.Abs(theScreenRightBottom.Y - theScreenLeftTop.Y);
             if (new Rectangle(new Point(0, 0), screen_size).IntersectsWith(new Rectangle(theScreenLeftTop, new Size(width, height))))
             {
-                using (SolidBrush sb = new SolidBrush(Color.FromArgb(150, Color.Blue)))
+                using (SolidBrush sb = new SolidBrush(Color.FromArgb(30, Color.Blue)))
                 {
                     g.FillRectangle(sb, new Rectangle(theScreenLeftTop, new Size(width, height)));
                 }
-                using (Pen pen = new Pen(Color.Blue, 2))
+                using (Pen pen = new Pen(Color.Blue, 4))
                 {
                     g.DrawRectangle(pen, new Rectangle(theScreenLeftTop, new Size(width, height)));
                 }

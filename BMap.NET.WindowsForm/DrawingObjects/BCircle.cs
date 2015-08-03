@@ -20,7 +20,7 @@ namespace BMap.NET.WindowsForm.DrawingObjects
             set;
         }
         /// <summary>
-        /// 椭圆右下角坐标
+        /// 椭圆矩形任意一角坐标
         /// </summary>
         public LatLngPoint RightBottom
         {
@@ -37,17 +37,18 @@ namespace BMap.NET.WindowsForm.DrawingObjects
         /// <param name="screen_size">地图大小</param>
         public override void Draw(System.Drawing.Graphics g, LatLngPoint center, int zoom, System.Drawing.Size screen_size)
         {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             Point theScreenCenter = MapHelper.GetScreenLocationByLatLng(Center, center, zoom, screen_size);  //椭圆中心点的屏幕坐标
-            Point theScreenRightBottom = MapHelper.GetScreenLocationByLatLng(RightBottom, center, zoom, screen_size);  //椭圆右下角的屏幕坐标
-            int width = 2 * (theScreenRightBottom.X - theScreenCenter.X);
-            int height = 2 * (theScreenRightBottom.Y - theScreenCenter.Y);
+            Point theScreenRightBottom = MapHelper.GetScreenLocationByLatLng(RightBottom, center, zoom, screen_size);  //椭圆矩形任意一角的屏幕坐标
+            int width = Math.Abs(2 * (theScreenRightBottom.X - theScreenCenter.X));
+            int height = Math.Abs(2 * (theScreenRightBottom.Y - theScreenCenter.Y));
             if (new Rectangle(new Point(0,0), screen_size).IntersectsWith(new Rectangle(theScreenCenter.X - width/2, theScreenCenter.Y - height/2, width, height)))  //需要绘制
             {
-                using (SolidBrush sb = new SolidBrush(Color.FromArgb(150, Color.Blue)))
+                using (SolidBrush sb = new SolidBrush(Color.FromArgb(30, Color.Blue)))
                 {
                     g.FillEllipse(sb, new Rectangle(theScreenCenter.X - width / 2, theScreenCenter.Y - height / 2, width, height));
                 }
-                using (Pen pen = new Pen(Color.Blue, 2))
+                using (Pen pen = new Pen(Color.Blue, 4))
                 {
                     g.DrawEllipse(pen, new Rectangle(theScreenCenter.X - width / 2, theScreenCenter.Y - height / 2, width, height));
                 }

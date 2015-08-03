@@ -11,6 +11,7 @@ using System.Drawing.Drawing2D;
 using BMap.NET.HTTPService;
 using Newtonsoft.Json.Linq;
 using BMap.NET.WindowsForm.FunctionalControls;
+using BMap.NET.WindowsForm.DrawingObjects;
 
 namespace BMap.NET.WindowsForm
 {
@@ -160,6 +161,10 @@ namespace BMap.NET.WindowsForm
         /// </summary>
         private BRoute _b_route;
         /// <summary>
+        /// 当前绘制图形  没有则为null(包括截图矩形)
+        /// </summary>
+        private DrawingObject _current_drawing;
+        /// <summary>
         /// 地图中瓦片容器
         /// </summary>
         private Dictionary<string, BTile> _tiles = new Dictionary<string, BTile>();
@@ -167,6 +172,11 @@ namespace BMap.NET.WindowsForm
         /// 地图中信息点（POI）容器
         /// </summary>
         private Dictionary<string, BPOI> _pois = new Dictionary<string, BPOI>();
+        /// <summary>
+        /// 绘制图形容器
+        /// </summary>
+        private Dictionary<int, DrawingObject> _drawingObjects = new Dictionary<int, DrawingObject>();
+
         #endregion
 
         /// <summary>
@@ -202,6 +212,8 @@ namespace BMap.NET.WindowsForm
             {
                 //瓦片
                 DrawTiles(e.Graphics);
+                //绘制图形
+                DrawDrawingObjects(e.Graphics);
                 //鼠标定位效果
                 DrawCursor(e.Graphics);
                 //地图信息
@@ -210,6 +222,7 @@ namespace BMap.NET.WindowsForm
                 DrawCurrentCity(e.Graphics);
                 //工具栏
                 DrawToolsBar(e.Graphics);
+                
             }
         }
         /// <summary>
@@ -265,7 +278,7 @@ namespace BMap.NET.WindowsForm
                 }
                 else
                 {
-                    _mouse_type = MouseType.DrawCircle;
+                    _mouse_type = MouseType.DrawCircle;                  
                     _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
                 }
                 Invalidate();
@@ -409,6 +422,16 @@ namespace BMap.NET.WindowsForm
                 _current_cursor_cache = Cursor = Cursors.SizeAll;
                 _previous_point_cache = e.Location;
             }
+            else if (_mouse_type == MouseType.DrawCircle)  //绘制椭圆
+            {
+                LatLngPoint theCenter = MapHelper.GetLatLngByScreenLocation(e.Location, _center, _zoom, ClientSize);
+                _current_drawing = new BCircle { Center = theCenter, RightBottom = theCenter };
+            }
+            else if (_mouse_type == MouseType.DrawRectange) //绘制矩形
+            {
+                LatLngPoint leftTop = MapHelper.GetLatLngByScreenLocation(e.Location, _center, _zoom, ClientSize);
+                _current_drawing = new BRectangle { LeftTop = leftTop, RightBottom = leftTop };
+            }
         }
         /// <summary>
         /// 鼠标在地图上移动
@@ -504,7 +527,7 @@ namespace BMap.NET.WindowsForm
             {
 
             }
-            if (_mouse_type == MouseType.DragMap)  //拖拽地图
+            else if (_mouse_type == MouseType.DragMap)  //拖拽地图
             {
                 int deltax = e.Location.X - _previous_point_cache.X;
                 int deltay = e.Location.Y - _previous_point_cache.Y;
@@ -512,6 +535,14 @@ namespace BMap.NET.WindowsForm
                 Center = llp;
                 _previous_point_cache = e.Location;
                 Locate(false);
+            }
+            else if (_mouse_type == MouseType.DrawCircle && _current_drawing as BCircle != null)  //绘制椭圆
+            {
+                (_current_drawing as BCircle).RightBottom = MapHelper.GetLatLngByScreenLocation(e.Location, _center, _zoom, ClientSize);
+            }
+            else if (_mouse_type == MouseType.DrawRectange && _current_drawing as BRectangle != null) //绘制矩形
+            {
+                (_current_drawing as BRectangle).RightBottom = MapHelper.GetLatLngByScreenLocation(e.Location, _center, _zoom, ClientSize);
             }
             Invalidate();
         }
@@ -527,6 +558,21 @@ namespace BMap.NET.WindowsForm
                 _mouse_type = MouseType.None;
                 _current_cursor_cache = Cursor = Cursors.Arrow;
             }
+            else if (_mouse_type == MouseType.DrawCircle && _current_drawing as BCircle != null)
+            {
+                _mouse_type = MouseType.None;
+                _current_cursor_cache = Cursor = Cursors.Arrow;
+                _drawingObjects.Add(_drawingObjects.Count + 1, _current_drawing);
+                _current_drawing = null;
+            }
+            else if (_mouse_type == MouseType.DrawRectange && _current_drawing as BRectangle != null)
+            {
+                _mouse_type = MouseType.None;
+                _current_cursor_cache = Cursor = Cursors.Arrow;
+                _drawingObjects.Add(_drawingObjects.Count + 1, _current_drawing);
+                _current_drawing = null;
+            }
+            Invalidate();
         }
         /// <summary>
         /// 鼠标滚轮在地图上滚动
@@ -874,6 +920,21 @@ namespace BMap.NET.WindowsForm
                         g.DrawLine(pen, new Point(p.X, 0), new Point(p.X, ClientSize.Height));
                     }
                 }
+            }
+        }
+        /// <summary>
+        /// 绘制图形
+        /// </summary>
+        /// <param name="g"></param>
+        private void DrawDrawingObjects(Graphics g)
+        {
+            if (_current_drawing != null)
+            {
+                _current_drawing.Draw(g, _center, _zoom, ClientSize);
+            }
+            foreach (KeyValuePair<int, DrawingObject> p in _drawingObjects)
+            {
+                p.Value.Draw(g, _center, _zoom, ClientSize);
             }
         }
         #endregion
