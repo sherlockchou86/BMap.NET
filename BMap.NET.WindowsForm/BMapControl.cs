@@ -508,7 +508,8 @@ namespace BMap.NET.WindowsForm
             {
                 int deltax = e.Location.X - _previous_point_cache.X;
                 int deltay = e.Location.Y - _previous_point_cache.Y;
-                Center = new LatLngPoint(_center.Lng - (double)deltax / (DISTANCE / Math.Pow(2, 18 - _zoom)), _center.Lat + (double)deltay / (DISTANCE / Math.Pow(2, 18 - _zoom)));
+                LatLngPoint llp = MapHelper.GetLatLngByScreenLocation(new Point(ClientSize.Width/2 - deltax, ClientSize.Height/2 - deltay), _center, _zoom, ClientSize);
+                Center = llp;
                 _previous_point_cache = e.Location;
                 Locate(false);
             }
@@ -656,8 +657,8 @@ namespace BMap.NET.WindowsForm
         private void InitializeTiles()
         {
             PointF center = MapHelper.GetLocationByLatLng(_center, _zoom); //中心点像素坐标
-            PointF left_down = new PointF(center.X - Bounds.Width / 2, center.Y - Bounds.Height / 2); //左下角像素坐标
-            PointF right_up = new PointF(center.X + Bounds.Width / 2, center.Y + Bounds.Height / 2); //右上角像素坐标
+            PointF left_down = new PointF(center.X -  ClientSize.Width / 2, center.Y - ClientSize.Height / 2); //左下角像素坐标
+            PointF right_up = new PointF(center.X + ClientSize.Width / 2, center.Y + ClientSize.Height / 2); //右上角像素坐标
 
             int tile_left_down_x = (int)Math.Floor(left_down.X / 256);  //左下角瓦片X坐标
             int tile_left_down_y = (int)Math.Floor(left_down.Y / 256);  //左下角瓦片Y坐标
@@ -932,7 +933,6 @@ namespace BMap.NET.WindowsForm
     /// </summary>
     class MapHelper
     {
-        private const double DISTANCE = 111319.49;  //每（经纬）度距离
         private const double EARTH_RADIUS = 6378.137;//地球半径
         private static double rad(double d)
         {
@@ -995,8 +995,15 @@ namespace BMap.NET.WindowsForm
 
             Point dp = new Point(cp.X + delta_x, cp.Y + delta_y * (-1));  //目标点像素坐标
 
+            double c = (2 * Math.PI * EARTH_RADIUS * 1000) / Math.Pow(2, 18 - zoom);//地图背景宽高
+
+            double y = 2 * Math.PI * (1 - (c/2 - dp.Y) / (c / 2));
+            double z = Math.Pow(Math.E, y);
+            double siny = (z - 1) / (z + 1);
+            
+
             //转换成经纬度坐标 并返回
-            return new LatLngPoint(dp.X / (DISTANCE / Math.Pow(2, 18 - zoom)), dp.Y / (DISTANCE / Math.Pow(2, 18 - zoom)));
+            return new LatLngPoint(dp.X / (c / 360), Math.Asin(siny) * 180 / Math.PI);
         }
         /// <summary>
         /// 根据经纬度坐标计算该点的像素坐标
@@ -1006,10 +1013,15 @@ namespace BMap.NET.WindowsForm
         /// <returns></returns>
         public static Point GetLocationByLatLng(LatLngPoint p, int zoom)
         {
-            // DISTANCE / Math.Pow(2, 18 - zoom) 每度占用像素
-            int x = (int)(p.Lng * (DISTANCE / Math.Pow(2, 18 - zoom)));
-            int y = (int)(p.Lat * (DISTANCE / Math.Pow(2, 18 - zoom)));
-            return new Point(x, y);  //返回像素坐标
+            double c = (2 * Math.PI * EARTH_RADIUS * 1000) / Math.Pow(2, 18 - zoom);//地图背景宽高
+
+            int x = (int)(p.Lng * (c / 360));  //X像素坐标   经度均匀分布
+
+            double siny = Math.Sin(p.Lat * Math.PI / 180);
+            double a = Math.Log((1 + siny) / (1 - siny));
+            int y = (int)(c/2 - (c / 2) * (1 - a / (2 * Math.PI)));  //Y像素坐标
+
+            return new Point(x, y);
         }
         /// <summary>
         /// 创建圆角矩形路径
