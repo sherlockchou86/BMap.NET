@@ -27,6 +27,10 @@ namespace BMap.NET.WindowsForm.BMapElements
             set;
         }
         /// <summary>
+        /// 周边点坐标
+        /// </summary>
+        private List<LatLngPoint> _points_arounds;
+        /// <summary>
         /// 绘制方法
         /// </summary>
         /// <param name="g">画布</param>
@@ -36,6 +40,11 @@ namespace BMap.NET.WindowsForm.BMapElements
         public override void Draw(System.Drawing.Graphics g, LatLngPoint center, int zoom, System.Drawing.Size screen_size)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            if (_points_arounds == null)
+            {
+                _points_arounds = new List<LatLngPoint>();
+
+            }
         }
     }
 }

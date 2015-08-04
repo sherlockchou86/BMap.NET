@@ -41,6 +41,7 @@
             this.txtInput.TabIndex = 0;
             this.txtInput.Text = "停车场";
             this.txtInput.TextChanged += new System.EventHandler(this.txtInput_TextChanged);
+            this.txtInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtInput_KeyDown);
             this.txtInput.Resize += new System.EventHandler(this.txtInput_Resize);
             // 
             // BPlaceBox

@@ -18,9 +18,33 @@ namespace BMap.NET.WindowsForm
     public partial class BPlaceBox : UserControl
     {
         /// <summary>
-        /// 当前城市
+        /// 目标搜索城市
+        /// </summary>
+        private string _city = "";
+        /// <summary>
+        /// 目标搜索区
+        /// </summary>
+        private string _district = "";
+        /// <summary>
+        /// 当前建议搜索城市
         /// </summary>
         public string CurrentCity
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 回车键是否发起搜索
+        /// </summary>
+        public bool Enter2Search
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 与之关联的位置列表控件
+        /// </summary>
+        public BPlacesBoard BPlacesBoard
         {
             get;
             set;
@@ -31,6 +55,30 @@ namespace BMap.NET.WindowsForm
         public BPlaceBox()
         {
             InitializeComponent();
+        }
+        /// <summary>
+        /// 开始搜索位置
+        /// </summary>
+        public void StartSearch()
+        {
+            if (txtInput.Text != "")
+            {
+                ((Action)delegate()
+                {
+                    PlaceService ps = new PlaceService();
+                    JObject places = ps.SearchInCity(_district +  txtInput.Text, _city == "" ? CurrentCity : _city);
+                    if (places != null)
+                    {
+                        this.Invoke((Action)delegate()
+                        {
+                            if (BPlacesBoard != null)  //通知与之关联的位置列表控件
+                            {
+                                //...
+                            }
+                        });
+                    }
+                }).BeginInvoke(null, null);
+            }
         }
         /// <summary>
         /// 建议位置
@@ -54,6 +102,7 @@ namespace BMap.NET.WindowsForm
                     _search = true;
                     return;
                 }
+                _district = ""; _city = "";
                 ((Action)(delegate()  //异步调用API  获取建议位置
                 {
                     PlaceSuggestionService pss = new PlaceSuggestionService();
@@ -82,7 +131,7 @@ namespace BMap.NET.WindowsForm
                                 lbl.TextAlign = ContentAlignment.MiddleLeft;
                                 lbl.Image = Properties.BMap.ico_search;
                                 lbl.ImageAlign = ContentAlignment.MiddleLeft;
-                                lbl.Tag = (string)place["name"];
+                                lbl.Tag = (string)place["name"] + "|" + (string)place["district"] + "|" + (string)place["city"];
                                 lbl.Text = "       " + (string)place["name"] + "   " + (string)place["city"] + "-" + (string)place["district"];   //返回JSON结构请参见百度API文档
                                 _suggestion_places.Controls.Add(lbl);
                             }
@@ -117,8 +166,13 @@ namespace BMap.NET.WindowsForm
         void lbl_Click(object sender, EventArgs e)
         {
             _search = false;
-            txtInput.Text = (sender as Label).Tag.ToString();
+            txtInput.Text = (sender as Label).Tag.ToString().Split('|')[0];  //选择位置
+            _district = (sender as Label).Tag.ToString().Split('|')[1];  //所在区
+            _city = (sender as Label).Tag.ToString().Split('|')[2];  //所在城市
             _suggestion_places.Visible = false;
+
+            if (Enter2Search)
+                StartSearch();
         }
         /// <summary>
         /// 鼠标离开建议位置列表
@@ -155,6 +209,18 @@ namespace BMap.NET.WindowsForm
         private void BPlaceBox_Load(object sender, EventArgs e)
         {
 
+        }
+        /// <summary>
+        /// 回车键 搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && Enter2Search)
+            {
+                StartSearch();
+            }
         }
     }
 }
