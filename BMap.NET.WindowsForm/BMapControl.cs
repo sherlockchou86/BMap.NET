@@ -109,6 +109,10 @@ namespace BMap.NET.WindowsForm
 
         #region 字段
         /// <summary>
+        /// 截图菜单
+        /// </summary>
+        private BScreenshotMenu _bScreenshotMenu = new BScreenshotMenu();
+        /// <summary>
         /// 当前光标
         /// </summary>
         private Cursor _current_cursor_cache = Cursors.Arrow;
@@ -316,17 +320,20 @@ namespace BMap.NET.WindowsForm
             }
             else if (new Rectangle(Width - 384 + 26 * 2, 10, 26, 26).Contains(PointToClient(Cursor.Position))) //截图
             {
-                if (_mouse_type == MouseType.DragScreenshotArea)
+                if (_current_drawing as BScreenShotRectangle == null)
                 {
-                    _mouse_type = MouseType.None;
-                    _current_cursor_cache = Cursor = Cursors.Arrow;
+                    if (_mouse_type == MouseType.DrawScreenshotArea)
+                    {
+                        _mouse_type = MouseType.None;
+                        _current_cursor_cache = Cursor = Cursors.Arrow;
+                    }
+                    else
+                    {
+                        _mouse_type = MouseType.DrawScreenshotArea;
+                        _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                    }
+                    Invalidate();
                 }
-                else
-                {
-                    _mouse_type = MouseType.DrawScreenshotArea;
-                    _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
-                }
-                Invalidate();
                 return;
             }
             else if (new Rectangle(Width - 384 + 26 * 1, 10, 26, 26).Contains(PointToClient(Cursor.Position))) //测量距离
@@ -415,7 +422,17 @@ namespace BMap.NET.WindowsForm
 
             if (_mouse_type == MouseType.None)  //拖拽地图
             {
-                //判断是否拖拽其他物体
+                //判断是否拖拽其他物体 地图优先级最低
+                if (_current_drawing as BScreenShotRectangle != null)  //拖拽截图矩形
+                {
+                    if ((_current_drawing as BScreenShotRectangle).Rect.Contains(e.Location))
+                    {
+                        _mouse_type = MouseType.DragScreenshotArea;
+                        _current_cursor_cache = Cursor = Cursors.SizeAll;
+                        _previous_point_cache = e.Location;
+                        return;
+                    }
+                }
                 _bCityControl.Visible = false;
                 _bLoadMapModeControl.Visible = false;
                 _mouse_type = MouseType.DragMap;
@@ -431,6 +448,28 @@ namespace BMap.NET.WindowsForm
             {
                 LatLngPoint leftTop = MapHelper.GetLatLngByScreenLocation(e.Location, _center, _zoom, ClientSize);
                 _current_drawing = new BRectangle { LeftTop = leftTop, RightBottom = leftTop };
+            }
+            else if (_mouse_type == MouseType.DrawLine)  //绘制直线
+            {
+                LatLngPoint p = MapHelper.GetLatLngByScreenLocation(e.Location, _center, _zoom, ClientSize);
+                if (_current_drawing == null)
+                {
+                    _current_drawing = new BLine { Points = new List<LatLngPoint> { p, p } };
+                }
+                (_current_drawing as BLine).Points.Add(p);
+            }
+            else if(_mouse_type == MouseType.DrawPolygon)  //绘制多边形
+            {
+                LatLngPoint p = MapHelper.GetLatLngByScreenLocation(e.Location, _center, _zoom, ClientSize);
+                if (_current_drawing == null)
+                {
+                    _current_drawing = new BPolygon { Points = new List<LatLngPoint> { p, p } };
+                }
+                (_current_drawing as BPolygon).Points.Add(p);
+            }
+            else if (_mouse_type == MouseType.DrawScreenshotArea)  //绘制截图区域
+            {
+                _current_drawing = new BScreenShotRectangle { LeftTop = e.Location, Width = 0, Height = 0 };
             }
         }
         /// <summary>
@@ -536,6 +575,18 @@ namespace BMap.NET.WindowsForm
                 _previous_point_cache = e.Location;
                 Locate(false);
             }
+            else if (_mouse_type == MouseType.DragScreenshotArea)
+            {
+                int deltax = e.Location.X - _previous_point_cache.X;
+                int deltay = e.Location.Y - _previous_point_cache.Y;
+                BScreenShotRectangle r = _current_drawing as BScreenShotRectangle;
+                if (r != null)
+                {
+                    r.LeftTop = new Point(r.LeftTop.X + deltax, r.LeftTop.Y + deltay);
+                    _previous_point_cache = e.Location;
+                    _bScreenshotMenu.Location = new Point(r.LeftTop.X + r.Width - _bScreenshotMenu.Width, r.LeftTop.Y + r.Height + 2);
+                }
+            }
             else if (_mouse_type == MouseType.DrawCircle && _current_drawing as BCircle != null)  //绘制椭圆
             {
                 (_current_drawing as BCircle).RightBottom = MapHelper.GetLatLngByScreenLocation(e.Location, _center, _zoom, ClientSize);
@@ -543,6 +594,19 @@ namespace BMap.NET.WindowsForm
             else if (_mouse_type == MouseType.DrawRectange && _current_drawing as BRectangle != null) //绘制矩形
             {
                 (_current_drawing as BRectangle).RightBottom = MapHelper.GetLatLngByScreenLocation(e.Location, _center, _zoom, ClientSize);
+            }
+            else if (_mouse_type == MouseType.DrawLine && _current_drawing as BLine != null)  //绘制线条
+            {
+                (_current_drawing as BLine).UpdateTheEnd(MapHelper.GetLatLngByScreenLocation(e.Location, _center, _zoom, ClientSize));
+            }
+            else if (_mouse_type == MouseType.DrawPolygon && _current_drawing as BPolygon != null) //绘制多边形
+            {
+                (_current_drawing as BPolygon).UpdateTheEnd(MapHelper.GetLatLngByScreenLocation(e.Location, _center, _zoom, ClientSize));
+            }
+            else if (_mouse_type == MouseType.DrawScreenshotArea && _current_drawing as BScreenShotRectangle != null) //绘制截图矩形
+            {
+                (_current_drawing as BScreenShotRectangle).Width = e.Location.X - (_current_drawing as BScreenShotRectangle).LeftTop.X;
+                (_current_drawing as BScreenShotRectangle).Height = e.Location.Y - (_current_drawing as BScreenShotRectangle).LeftTop.Y;
             }
             Invalidate();
         }
@@ -553,24 +617,37 @@ namespace BMap.NET.WindowsForm
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
-            if (_mouse_type == MouseType.DragMap)
+            if (_mouse_type == MouseType.DragMap)  //拖动地图 鼠标弹起
             {
                 _mouse_type = MouseType.None;
                 _current_cursor_cache = Cursor = Cursors.Arrow;
             }
-            else if (_mouse_type == MouseType.DrawCircle && _current_drawing as BCircle != null)
+            else if (_mouse_type == MouseType.DragScreenshotArea)  //拖拽截图矩形
+            {
+                _mouse_type = MouseType.None;
+                _current_cursor_cache = Cursor = Cursors.Arrow;
+            }
+            else if (_mouse_type == MouseType.DrawCircle && _current_drawing as BCircle != null)  //绘制椭圆鼠标弹起
             {
                 _mouse_type = MouseType.None;
                 _current_cursor_cache = Cursor = Cursors.Arrow;
                 _drawingObjects.Add(_drawingObjects.Count + 1, _current_drawing);
                 _current_drawing = null;
             }
-            else if (_mouse_type == MouseType.DrawRectange && _current_drawing as BRectangle != null)
+            else if (_mouse_type == MouseType.DrawRectange && _current_drawing as BRectangle != null)  //绘制矩形鼠标弹起
             {
                 _mouse_type = MouseType.None;
                 _current_cursor_cache = Cursor = Cursors.Arrow;
                 _drawingObjects.Add(_drawingObjects.Count + 1, _current_drawing);
                 _current_drawing = null;
+            }
+            else if (_mouse_type == MouseType.DrawScreenshotArea && _current_drawing as BScreenShotRectangle != null)  //绘制截图矩形鼠标弹起
+            {
+                _current_cursor_cache = Cursor = Cursors.Arrow;
+                _mouse_type = MouseType.None;
+                BScreenShotRectangle r = _current_drawing as BScreenShotRectangle;
+                _bScreenshotMenu.Location = new Point(r.LeftTop.X + r.Width - _bScreenshotMenu.Width, r.LeftTop.Y + r.Height + 2);
+                _bScreenshotMenu.Visible = true;
             }
             Invalidate();
         }
@@ -608,12 +685,34 @@ namespace BMap.NET.WindowsForm
             Invalidate();
         }
         /// <summary>
-        /// 
+        /// 鼠标停留
         /// </summary>
         /// <param name="e"></param>
         protected override void OnMouseHover(EventArgs e)
         {
             base.OnMouseHover(e);
+        }
+        /// <summary>
+        /// 鼠标双击
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            base.OnMouseDoubleClick(e);
+            if (_mouse_type == MouseType.DrawLine)  //绘制线条结束
+            {
+                _mouse_type = MouseType.None;
+                _current_cursor_cache = Cursor = Cursors.Arrow;
+                _drawingObjects.Add(_drawingObjects.Count + 1, _current_drawing);
+                _current_drawing = null;
+            }
+            else if (_mouse_type == MouseType.DrawPolygon) //绘制多边形结束
+            {
+                _mouse_type = MouseType.None;
+                _current_cursor_cache = Cursor = Cursors.Arrow;
+                _drawingObjects.Add(_drawingObjects.Count + 1, _current_drawing);
+                _current_drawing = null;
+            }
         }
         #endregion
 
@@ -659,6 +758,11 @@ namespace BMap.NET.WindowsForm
                 _toolTip.Padding = new System.Windows.Forms.Padding(1);
                 Controls.Add(_toolTip);
                 _toolTip.BringToFront();
+                //截图菜单
+                _bScreenshotMenu.Visible = false;
+                Controls.Add(_bScreenshotMenu);
+                _bScreenshotMenu.ScreenshotDone += new ScreenshotDoneEventHandler(_bScreenshotMenu_ScreenshotDone);
+                _bScreenshotMenu.BringToFront();
             }
         }
         /// <summary>
@@ -683,19 +787,27 @@ namespace BMap.NET.WindowsForm
                 }
                 else  //定位地图中心点
                 {
-                    if (_zoom <= 10)
+                    GeocodingService gs = new GeocodingService();
+                    JObject _location = gs.DeGeocoding(_center.Lat + "," + _center.Lng);
+                    if (_location != null)
                     {
-                        _currentCity = "中国";
-                    }
-                    else
-                    {
-                        GeocodingService gs = new GeocodingService();
-                        JObject _location = gs.DeGeocoding(_center.Lat + "," + _center.Lng);
-                        if (_location != null)
+                        if (_zoom <= 8) //定位到国家
+                        {
+                            _currentCity = (string)(_location["result"]["addressComponent"]["country"]);  //返回JSON结构请参见百度API文档
+                        }
+                        else if (_zoom <= 10) //定位到省份
+                        {
+                            _currentCity = (string)(_location["result"]["addressComponent"]["province"]);  //返回JSON结构请参见百度API文档
+                        }
+                        else if (_zoom <= 12) //定位到城市
                         {
                             _currentCity = (string)(_location["result"]["addressComponent"]["city"]);  //返回JSON结构请参见百度API文档
                         }
-                    }
+                        else  //定位到县区
+                        {
+                            _currentCity = (string)(_location["result"]["addressComponent"]["district"]);  //返回JSON结构请参见百度API文档
+                        }
+                    }                   
                 }
                 this.Invoke((Action)delegate()
                 {
@@ -997,6 +1109,36 @@ namespace BMap.NET.WindowsForm
         void _bLoadMapModeControl_LoadMapModeChanged(LoadMapMode loadMode)
         {
             LoadMode = loadMode;
+        }
+        /// <summary>
+        /// 截图完成
+        /// </summary>
+        /// <param name="saved"></param>
+        void _bScreenshotMenu_ScreenshotDone(bool saved)
+        {
+            if (saved) //保存
+            {
+                using (SaveFileDialog sfd = new SaveFileDialog())
+                {
+                    sfd.Filter = "JPEG文件(*.jpeg,jpg)|*.JPEG;*.JPG";
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        BScreenShotRectangle r = _current_drawing as BScreenShotRectangle;
+                        _current_drawing = null;
+                        _bScreenshotMenu.Visible = false;
+                        Bitmap b = new Bitmap(Width, Height);
+                        DrawToBitmap(b, new Rectangle(0, 0, Width, Height));
+                        Bitmap image2save = new Bitmap(r.Width, r.Height);
+                        Graphics.FromImage(image2save).DrawImage(b, new Rectangle(0, 0, r.Width, r.Height), r.Rect, GraphicsUnit.Pixel);
+                        image2save.Save(sfd.FileName);
+                    }
+                }
+            }
+            else
+            {
+                _current_drawing = null;
+                _bScreenshotMenu.Visible = false;
+            }
         }
         #endregion
     }

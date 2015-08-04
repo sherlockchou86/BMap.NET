@@ -42,15 +42,16 @@ namespace BMap.NET.WindowsForm.DrawingObjects
 
             int width = Math.Abs(theScreenRightBottom.X - theScreenLeftTop.X);
             int height = Math.Abs(theScreenRightBottom.Y - theScreenLeftTop.Y);
-            if (new Rectangle(new Point(0, 0), screen_size).IntersectsWith(new Rectangle(theScreenLeftTop, new Size(width, height))))
+            Rectangle r = new Rectangle(Math.Min(theScreenLeftTop.X, theScreenRightBottom.X), Math.Min(theScreenLeftTop.Y, theScreenRightBottom.Y), width, height);
+            if (new Rectangle(new Point(0, 0), screen_size).IntersectsWith(r))
             {
                 using (SolidBrush sb = new SolidBrush(Color.FromArgb(30, Color.Blue)))
                 {
-                    g.FillRectangle(sb, new Rectangle(theScreenLeftTop, new Size(width, height)));
+                    g.FillRectangle(sb, r);
                 }
                 using (Pen pen = new Pen(Color.Blue, 4))
                 {
-                    g.DrawRectangle(pen, new Rectangle(theScreenLeftTop, new Size(width, height)));
+                    g.DrawRectangle(pen, r);
                 }
             }
         }

@@ -36,6 +36,16 @@ namespace BMap.NET.WindowsForm.DrawingObjects
             get;
         }
         /// <summary>
+        /// 表示屏幕区域
+        /// </summary>
+        public Rectangle Rect
+        {
+            get
+            {
+                return new Rectangle(LeftTop, new Size(Width, Height));
+            }
+        }
+        /// <summary>
         /// 绘制方法
         /// </summary>
         /// <param name="g"></param>
@@ -44,6 +54,7 @@ namespace BMap.NET.WindowsForm.DrawingObjects
         /// <param name="screen_size"></param>
         public override void Draw(Graphics g, LatLngPoint center, int zoom, Size screen_size)
         {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             using (SolidBrush sb = new SolidBrush(Color.FromArgb(100, Color.White)))
             {
                 g.FillRectangle(sb, new Rectangle(LeftTop, new Size(Width, Height)));
@@ -55,19 +66,19 @@ namespace BMap.NET.WindowsForm.DrawingObjects
             using (SolidBrush sb = new SolidBrush(Color.Black))
             {
                 //移动柄
-                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 2, LeftTop.Y - 2), new Size(4, 4)));
-                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 2 + Width / 2, LeftTop.Y - 2), new Size(4, 4)));
-                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 2 + Width, LeftTop.Y - 2), new Size(4, 4)));
-                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 2 + Width, LeftTop.Y - 2 + Height / 2), new Size(4, 4)));
-                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 2 + Width, LeftTop.Y - 2 + Height), new Size(4, 4)));
-                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 2 + Width / 2, LeftTop.Y - 2 + Height), new Size(4, 4)));
-                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 2, LeftTop.Y - 2 + Height), new Size(4, 4)));
-                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 2, LeftTop.Y - 2 + Height / 2), new Size(4, 4)));
+                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 3, LeftTop.Y - 3), new Size(6, 6)));
+                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 3 + Width / 2, LeftTop.Y - 3), new Size(6, 6)));
+                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 3 + Width, LeftTop.Y - 3), new Size(6, 6)));
+                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 3 + Width, LeftTop.Y - 3 + Height / 2), new Size(6, 6)));
+                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 3 + Width, LeftTop.Y - 3 + Height), new Size(6, 6)));
+                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 3 + Width / 2, LeftTop.Y - 3 + Height), new Size(6, 6)));
+                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 3, LeftTop.Y - 3 + Height), new Size(6, 6)));
+                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 3, LeftTop.Y - 3 + Height / 2), new Size(6, 6)));
                 //高宽
-                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 2, LeftTop.Y - 20), new Size(80, 20)));
+                g.FillRectangle(sb, new Rectangle(new Point(LeftTop.X - 2, LeftTop.Y - 23), new Size(60, 18)));
                 using (Font f = new Font("微软雅黑", 9))
                 {
-                    g.DrawString(Width + "×" + Height, f, sb, new PointF(LeftTop.X - 2, LeftTop.Y - 16));
+                    g.DrawString(Width + "×" + Height, f, Brushes.White, new PointF(LeftTop.X - 1, LeftTop.Y - 21));
                 }
             }
         }

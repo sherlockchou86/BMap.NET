@@ -41,12 +41,13 @@ namespace BMap.NET.WindowsForm.DrawingObjects
         {
             if (Points != null && Points.Count >= 2)
             {
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                 List<Point> l = new List<Point>();
                 foreach (LatLngPoint p in Points)
                 {
                     l.Add(MapHelper.GetScreenLocationByLatLng(p, center, zoom, screen_size));
                 }
-                using (Pen pen = new Pen(Color.Blue, 2))
+                using (Pen pen = new Pen(Color.Blue, 4))
                 {
                     for (int i = 0; i < l.Count - 1; ++i)
                     {

@@ -151,6 +151,9 @@
     <EmbeddedResource Include="BPlaceBox.resx">
       <DependentUpon>BPlaceBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BScreenshotMenu.resx">
+      <DependentUpon>BScreenshotMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FunctionalControls\CityList.resx">
       <DependentUpon>CityList.cs</DependentUpon>
     </EmbeddedResource>
