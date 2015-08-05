@@ -47,7 +47,7 @@ namespace BMap.NET.WindowsForm.DrawingObjects
                 {
                     l.Add(MapHelper.GetScreenLocationByLatLng(p, center, zoom, screen_size));
                 }
-                using (Pen pen = new Pen(Color.Blue, 4))
+                using (Pen pen = new Pen(Color.FromArgb(150,Color.Blue), 4))
                 {
                     for (int i = 0; i < l.Count - 1; ++i)
                     {

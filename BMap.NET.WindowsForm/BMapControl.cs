@@ -109,6 +109,10 @@ namespace BMap.NET.WindowsForm
 
         #region 字段
         /// <summary>
+        /// 快速搜索控件
+        /// </summary>
+        private BQuickSearchControl _bQuickSearchControl = new BQuickSearchControl();
+        /// <summary>
         /// 截图菜单
         /// </summary>
         private BScreenshotMenu _bScreenshotMenu = new BScreenshotMenu();
@@ -220,13 +224,14 @@ namespace BMap.NET.WindowsForm
                 DrawDrawingObjects(e.Graphics);
                 //鼠标定位效果
                 DrawCursor(e.Graphics);
+                //地图元素
+                DrawMapElements(e.Graphics);
                 //地图信息
                 DrawMapInfo(e.Graphics);
                 //当前城市
                 DrawCurrentCity(e.Graphics);
                 //工具栏
                 DrawToolsBar(e.Graphics);
-                
             }
         }
         /// <summary>
@@ -254,6 +259,8 @@ namespace BMap.NET.WindowsForm
                 {
                     _mouse_type = MouseType.DrawPolygon;
                     _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                    _current_drawing = null;
+                    _bScreenshotMenu.Visible = false;
                 }
                 Invalidate();
                 return;
@@ -269,6 +276,8 @@ namespace BMap.NET.WindowsForm
                 {
                     _mouse_type = MouseType.DrawLine;
                     _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                    _current_drawing = null;
+                    _bScreenshotMenu.Visible = false;
                 }
                 Invalidate();
                 return;
@@ -284,6 +293,8 @@ namespace BMap.NET.WindowsForm
                 {
                     _mouse_type = MouseType.DrawCircle;                  
                     _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                    _current_drawing = null;
+                    _bScreenshotMenu.Visible = false;
                 }
                 Invalidate();
                 return;
@@ -299,6 +310,8 @@ namespace BMap.NET.WindowsForm
                 {
                     _mouse_type = MouseType.DrawRectange;
                     _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                    _current_drawing = null;
+                    _bScreenshotMenu.Visible = false;
                 }
                 Invalidate();
                 return;
@@ -314,6 +327,8 @@ namespace BMap.NET.WindowsForm
                 {
                     _mouse_type = MouseType.DrawMarker;
                     _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                    _current_drawing = null;
+                    _bScreenshotMenu.Visible = false;
                 }
                 Invalidate();
                 return;
@@ -347,23 +362,35 @@ namespace BMap.NET.WindowsForm
                 {
                     _mouse_type = MouseType.DrawDistance;
                     _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                    _current_drawing = null;
+                    _bScreenshotMenu.Visible = false;
                 }
                 Invalidate();
                 return;
             }
             else if (new Rectangle(Width - 384, 10, 26, 26).Contains(PointToClient(Cursor.Position))) //矩形区域搜索
             {
-                if (_mouse_type == MouseType.DrawBound)
+                if (_b_bound == null)
                 {
-                    _mouse_type = MouseType.None;
-                    _current_cursor_cache = Cursor = Cursors.Arrow;
+                    if (_mouse_type == MouseType.DrawBound)
+                    {
+                        _mouse_type = MouseType.None;
+                        _current_cursor_cache = Cursor = Cursors.Arrow;
+                    }
+                    else
+                    {
+                        _mouse_type = MouseType.DrawBound;
+                        _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                        _current_drawing = null;
+                        _bScreenshotMenu.Visible = false;
+                    }
+                    Invalidate();
                 }
                 else
                 {
-                    _mouse_type = MouseType.DrawBound;
-                    _current_cursor_cache = Cursor = Cursors.Cross;  //特定光标
+                    _b_bound = null;
+                    _bQuickSearchControl.Visible = false;
                 }
-                Invalidate();
                 return;
             }
             if (new Rectangle(10, 10, 90, 25).Contains(e.Location))  //打开城市切换窗体
@@ -471,6 +498,11 @@ namespace BMap.NET.WindowsForm
             {
                 _current_drawing = new BScreenShotRectangle { LeftTop = e.Location, Width = 0, Height = 0 };
             }
+            else if (_mouse_type == MouseType.DrawBound)  //矩形搜索开始
+            {
+                LatLngPoint leftTop = MapHelper.GetLatLngByScreenLocation(e.Location, _center, _zoom, ClientSize);
+                _b_bound = new BBound { LeftTop = leftTop, RightBottom = leftTop };
+            }
         }
         /// <summary>
         /// 鼠标在地图上移动
@@ -574,6 +606,13 @@ namespace BMap.NET.WindowsForm
                 Center = llp;
                 _previous_point_cache = e.Location;
                 Locate(false);
+                if (_bQuickSearchControl.Visible)
+                {
+                    Point p1 = MapHelper.GetScreenLocationByLatLng(_b_bound.LeftTop, _center, _zoom, ClientSize);
+                    Point p2 = MapHelper.GetScreenLocationByLatLng(_b_bound.RightBottom, _center, _zoom, ClientSize);
+                    Point p = p1.Y > p2.Y ? p1 : p2;
+                    _bQuickSearchControl.Location = new Point(p.X - _bQuickSearchControl.Width, p.Y + 2);
+                }
             }
             else if (_mouse_type == MouseType.DragScreenshotArea)
             {
@@ -584,7 +623,7 @@ namespace BMap.NET.WindowsForm
                 {
                     r.LeftTop = new Point(r.LeftTop.X + deltax, r.LeftTop.Y + deltay);
                     _previous_point_cache = e.Location;
-                    _bScreenshotMenu.Location = new Point(r.LeftTop.X + r.Width - _bScreenshotMenu.Width, r.LeftTop.Y + r.Height + 2);
+                    _bScreenshotMenu.Location = new Point(r.LeftTop.X + r.Width - _bScreenshotMenu.Width, r.LeftTop.Y + r.Height + 4);
                 }
             }
             else if (_mouse_type == MouseType.DrawCircle && _current_drawing as BCircle != null)  //绘制椭圆
@@ -607,6 +646,10 @@ namespace BMap.NET.WindowsForm
             {
                 (_current_drawing as BScreenShotRectangle).Width = e.Location.X - (_current_drawing as BScreenShotRectangle).LeftTop.X;
                 (_current_drawing as BScreenShotRectangle).Height = e.Location.Y - (_current_drawing as BScreenShotRectangle).LeftTop.Y;
+            }
+            else if (_mouse_type == MouseType.DrawBound && _b_bound != null)  //矩形搜索区域
+            {
+                (_b_bound as BBound).RightBottom = MapHelper.GetLatLngByScreenLocation(e.Location, _center, _zoom, ClientSize);
             }
             Invalidate();
         }
@@ -646,8 +689,18 @@ namespace BMap.NET.WindowsForm
                 _current_cursor_cache = Cursor = Cursors.Arrow;
                 _mouse_type = MouseType.None;
                 BScreenShotRectangle r = _current_drawing as BScreenShotRectangle;
-                _bScreenshotMenu.Location = new Point(r.LeftTop.X + r.Width - _bScreenshotMenu.Width, r.LeftTop.Y + r.Height + 2);
+                _bScreenshotMenu.Location = new Point(r.LeftTop.X + r.Width - _bScreenshotMenu.Width, r.LeftTop.Y + r.Height + 4);
                 _bScreenshotMenu.Visible = true;
+            }
+            else if (_mouse_type == MouseType.DrawBound && _b_bound != null)
+            {
+                _current_cursor_cache = Cursor = Cursors.Arrow;
+                _mouse_type = MouseType.None;
+                Point p1 = MapHelper.GetScreenLocationByLatLng(_b_bound.LeftTop, _center, _zoom, ClientSize);
+                Point p2 = MapHelper.GetScreenLocationByLatLng(_b_bound.RightBottom, _center, _zoom, ClientSize);
+                Point p = p1.Y > p2.Y ? p1 : p2;
+                _bQuickSearchControl.Location = new Point(p.X - _bQuickSearchControl.Width, p.Y + 2);
+                _bQuickSearchControl.Visible = true;
             }
             Invalidate();
         }
@@ -664,6 +717,13 @@ namespace BMap.NET.WindowsForm
             {
                 Zoom = z;
                 Locate(false);
+                if (_bQuickSearchControl.Visible)
+                {
+                    Point p1 = MapHelper.GetScreenLocationByLatLng(_b_bound.LeftTop, _center, _zoom, ClientSize);
+                    Point p2 = MapHelper.GetScreenLocationByLatLng(_b_bound.RightBottom, _center, _zoom, ClientSize);
+                    Point p = p1.Y > p2.Y ? p1 : p2;
+                    _bQuickSearchControl.Location = new Point(p.X - _bQuickSearchControl.Width, p.Y + 2);
+                }
             }
         }
         /// <summary>
@@ -763,6 +823,12 @@ namespace BMap.NET.WindowsForm
                 Controls.Add(_bScreenshotMenu);
                 _bScreenshotMenu.ScreenshotDone += new ScreenshotDoneEventHandler(_bScreenshotMenu_ScreenshotDone);
                 _bScreenshotMenu.BringToFront();
+                //快速搜索控件
+                _bQuickSearchControl.Visible = false;
+                Controls.Add(_bQuickSearchControl);
+                _bQuickSearchControl.QuickSearch += new QuickSearchEventHandler(_bQuickSearchControl_QuickSearch);
+                _bQuickSearchControl.VisibleChanged += new EventHandler(_bQuickSearchControl_VisibleChanged);
+                _bQuickSearchControl.BringToFront();
             }
         }
         /// <summary>
@@ -1049,6 +1115,17 @@ namespace BMap.NET.WindowsForm
                 p.Value.Draw(g, _center, _zoom, ClientSize);
             }
         }
+        /// <summary>
+        /// 绘制地图元素
+        /// </summary>
+        /// <param name="g"></param>
+        private void DrawMapElements(Graphics g)
+        {
+            if (_b_bound != null)  //矩形搜索区域
+            {
+                _b_bound.Draw(g, _center, _zoom, ClientSize);
+            }
+        }
         #endregion
 
         #region 公开方法
@@ -1140,6 +1217,27 @@ namespace BMap.NET.WindowsForm
                 _bScreenshotMenu.Visible = false;
             }
         }
+        /// <summary>
+        /// 矩形区域搜索
+        /// </summary>
+        /// <param name="searchName"></param>
+        void _bQuickSearchControl_QuickSearch(string searchName)
+        {
+            _bQuickSearchControl.Visible = false;
+        }
+        /// <summary>
+        /// 矩形搜索框关闭
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void _bQuickSearchControl_VisibleChanged(object sender, EventArgs e)
+        {
+            if (!_bQuickSearchControl.Visible)
+            {
+                _b_bound = null;
+            }
+        }
+
         #endregion
     }
     /// <summary>

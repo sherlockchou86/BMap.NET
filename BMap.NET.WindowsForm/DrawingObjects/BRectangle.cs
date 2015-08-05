@@ -49,7 +49,7 @@ namespace BMap.NET.WindowsForm.DrawingObjects
                 {
                     g.FillRectangle(sb, r);
                 }
-                using (Pen pen = new Pen(Color.Blue, 4))
+                using (Pen pen = new Pen(Color.FromArgb(150,Color.Blue), 4))
                 {
                     g.DrawRectangle(pen, r);
                 }

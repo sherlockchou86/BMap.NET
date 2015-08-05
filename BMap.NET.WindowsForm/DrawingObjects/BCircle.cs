@@ -48,7 +48,7 @@ namespace BMap.NET.WindowsForm.DrawingObjects
                 {
                     g.FillEllipse(sb, new Rectangle(theScreenCenter.X - width / 2, theScreenCenter.Y - height / 2, width, height));
                 }
-                using (Pen pen = new Pen(Color.Blue, 4))
+                using (Pen pen = new Pen(Color.FromArgb(150,Color.Blue), 4))
                 {
                     g.DrawEllipse(pen, new Rectangle(theScreenCenter.X - width / 2, theScreenCenter.Y - height / 2, width, height));
                 }

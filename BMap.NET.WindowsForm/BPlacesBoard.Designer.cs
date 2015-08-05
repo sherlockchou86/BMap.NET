@@ -28,10 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.flpPlaces = new System.Windows.Forms.FlowLayoutPanel();
+            this.SuspendLayout();
+            // 
+            // flpPlaces
+            // 
+            this.flpPlaces.AutoScroll = true;
+            this.flpPlaces.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpPlaces.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpPlaces.Location = new System.Drawing.Point(0, 0);
+            this.flpPlaces.Name = "flpPlaces";
+            this.flpPlaces.Size = new System.Drawing.Size(269, 369);
+            this.flpPlaces.TabIndex = 0;
+            this.flpPlaces.WrapContents = false;
+            // 
+            // BPlacesBoard
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.flpPlaces);
+            this.Name = "BPlacesBoard";
+            this.Size = new System.Drawing.Size(269, 369);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.FlowLayoutPanel flpPlaces;
     }
 }

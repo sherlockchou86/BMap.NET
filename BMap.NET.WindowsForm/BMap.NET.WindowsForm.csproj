@@ -70,11 +70,23 @@
     <Compile Include="BMapControl.Designer.cs">
       <DependentUpon>BMapControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="BPlaceItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BPlaceItem.Designer.cs">
+      <DependentUpon>BPlaceItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="BPOITipEditorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="BPOITipEditorControl.Designer.cs">
       <DependentUpon>BPOITipEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BQuickSearchBoardcs.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BQuickSearchBoardcs.Designer.cs">
+      <DependentUpon>BQuickSearchBoardcs.cs</DependentUpon>
     </Compile>
     <Compile Include="BQuickSearchControl.cs">
       <SubType>UserControl</SubType>
@@ -151,6 +163,18 @@
     <EmbeddedResource Include="BPlaceBox.resx">
       <DependentUpon>BPlaceBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BPlaceItem.resx">
+      <DependentUpon>BPlaceItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BPlacesBoard.resx">
+      <DependentUpon>BPlacesBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BQuickSearchBoardcs.resx">
+      <DependentUpon>BQuickSearchBoardcs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BQuickSearchControl.resx">
+      <DependentUpon>BQuickSearchControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BScreenshotMenu.resx">
       <DependentUpon>BScreenshotMenu.cs</DependentUpon>
     </EmbeddedResource>
@@ -174,6 +198,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="libs\Newtonsoft.Json.dll" />
+    <None Include="Resources\ico_red_point_big.png" />
+    <None Include="Resources\ico_red_point_small.png" />
+    <None Include="Resources\ico_blue_point_big.png" />
+    <None Include="Resources\ico_blue_point_small.png" />
+    <None Include="Resources\ico_source.png" />
+    <None Include="Resources\ico_destination.png" />
+    <None Include="Resources\ico_search_eat.png" />
+    <None Include="Resources\ico_search_hotel.png" />
+    <None Include="Resources\ico_search_cinema.png" />
+    <None Include="Resources\ico_travel.png" />
+    <None Include="Resources\ico_leisure.png" />
+    <None Include="Resources\ico_life.png" />
+    <None Include="Resources\ico_hotel.png" />
+    <None Include="Resources\ico_eat.png" />
+    <None Include="Resources\ico_service.png" />
+    <None Include="Resources\ico_happy.png" />
     <None Include="Resources\ico_cursor_locate.png" />
     <None Include="Resources\ico_setmarker.png" />
     <None Include="Resources\ico_search_in_bound.png" />

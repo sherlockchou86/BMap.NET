@@ -23,21 +23,5 @@ namespace BMap.NET.WinformDemo
         {
 
         }
-
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (radioButton1.Checked)
-            {
-                bMapControl1.Mode = MapMode.Normal;
-            }
-            if (radioButton2.Checked)
-            {
-                bMapControl1.Mode = MapMode.Satellite;
-            }
-            if (radioButton3.Checked)
-            {
-                bMapControl1.Mode = MapMode.Sate_RoadNet;
-            }
-        }
     }
 }

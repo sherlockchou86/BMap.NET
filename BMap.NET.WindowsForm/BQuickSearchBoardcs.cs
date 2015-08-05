@@ -10,41 +10,50 @@ using System.Windows.Forms;
 namespace BMap.NET.WindowsForm
 {
     /// <summary>
-    /// 快速搜索控件
+    /// 快速搜索面板
     /// </summary>
-    partial class BQuickSearchControl : UserControl
+    partial class BQuickSearchBoardcs : UserControl
     {
         public event QuickSearchEventHandler QuickSearch;
-        public BQuickSearchControl()
+        public BQuickSearchBoardcs()
         {
             InitializeComponent();
-        }
-        /// <summary>
-        /// 关闭
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            Visible = false;
         }
         /// <summary>
         /// 点击搜索
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void linkLabel2_Click(object sender, EventArgs e)
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
-            string search_name = (sender as LinkLabel).Text;
             if (QuickSearch != null)
             {
-                QuickSearch(search_name);
+                QuickSearch((sender as PictureBox).Tag.ToString());
+            }
+        }
+        /// <summary>
+        /// 点击搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void linkLabel4_Click(object sender, EventArgs e)
+        {
+            if (QuickSearch != null)
+            {
+                QuickSearch((sender as LinkLabel).Text);
+            }
+        }
+        /// <summary>
+        /// 点击搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void linkLabel1_Click(object sender, EventArgs e)
+        {
+            if (QuickSearch != null)
+            {
+                QuickSearch((sender as LinkLabel).Tag.ToString());
             }
         }
     }
-    /// <summary>
-    /// 表示处理快速搜索事件的方法
-    /// </summary>
-    /// <param name="searchName"></param>
-    delegate void QuickSearchEventHandler(string searchName);
 }
