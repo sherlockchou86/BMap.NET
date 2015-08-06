@@ -105,6 +105,14 @@ namespace BMap.NET.WindowsForm
             get;
             set;
         }
+        /// <summary>
+        /// 与之关联的位置列表控件
+        /// </summary>
+        public BPlacesBoard BPlacesBoard
+        {
+            set;
+            get;
+        }
         #endregion
 
         #region 字段
@@ -882,6 +890,10 @@ namespace BMap.NET.WindowsForm
                     {
                         BPlaceBox.CurrentCity = _currentCity;
                     }
+                    if (BPlacesBoard != null)
+                    {
+                        BPlacesBoard.CurrentCity = _currentCity;
+                    }
                 });
             })).BeginInvoke(null, null);
         }
@@ -1125,10 +1137,34 @@ namespace BMap.NET.WindowsForm
             {
                 _b_bound.Draw(g, _center, _zoom, ClientSize);
             }
+            foreach(KeyValuePair<string,BPOI> p in _pois)  //信息点
+            {
+                p.Value.Draw(g, _center, _zoom, ClientSize);
+            }
         }
         #endregion
 
         #region 公开方法
+        /// <summary>
+        /// 向地图中增加位置POI
+        /// </summary>
+        /// <param name="places"></param>
+        public void AddPlaces(JToken places)
+        {
+            _pois.Clear();
+            int index = 0;
+            foreach (JObject place in places)
+            {
+                if (place["location"]["lng"] != null && (string)place["location"]["lng"] != "")
+                {
+                    LatLngPoint location = new LatLngPoint(double.Parse((string)place["location"]["lng"]), double.Parse((string)place["location"]["lat"]));
+                    BPOI poi = new BPOI { DataSource = place, Index = index, Selected = false, Location = location };
+                    _pois.Add((string)place["uid"], poi);
+                }
+                index++;
+            }
+            Invalidate();
+        }
         #endregion
 
         #region 事件处理方法
@@ -1143,6 +1179,10 @@ namespace BMap.NET.WindowsForm
             if (BPlaceBox != null)  //关联的位置输入框
             {
                 BPlaceBox.CurrentCity = cityName;
+            }
+            if (BPlacesBoard != null)  //关联的位置列表控件
+            {
+                BPlacesBoard.CurrentCity = cityName;
             }
             Invalidate();
             ((Action)delegate()  //定位到指定城市

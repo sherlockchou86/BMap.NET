@@ -73,7 +73,7 @@ namespace BMap.NET.WindowsForm
                         {
                             if (BPlacesBoard != null)  //通知与之关联的位置列表控件
                             {
-                                //...
+                                BPlacesBoard.AddPlaces(places["results"]);
                             }
                         });
                     }
@@ -144,6 +144,7 @@ namespace BMap.NET.WindowsForm
                                     Parent.Controls.Add(_suggestion_places);
                                 }
                                 _suggestion_places.Visible = true;
+                                _suggestion_places.BringToFront();
                             }
                             else
                             {
@@ -219,6 +220,7 @@ namespace BMap.NET.WindowsForm
         {
             if (e.KeyCode == Keys.Enter && Enter2Search)
             {
+                _suggestion_places.Visible = false;
                 StartSearch();
             }
         }

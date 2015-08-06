@@ -39,6 +39,7 @@
             this.缩小ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.清空所有绘图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.清空所有标记ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cm_popup.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,9 +54,10 @@
             this.放大ToolStripMenuItem,
             this.缩小ToolStripMenuItem,
             this.toolStripSeparator2,
-            this.清空所有绘图ToolStripMenuItem});
+            this.清空所有绘图ToolStripMenuItem,
+            this.清空所有标记ToolStripMenuItem});
             this.cm_popup.Name = "cm_popup";
-            this.cm_popup.Size = new System.Drawing.Size(153, 192);
+            this.cm_popup.Size = new System.Drawing.Size(153, 214);
             // 
             // 这是哪里ToolStripMenuItem
             // 
@@ -109,6 +111,12 @@
             this.清空所有绘图ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.清空所有绘图ToolStripMenuItem.Text = "清空所有绘图";
             // 
+            // 清空所有标记ToolStripMenuItem
+            // 
+            this.清空所有标记ToolStripMenuItem.Name = "清空所有标记ToolStripMenuItem";
+            this.清空所有标记ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.清空所有标记ToolStripMenuItem.Text = "清空所有标记";
+            // 
             // BMapControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -132,5 +140,6 @@
         private System.Windows.Forms.ToolStripMenuItem 缩小ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem 清空所有绘图ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 清空所有标记ToolStripMenuItem;
     }
 }

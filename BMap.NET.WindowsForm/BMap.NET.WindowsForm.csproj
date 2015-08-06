@@ -131,6 +131,9 @@
     <Compile Include="DrawingObjects\BRectangle.cs" />
     <Compile Include="DrawingObjects\BScreenShotRectangle.cs" />
     <Compile Include="DrawingObjects\DrawingObject.cs" />
+    <Compile Include="FunctionalControls\BTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FunctionalControls\CityList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -153,6 +156,9 @@
   <ItemGroup>
     <EmbeddedResource Include="BCityControl.resx">
       <DependentUpon>BCityControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BDirectionBoard.resx">
+      <DependentUpon>BDirectionBoard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BLoadMapModeControl.resx">
       <DependentUpon>BLoadMapModeControl.cs</DependentUpon>
