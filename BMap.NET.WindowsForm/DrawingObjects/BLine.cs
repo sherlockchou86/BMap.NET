@@ -45,7 +45,7 @@ namespace BMap.NET.WindowsForm.DrawingObjects
                 List<Point> l = new List<Point>();
                 foreach (LatLngPoint p in Points)
                 {
-                    l.Add(MapHelper.GetScreenLocationByLatLng(p, center, zoom, screen_size));
+                    l.Add(MapHelper.GetScreenLocationByLatLng(p, center, zoom, screen_size));  //屏幕坐标
                 }
                 using (Pen pen = new Pen(Color.FromArgb(150,Color.Blue), 4))
                 {

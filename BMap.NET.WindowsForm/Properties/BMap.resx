@@ -133,6 +133,9 @@
   <data name="ico_cachefirst" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_cachefirst.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ico_center_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_center_menu.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ico_circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -148,8 +151,23 @@
   <data name="ico_distance" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_distance.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ico_driving_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_driving_blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ico_driving_gray" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_driving_gray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ico_eat" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_eat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ico_end_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_end_menu.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ico_enlarge_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_enlarge_menu.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ico_exchange" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_exchange.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ico_happy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_happy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -172,6 +190,9 @@
   <data name="ico_mapshot" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_mapshot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ico_narrow_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_narrow_menu.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ico_polygon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_polygon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -183,6 +204,12 @@
   </data>
   <data name="ico_red_point_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_red_point_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ico_removedrawing_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_removedrawing_menu.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ico_removemark_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_removemark_menu.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ico_sateshot" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_sateshot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -205,6 +232,9 @@
   <data name="ico_search_in_bound" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_search_in_bound.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ico_select" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_select.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ico_server" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_server.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -217,7 +247,25 @@
   <data name="ico_source" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_source.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ico_start_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_start_menu.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ico_transit_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_transit_blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ico_transit_gray" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_transit_gray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ico_travel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_travel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ico_walking_blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_walking_blue.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ico_walking_gray" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_walking_gray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ico_where_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_where_menu.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

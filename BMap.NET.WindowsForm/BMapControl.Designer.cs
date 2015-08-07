@@ -29,93 +29,117 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BMapControl));
             this.cm_popup = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.这是哪里ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.设为起点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.设为终点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsWhere = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsSetStart = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsSetEnd = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.居中ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.放大ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.缩小ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsCenter = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsLarge = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsSmall = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.清空所有绘图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.清空所有标记ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsClearDrawings = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsClearMarks = new System.Windows.Forms.ToolStripMenuItem();
             this.cm_popup.SuspendLayout();
             this.SuspendLayout();
             // 
             // cm_popup
             // 
             this.cm_popup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.这是哪里ToolStripMenuItem,
-            this.设为起点ToolStripMenuItem,
-            this.设为终点ToolStripMenuItem,
+            this.cmsWhere,
+            this.cmsSetStart,
+            this.cmsSetEnd,
             this.toolStripSeparator1,
-            this.居中ToolStripMenuItem,
-            this.放大ToolStripMenuItem,
-            this.缩小ToolStripMenuItem,
+            this.cmsCenter,
+            this.cmsLarge,
+            this.cmsSmall,
             this.toolStripSeparator2,
-            this.清空所有绘图ToolStripMenuItem,
-            this.清空所有标记ToolStripMenuItem});
+            this.cmsClearDrawings,
+            this.cmsClearMarks});
             this.cm_popup.Name = "cm_popup";
-            this.cm_popup.Size = new System.Drawing.Size(153, 214);
+            this.cm_popup.Size = new System.Drawing.Size(149, 192);
             // 
-            // 这是哪里ToolStripMenuItem
+            // cmsWhere
             // 
-            this.这是哪里ToolStripMenuItem.Name = "这是哪里ToolStripMenuItem";
-            this.这是哪里ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.这是哪里ToolStripMenuItem.Text = "这是哪里?";
+            this.cmsWhere.Image = ((System.Drawing.Image)(resources.GetObject("cmsWhere.Image")));
+            this.cmsWhere.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.cmsWhere.Name = "cmsWhere";
+            this.cmsWhere.Size = new System.Drawing.Size(148, 22);
+            this.cmsWhere.Text = "这是哪里?";
+            this.cmsWhere.Click += new System.EventHandler(this.cm_popup_Click);
             // 
-            // 设为起点ToolStripMenuItem
+            // cmsSetStart
             // 
-            this.设为起点ToolStripMenuItem.Name = "设为起点ToolStripMenuItem";
-            this.设为起点ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.设为起点ToolStripMenuItem.Text = "以此为起点";
+            this.cmsSetStart.Image = ((System.Drawing.Image)(resources.GetObject("cmsSetStart.Image")));
+            this.cmsSetStart.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.cmsSetStart.Name = "cmsSetStart";
+            this.cmsSetStart.Size = new System.Drawing.Size(148, 22);
+            this.cmsSetStart.Text = "以此为起点";
+            this.cmsSetStart.Click += new System.EventHandler(this.cm_popup_Click);
             // 
-            // 设为终点ToolStripMenuItem
+            // cmsSetEnd
             // 
-            this.设为终点ToolStripMenuItem.Name = "设为终点ToolStripMenuItem";
-            this.设为终点ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.设为终点ToolStripMenuItem.Text = "以此为终点";
+            this.cmsSetEnd.Image = ((System.Drawing.Image)(resources.GetObject("cmsSetEnd.Image")));
+            this.cmsSetEnd.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.cmsSetEnd.Name = "cmsSetEnd";
+            this.cmsSetEnd.Size = new System.Drawing.Size(148, 22);
+            this.cmsSetEnd.Text = "以此为终点";
+            this.cmsSetEnd.Click += new System.EventHandler(this.cm_popup_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(145, 6);
             // 
-            // 居中ToolStripMenuItem
+            // cmsCenter
             // 
-            this.居中ToolStripMenuItem.Name = "居中ToolStripMenuItem";
-            this.居中ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.居中ToolStripMenuItem.Text = "居中";
+            this.cmsCenter.Image = ((System.Drawing.Image)(resources.GetObject("cmsCenter.Image")));
+            this.cmsCenter.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.cmsCenter.Name = "cmsCenter";
+            this.cmsCenter.Size = new System.Drawing.Size(148, 22);
+            this.cmsCenter.Text = "居中";
+            this.cmsCenter.Click += new System.EventHandler(this.cm_popup_Click);
             // 
-            // 放大ToolStripMenuItem
+            // cmsLarge
             // 
-            this.放大ToolStripMenuItem.Name = "放大ToolStripMenuItem";
-            this.放大ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.放大ToolStripMenuItem.Text = "放大";
+            this.cmsLarge.Image = ((System.Drawing.Image)(resources.GetObject("cmsLarge.Image")));
+            this.cmsLarge.Name = "cmsLarge";
+            this.cmsLarge.Size = new System.Drawing.Size(148, 22);
+            this.cmsLarge.Text = "放大";
+            this.cmsLarge.Click += new System.EventHandler(this.cm_popup_Click);
             // 
-            // 缩小ToolStripMenuItem
+            // cmsSmall
             // 
-            this.缩小ToolStripMenuItem.Name = "缩小ToolStripMenuItem";
-            this.缩小ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.缩小ToolStripMenuItem.Text = "缩小";
+            this.cmsSmall.Image = ((System.Drawing.Image)(resources.GetObject("cmsSmall.Image")));
+            this.cmsSmall.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.cmsSmall.Name = "cmsSmall";
+            this.cmsSmall.Size = new System.Drawing.Size(148, 22);
+            this.cmsSmall.Text = "缩小";
+            this.cmsSmall.Click += new System.EventHandler(this.cm_popup_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(145, 6);
             // 
-            // 清空所有绘图ToolStripMenuItem
+            // cmsClearDrawings
             // 
-            this.清空所有绘图ToolStripMenuItem.Name = "清空所有绘图ToolStripMenuItem";
-            this.清空所有绘图ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.清空所有绘图ToolStripMenuItem.Text = "清空所有绘图";
+            this.cmsClearDrawings.Image = ((System.Drawing.Image)(resources.GetObject("cmsClearDrawings.Image")));
+            this.cmsClearDrawings.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.cmsClearDrawings.Name = "cmsClearDrawings";
+            this.cmsClearDrawings.Size = new System.Drawing.Size(148, 22);
+            this.cmsClearDrawings.Text = "清空所有绘图";
+            this.cmsClearDrawings.Click += new System.EventHandler(this.cm_popup_Click);
             // 
-            // 清空所有标记ToolStripMenuItem
+            // cmsClearMarks
             // 
-            this.清空所有标记ToolStripMenuItem.Name = "清空所有标记ToolStripMenuItem";
-            this.清空所有标记ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.清空所有标记ToolStripMenuItem.Text = "清空所有标记";
+            this.cmsClearMarks.Image = ((System.Drawing.Image)(resources.GetObject("cmsClearMarks.Image")));
+            this.cmsClearMarks.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.cmsClearMarks.Name = "cmsClearMarks";
+            this.cmsClearMarks.Size = new System.Drawing.Size(148, 22);
+            this.cmsClearMarks.Text = "清空所有标记";
+            this.cmsClearMarks.Click += new System.EventHandler(this.cm_popup_Click);
             // 
             // BMapControl
             // 
@@ -131,15 +155,15 @@
         #endregion
 
         private System.Windows.Forms.ContextMenuStrip cm_popup;
-        private System.Windows.Forms.ToolStripMenuItem 这是哪里ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 设为起点ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 设为终点ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cmsWhere;
+        private System.Windows.Forms.ToolStripMenuItem cmsSetStart;
+        private System.Windows.Forms.ToolStripMenuItem cmsSetEnd;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem 居中ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 放大ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 缩小ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cmsCenter;
+        private System.Windows.Forms.ToolStripMenuItem cmsLarge;
+        private System.Windows.Forms.ToolStripMenuItem cmsSmall;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem 清空所有绘图ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 清空所有标记ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cmsClearDrawings;
+        private System.Windows.Forms.ToolStripMenuItem cmsClearMarks;
     }
 }

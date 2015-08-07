@@ -13,7 +13,7 @@ using BMap.NET.HTTPService;
 namespace BMap.NET.WindowsForm
 {
     /// <summary>
-    /// 位置输入框（带自动提示）
+    /// 位置搜索输入框（带自动提示）
     /// </summary>
     public partial class BPlaceBox : UserControl
     {
@@ -25,9 +25,28 @@ namespace BMap.NET.WindowsForm
         /// 目标搜索区
         /// </summary>
         private string _district = "";
+
+        private Font _intputFont;
+        /// <summary>
+        /// 输入字体
+        /// </summary>
+        [Description("位置搜索时输入的字体"),Category("BMap.NET")]
+        public Font InputFont
+        {
+            get
+            {
+                return _intputFont;
+            }
+            set
+            {
+                _intputFont = value;
+                txtInput.Font = _intputFont;
+            }
+        }
         /// <summary>
         /// 当前建议搜索城市
         /// </summary>
+        [Description("当前建议搜索城市"), Category("BMap.NET")]
         public string CurrentCity
         {
             get;
@@ -36,6 +55,7 @@ namespace BMap.NET.WindowsForm
         /// <summary>
         /// 回车键是否发起搜索
         /// </summary>
+        [Description("指示回车键是否发起搜索"), Category("BMap.NET")]
         public bool Enter2Search
         {
             get;
@@ -44,11 +64,28 @@ namespace BMap.NET.WindowsForm
         /// <summary>
         /// 与之关联的位置列表控件
         /// </summary>
+        [Description("与之关联的位置列表控件，该控件负责显示搜索得到的结果"), Category("BMap.NET")]
         public BPlacesBoard BPlacesBoard
         {
             get;
             set;
         }
+        /// <summary>
+        /// 输入搜索内容
+        /// </summary>
+        [Description("搜索输入框中的内容"),Category("BMap.NET")]
+        public string QueryText
+        {
+            get
+            {
+                return txtInput.Text;
+            }
+            set
+            {
+                txtInput.Text = value;
+            }
+        }
+
         /// <summary>
         /// 构造方法
         /// </summary>
@@ -57,7 +94,7 @@ namespace BMap.NET.WindowsForm
             InitializeComponent();
         }
         /// <summary>
-        /// 开始搜索位置
+        /// 开始发起搜索
         /// </summary>
         public void StartSearch()
         {
@@ -80,6 +117,14 @@ namespace BMap.NET.WindowsForm
                 }).BeginInvoke(null, null);
             }
         }
+        /// <summary>
+        /// 设置下一次输入内容变化时 不显示位置建议下拉框
+        /// </summary>
+        public void DontSearchNextTime()
+        {
+            _search = false;
+        }
+
         /// <summary>
         /// 建议位置
         /// </summary>

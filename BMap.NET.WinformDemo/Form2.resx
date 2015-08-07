@@ -117,35 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="picExchange.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABoAAAAmCAIAAABVkBxPAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAAGYktHRAD/AP8A/6C9p5MAAAD1SURBVEhL7ZI9C4MwEIb7
-        //+Ji/g1uLjqqIhYcXFSHBT8BAuCPbyrWA3ShA6F5pl8L3cPScxt+SpSJ47UicPWdV1n23bTNJRf1HVd
-        lmVVVZRPMHR93xuGoSiKpmlt21J1RVVVqAOUTxx1wzCgC9F1HXZKa7y6cRxN08SBDbDDfrGBT1cUxX3F
-        siwc830fYp7n2MB9WMRxHBw7/I1/0M3z/FjZdBixec9HuizLMB7A5j2fHjZNU6xsJEmCS3s47i6OYywC
-        URRR9R22Dt6a67qe503TRKWVMAzBFQQB5RNs3QXw1OmLBbfuGqkTR+rEkTpxflm3LE+JGC/8U9qGcgAA
-        AABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="pictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAAGYktHRAD/AP8A/6C9p5MAAAC5SURBVDhPvZGxDoIwEIZ9
-        c6Mxgg8CuuoziOIuiot2JHGBBKgLwS/10OpSGfTPDf3v+uXu2kHbU/8HknI/zwJfeb6ahlmAlUKnN2B1
-        XY7Ow48gKWWjF5CUCeXJZbwrYt3oW6M5YEmm1VEu2cAiC6nFxVa80SaPSDKbeBuYKZ9a3dTijehDkn3E
-        OwFmM4An3jlSlK9J8m7ibeDQLQ1DH+K59KlK5ZINoH7P+hB9mI19CA6Oj/tGvwba9g6zhMUAKbYqsQAA
-        AABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="pictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADrwAAA68AZW8ckkAAAAGYktHRAD/AP8A/6C9p5MAAACeSURBVDhPxZExCoRQDET3
-        /pUg6DXU1iMIaq3gNdRq9oWNkL8Iq4XskMLMZML8+NJN/MEwz2oalaUVH9Pk/IHU0LbKsu+CDAgGdiPn
-        ufpe62o1DNZCLovPJAYCoDEd0XVG1rW3iYHQaCyO2DYjkQ5cMxSFtyeRyB1BC3keiQui8UqGWLzvGkd/
-        dDhuMIB7Z/2AZQQgNFVVv37cBTxtkN4/o9GrfLGpTQAAAABJRU5ErkJggg==
-</value>
-  </data>
 </root>

@@ -204,6 +204,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="libs\Newtonsoft.Json.dll" />
+    <None Include="Resources\ico_select.gif" />
+    <None Include="Resources\ico_transit_blue.png" />
+    <None Include="Resources\ico_transit_gray.png" />
+    <None Include="Resources\ico_driving_blue.png" />
+    <None Include="Resources\ico_driving_gray.png" />
+    <None Include="Resources\ico_walking_blue.png" />
+    <None Include="Resources\ico_walking_gray.png" />
+    <None Include="Resources\ico_exchange.png" />
+    <None Include="Resources\ico_narrow_menu.gif" />
+    <None Include="Resources\ico_enlarge_menu.gif" />
+    <None Include="Resources\ico_removemark_menu.gif" />
+    <None Include="Resources\ico_removedrawing_menu.gif" />
+    <None Include="Resources\ico_center_menu.gif" />
+    <None Include="Resources\ico_where_menu.gif" />
+    <None Include="Resources\ico_start_menu.gif" />
+    <None Include="Resources\ico_end_menu.gif" />
     <None Include="Resources\ico_red_point_big.png" />
     <None Include="Resources\ico_red_point_small.png" />
     <None Include="Resources\ico_blue_point_big.png" />
