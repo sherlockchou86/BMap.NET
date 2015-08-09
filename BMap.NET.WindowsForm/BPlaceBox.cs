@@ -35,7 +35,7 @@ namespace BMap.NET.WindowsForm
         {
             get
             {
-                return _intputFont;
+                return txtInput.Font;
             }
             set
             {
@@ -245,7 +245,8 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void txtInput_Resize(object sender, EventArgs e)
         {
-            Size = txtInput.Size;
+            Size = new Size(txtInput.Width + 2, txtInput.Height + 2);
+            txtInput.Location = new Point(1, 1);
         }
         /// <summary>
         /// 控件加载 
@@ -268,6 +269,15 @@ namespace BMap.NET.WindowsForm
                 _suggestion_places.Visible = false;
                 StartSearch();
             }
+        }
+        /// <summary>
+        /// 重绘
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BPlaceBox_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(0, 0, Width - 1, Height - 1));
         }
     }
 }

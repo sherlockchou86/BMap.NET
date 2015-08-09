@@ -145,6 +145,9 @@
   <data name="ico_cursor_locate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_cursor_locate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ico_delete_marker" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_delete_marker.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ico_destination" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_destination.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -159,6 +162,9 @@
   </data>
   <data name="ico_eat" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_eat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ico_edit_marker" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_edit_marker.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ico_end_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_end_menu.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -192,6 +198,9 @@
   </data>
   <data name="ico_narrow_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_narrow_menu.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ico_poi_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_poi_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ico_polygon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_polygon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

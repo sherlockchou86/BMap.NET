@@ -41,8 +41,8 @@
             // bTabControl1
             // 
             this.bTabControl1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.bTabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.bTabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
             this.bTabControl1.Controls.Add(this.tabPage1);
             this.bTabControl1.Controls.Add(this.tabPage2);
             this.bTabControl1.ItemSize = new System.Drawing.Size(70, 70);
@@ -77,9 +77,10 @@
             // 
             // bMapControl1
             // 
-            this.bMapControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bMapControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.bMapControl1.BDirectionBoard = null;
             this.bMapControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bMapControl1.BPlaceBox = this.bPlaceBox1;
             this.bMapControl1.BPlacesBoard = this.bPlacesBoard1;
@@ -96,9 +97,11 @@
             this.bPlaceBox1.BPlacesBoard = this.bPlacesBoard1;
             this.bPlaceBox1.CurrentCity = null;
             this.bPlaceBox1.Enter2Search = true;
+            this.bPlaceBox1.InputFont = new System.Drawing.Font("Microsoft YaHei", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bPlaceBox1.Location = new System.Drawing.Point(74, 12);
             this.bPlaceBox1.Name = "bPlaceBox1";
-            this.bPlaceBox1.Size = new System.Drawing.Size(307, 33);
+            this.bPlaceBox1.QueryText = "停车场";
+            this.bPlaceBox1.Size = new System.Drawing.Size(307, 26);
             this.bPlaceBox1.TabIndex = 4;
             // 
             // tabPage2
@@ -106,7 +109,7 @@
             this.tabPage2.Location = new System.Drawing.Point(74, 4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(303, 556);
+            this.tabPage2.Size = new System.Drawing.Size(304, 556);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "路线";
             this.tabPage2.UseVisualStyleBackColor = true;

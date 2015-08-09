@@ -70,17 +70,23 @@
     <Compile Include="BMapControl.Designer.cs">
       <DependentUpon>BMapControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="BMarkerTipControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BMarkerTipControl.Designer.cs">
+      <DependentUpon>BMarkerTipControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="BPlaceItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="BPlaceItem.Designer.cs">
       <DependentUpon>BPlaceItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="BPOITipEditorControl.cs">
+    <Compile Include="BMarkerEditorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="BPOITipEditorControl.Designer.cs">
-      <DependentUpon>BPOITipEditorControl.cs</DependentUpon>
+    <Compile Include="BMarkerEditorControl.Designer.cs">
+      <DependentUpon>BMarkerEditorControl.cs</DependentUpon>
     </Compile>
     <Compile Include="BQuickSearchBoardcs.cs">
       <SubType>UserControl</SubType>
@@ -112,6 +118,12 @@
     <Compile Include="BPOITipControl.Designer.cs">
       <DependentUpon>BPOITipControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="BRouteItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BRouteItem.Designer.cs">
+      <DependentUpon>BRouteItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="BScreenshotMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -125,6 +137,12 @@
     <Compile Include="BMapElements\BPOI.cs" />
     <Compile Include="BMapElements\BRoute.cs" />
     <Compile Include="BMapElements\BTile.cs" />
+    <Compile Include="BStepItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BStepItem.Designer.cs">
+      <DependentUpon>BStepItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="DrawingObjects\BCircle.cs" />
     <Compile Include="DrawingObjects\BLine.cs" />
     <Compile Include="DrawingObjects\BPolygon.cs" />
@@ -175,6 +193,9 @@
     <EmbeddedResource Include="BPlacesBoard.resx">
       <DependentUpon>BPlacesBoard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BPOITipControl.resx">
+      <DependentUpon>BPOITipControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BQuickSearchBoardcs.resx">
       <DependentUpon>BQuickSearchBoardcs.cs</DependentUpon>
     </EmbeddedResource>
@@ -204,6 +225,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="libs\Newtonsoft.Json.dll" />
+    <None Include="Resources\ico_poi_logo.png" />
+    <None Include="Resources\ico_edit_marker.png" />
+    <None Include="Resources\ico_delete_marker.png" />
     <None Include="Resources\ico_select.gif" />
     <None Include="Resources\ico_transit_blue.png" />
     <None Include="Resources\ico_transit_gray.png" />

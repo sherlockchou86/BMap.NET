@@ -1,6 +1,6 @@
 ﻿namespace BMap.NET.WindowsForm
 {
-    partial class BPOITipEditorControl
+    partial class BStepItem
     {
         /// <summary> 
         /// Required designer variable.

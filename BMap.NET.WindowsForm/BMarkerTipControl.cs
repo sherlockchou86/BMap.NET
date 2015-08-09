@@ -9,9 +9,12 @@ using System.Windows.Forms;
 
 namespace BMap.NET.WindowsForm
 {
-    partial class BPOITipEditorControl : UserControl
+    /// <summary>
+    /// 标记信息显示控件
+    /// </summary>
+    partial class BMarkerTipControl : UserControl
     {
-        public BPOITipEditorControl()
+        public BMarkerTipControl()
         {
             InitializeComponent();
         }
