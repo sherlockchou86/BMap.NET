@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.bMarkerTipControl1 = new BMap.NET.WindowsForm.BMarkerTipControl();
             this.bPlaceBox1 = new BMap.NET.WindowsForm.BPlaceBox();
             this.bTabControl1 = new BMap.NET.WindowsForm.FunctionalControls.BTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -39,6 +40,14 @@
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // bMarkerTipControl1
+            // 
+            this.bMarkerTipControl1.BackColor = System.Drawing.Color.White;
+            this.bMarkerTipControl1.Location = new System.Drawing.Point(391, 16);
+            this.bMarkerTipControl1.Name = "bMarkerTipControl1";
+            this.bMarkerTipControl1.Size = new System.Drawing.Size(360, 235);
+            this.bMarkerTipControl1.TabIndex = 5;
             // 
             // bPlaceBox1
             // 
@@ -111,10 +120,10 @@
             // bpoiTipControl1
             // 
             this.bpoiTipControl1.BackColor = System.Drawing.Color.White;
-            this.bpoiTipControl1.Location = new System.Drawing.Point(498, 77);
+            this.bpoiTipControl1.Location = new System.Drawing.Point(529, 228);
             this.bpoiTipControl1.Name = "bpoiTipControl1";
             this.bpoiTipControl1.Size = new System.Drawing.Size(360, 284);
-            this.bpoiTipControl1.TabIndex = 5;
+            this.bpoiTipControl1.TabIndex = 6;
             // 
             // Form2
             // 
@@ -122,6 +131,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1139, 732);
             this.Controls.Add(this.bpoiTipControl1);
+            this.Controls.Add(this.bMarkerTipControl1);
             this.Controls.Add(this.bPlaceBox1);
             this.Controls.Add(this.bTabControl1);
             this.Name = "Form2";
@@ -141,6 +151,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private WindowsForm.BPlaceBox bPlaceBox1;
+        private WindowsForm.BMarkerTipControl bMarkerTipControl1;
         private WindowsForm.BPOITipControl bpoiTipControl1;
     }
 }

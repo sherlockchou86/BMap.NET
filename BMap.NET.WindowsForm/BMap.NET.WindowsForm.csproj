@@ -70,6 +70,7 @@
     <Compile Include="BMapControl.Designer.cs">
       <DependentUpon>BMapControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="BMapElements\BMarker.cs" />
     <Compile Include="BMarkerTipControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -159,6 +160,7 @@
       <DependentUpon>CityList.cs</DependentUpon>
     </Compile>
     <Compile Include="LatLngPoint.cs" />
+    <Compile Include="POIType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\BMap.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -183,6 +185,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BMapControl.resx">
       <DependentUpon>BMapControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BMarkerEditorControl.resx">
+      <DependentUpon>BMarkerEditorControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BMarkerTipControl.resx">
+      <DependentUpon>BMarkerTipControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BPlaceBox.resx">
       <DependentUpon>BPlaceBox.cs</DependentUpon>

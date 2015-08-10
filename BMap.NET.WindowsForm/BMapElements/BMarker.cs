@@ -2,32 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json.Linq;
 using System.Drawing;
 
 namespace BMap.NET.WindowsForm.BMapElements
 {
     /// <summary>
-    /// 地图中POI 信息点
+    /// 地图中的标记点
     /// </summary>
-    class BPOI : BMapElement
+    class BMarker:BMapElement
     {
-        /// <summary>
-        /// POI类型
-        /// </summary>
-        public POIType Type
-        {
-            set;
-            get;
-        }
-        /// <summary>
-        /// 位置
-        /// </summary>
-        public LatLngPoint Location
-        {
-            set;
-            get;
-        }
         /// <summary>
         /// 索引号
         /// </summary>
@@ -37,12 +20,12 @@ namespace BMap.NET.WindowsForm.BMapElements
             set;
         }
         /// <summary>
-        /// POI的数据源
+        /// 位置
         /// </summary>
-        public JObject DataSource
+        public LatLngPoint Location
         {
-            get;
             set;
+            get;
         }
         private bool _selected;
         /// <summary>
@@ -58,6 +41,22 @@ namespace BMap.NET.WindowsForm.BMapElements
             {
                 _selected = value;
             }
+        }
+        /// <summary>
+        /// 标记名
+        /// </summary>
+        public string Name
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 标记备注
+        /// </summary>
+        public string Remarks
+        {
+            get;
+            set;
         }
         /// <summary>
         /// 绘制方法

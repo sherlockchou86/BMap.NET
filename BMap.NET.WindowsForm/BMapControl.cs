@@ -193,7 +193,7 @@ namespace BMap.NET.WindowsForm
         /// </summary>
         private Dictionary<string, BTile> _tiles = new Dictionary<string, BTile>();
         /// <summary>
-        /// 地图中信息点（POI）容器
+        /// 地图中普通信息点（POI）容器
         /// </summary>
         private Dictionary<string, BPOI> _pois = new Dictionary<string, BPOI>();
         /// <summary>
@@ -201,9 +201,33 @@ namespace BMap.NET.WindowsForm
         /// </summary>
         private Dictionary<int, DrawingObject> _drawingObjects = new Dictionary<int, DrawingObject>();
         /// <summary>
-        /// 地图中添加的标记
+        /// 地图中用户添加的标记点
         /// </summary>
-        private Dictionary<string, BPOI> _marks = new Dictionary<string, BPOI>();
+        private Dictionary<string, BMarker> _markers = new Dictionary<string, BMarker>();
+        /// <summary>
+        /// 线路起点（没有则为null）
+        /// </summary>
+        private BPOI _theRouteStart;
+        /// <summary>
+        /// 线路终点（没有则为null）
+        /// </summary>
+        private BPOI _theRouteEnd;
+        /// <summary>
+        /// 地图中用户询问的未知点（没有则为null）
+        /// </summary>
+        private BPOI _theStrangePoint;
+        /// <summary>
+        /// POI信息显示控件
+        /// </summary>
+        private BPOITipControl _bPOITipControl = new BPOITipControl();
+        /// <summary>
+        /// 标记点信息编辑控件
+        /// </summary>
+        private BMarkerEditorControl _bMarkerEditorControl = new BMarkerEditorControl();
+        /// <summary>
+        /// 标记点信息显示控件
+        /// </summary>
+        private BMarkerTipControl _bMarkerTipControl = new BMarkerTipControl();
         #endregion
 
         /// <summary>
@@ -1417,7 +1441,7 @@ namespace BMap.NET.WindowsForm
             }
             else if (item.Name == "cmsClearMarkers") //清空标记
             {
-                _marks.Clear();
+                _markers.Clear();
             }
             Invalidate();
         }
