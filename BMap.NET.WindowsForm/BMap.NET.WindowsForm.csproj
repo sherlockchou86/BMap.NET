@@ -233,6 +233,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="libs\Newtonsoft.Json.dll" />
+    <None Include="Resources\ico_marker.png" />
     <None Include="Resources\ico_poi_logo.png" />
     <None Include="Resources\ico_edit_marker.png" />
     <None Include="Resources\ico_delete_marker.png" />

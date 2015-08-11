@@ -7,19 +7,66 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using BMap.NET.WindowsForm.BMapElements;
 
 namespace BMap.NET.WindowsForm
 {
     /// <summary>
     /// 标记点信息显示控件
     /// </summary>
-    public partial class BMarkerTipControl : UserControl
+    partial class BMarkerTipControl : UserControl
     {
         /// <summary>
         /// 选项卡
         /// </summary>
         int _tab_index = 0;
-
+        private BMarker _marker;
+        /// <summary>
+        /// 与之对应的标记点
+        /// </summary>
+        public BMarker Marker
+        {
+            get
+            {
+                return _marker;
+            }
+            set
+            {
+                _marker = value;
+                lblName.Text = _marker.Name;
+                txtRemarks.Text = _marker.Remarks;
+            }
+        }
+        /// <summary>
+        /// 是否已点击删除
+        /// </summary>
+        public bool Deleted
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 是否已点击编辑
+        /// </summary>
+        public bool Edited
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 当前建议搜索城市
+        /// </summary>
+        public string CurrentCity
+        {
+            get
+            {
+                return bPlaceBox.CurrentCity;
+            }
+            set
+            {
+                bPlaceBox.CurrentCity = value;
+            }
+        }
         /// <summary>
         /// 构造方法
         /// </summary>
@@ -38,7 +85,8 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void picEdit_Click(object sender, EventArgs e)
         {
-
+            Edited = true;
+            Visible = false;
         }
         /// <summary>
         /// 删除标记
@@ -47,7 +95,8 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void picDelete_Click(object sender, EventArgs e)
         {
-
+            Deleted = true;
+            Visible = false;
         }
         /// <summary>
         /// 关闭
@@ -216,6 +265,33 @@ namespace BMap.NET.WindowsForm
                 txtNearby.Location = new Point(txtNearby.Location.X, 226 - 15 - 54);
             }
             Invalidate();
+        }
+        /// <summary>
+        /// 搜索周边
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnsearch_Click(object sender, EventArgs e)
+        {
+
+        }
+        /// <summary>
+        /// 公交
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btntransit_Click(object sender, EventArgs e)
+        {
+
+        }
+        /// <summary>
+        /// 驾车
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btndriving_Click(object sender, EventArgs e)
+        {
+
         }
         #endregion
     }

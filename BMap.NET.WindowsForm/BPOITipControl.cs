@@ -7,19 +7,61 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using Newtonsoft.Json.Linq;
+using BMap.NET.WindowsForm.BMapElements;
 
 namespace BMap.NET.WindowsForm
 {
     /// <summary>
     /// POI信息显示控件
     /// </summary>
-    public partial class BPOITipControl : UserControl
+    partial class BPOITipControl : UserControl
     {
         /// <summary>
         /// 选项卡
         /// </summary>
         int _tab_index = 0;
 
+        private BPOI _poi;
+        /// <summary>
+        /// 与之对应的POI
+        /// </summary>
+        public BPOI POI
+        {
+            get
+            {
+                return _poi;
+            }
+            set
+            {
+                _poi = value;
+                //
+                if (_poi.DataSource["name"] != null)
+                    lnkName.Text = (string)_poi.DataSource["name"]; //具体json格式参见api文档
+                if (_poi.DataSource["address"] != null)
+                    txtAddress.Text = (string)_poi.DataSource["address"];
+                if (_poi.DataSource["telephone"] != null)
+                    txtPhone.Text = (string)_poi.DataSource["telephone"];
+                if (_poi.DataSource["detail_info"] != null && _poi.DataSource["detail_info"]["price"] != null)
+                    txtPrice.Text = "人均:￥" + (string)_poi.DataSource["detail_info"]["price"];
+                if (_poi.DataSource["detail_info"] != null && _poi.DataSource["detail_info"]["tag"] != null)
+                    txtTag.Text = (string)_poi.DataSource["detail_info"]["tag"];
+            }
+        }
+        /// <summary>
+        /// 当前建议搜索城市
+        /// </summary>
+        public string CurrentCity
+        {
+            get
+            {
+                return bPlaceBox.CurrentCity;
+            }
+            set
+            {
+                bPlaceBox.CurrentCity = value;
+            }
+        }
         /// <summary>
         /// 构造方法
         /// </summary>
@@ -179,13 +221,13 @@ namespace BMap.NET.WindowsForm
                 lnknearby_hospital.Visible = true;
                 lnknearby_hotel.Visible = true;
 
-                lnknearby_bank.Location = new Point(lnknearby_bank.Location.X, 232 - 15);
-                lnknearby_bus_station.Location = new Point(lnknearby_bus_station.Location.X, 232 - 15);
-                lnknearby_eatting.Location = new Point(lnknearby_eatting.Location.X, 232 - 15);
-                lnknearby_hospital.Location = new Point(lnknearby_hospital.Location.X, 232 - 15);
-                lnknearby_hotel.Location = new Point(lnknearby_hotel.Location.X, 232 - 15);
-                btnsearch.Location = new Point(btnsearch.Location.X, 225 - 15);
-                txtNearby.Location = new Point(txtNearby.Location.X, 226 - 15);
+                lnknearby_bank.Location = new Point(lnknearby_bank.Location.X, 232 - 15 + 7);
+                lnknearby_bus_station.Location = new Point(lnknearby_bus_station.Location.X, 232 - 15 + 7);
+                lnknearby_eatting.Location = new Point(lnknearby_eatting.Location.X, 232 - 15 + 7);
+                lnknearby_hospital.Location = new Point(lnknearby_hospital.Location.X, 232 - 15 + 7);
+                lnknearby_hotel.Location = new Point(lnknearby_hotel.Location.X, 232 - 15 + 7);
+                btnsearch.Location = new Point(btnsearch.Location.X, 225 - 15 + 7);
+                txtNearby.Location = new Point(txtNearby.Location.X, 226 - 15 + 7);
             }
             Invalidate();
         }

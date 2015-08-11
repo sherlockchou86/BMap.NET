@@ -103,7 +103,7 @@
             this.txtAddress.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtAddress.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtAddress.ForeColor = System.Drawing.Color.Gray;
-            this.txtAddress.Location = new System.Drawing.Point(41, 108);
+            this.txtAddress.Location = new System.Drawing.Point(42, 108);
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.ReadOnly = true;
             this.txtAddress.Size = new System.Drawing.Size(308, 16);
@@ -138,7 +138,7 @@
             this.txtPhone.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtPhone.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtPhone.ForeColor = System.Drawing.Color.Gray;
-            this.txtPhone.Location = new System.Drawing.Point(40, 129);
+            this.txtPhone.Location = new System.Drawing.Point(41, 129);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.ReadOnly = true;
             this.txtPhone.Size = new System.Drawing.Size(311, 16);
@@ -174,7 +174,7 @@
             // btntransit
             // 
             this.btntransit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btntransit.Location = new System.Drawing.Point(240, 210);
+            this.btntransit.Location = new System.Drawing.Point(240, 216);
             this.btntransit.Name = "btntransit";
             this.btntransit.Size = new System.Drawing.Size(54, 23);
             this.btntransit.TabIndex = 13;
@@ -184,7 +184,7 @@
             // btndriving
             // 
             this.btndriving.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btndriving.Location = new System.Drawing.Point(299, 210);
+            this.btndriving.Location = new System.Drawing.Point(299, 216);
             this.btndriving.Name = "btndriving";
             this.btndriving.Size = new System.Drawing.Size(52, 23);
             this.btndriving.TabIndex = 14;
@@ -196,7 +196,7 @@
             this.lblPlace.AutoSize = true;
             this.lblPlace.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lblPlace.ForeColor = System.Drawing.Color.Gray;
-            this.lblPlace.Location = new System.Drawing.Point(7, 213);
+            this.lblPlace.Location = new System.Drawing.Point(7, 219);
             this.lblPlace.Name = "lblPlace";
             this.lblPlace.Size = new System.Drawing.Size(32, 17);
             this.lblPlace.TabIndex = 15;
@@ -204,7 +204,7 @@
             // 
             // txtNearby
             // 
-            this.txtNearby.Location = new System.Drawing.Point(9, 239);
+            this.txtNearby.Location = new System.Drawing.Point(9, 245);
             this.txtNearby.Name = "txtNearby";
             this.txtNearby.Size = new System.Drawing.Size(100, 21);
             this.txtNearby.TabIndex = 16;
@@ -212,7 +212,7 @@
             // 
             // btnsearch
             // 
-            this.btnsearch.Location = new System.Drawing.Point(115, 238);
+            this.btnsearch.Location = new System.Drawing.Point(115, 244);
             this.btnsearch.Name = "btnsearch";
             this.btnsearch.Size = new System.Drawing.Size(43, 23);
             this.btnsearch.TabIndex = 17;
@@ -223,7 +223,7 @@
             // lnknearby_hotel
             // 
             this.lnknearby_hotel.AutoSize = true;
-            this.lnknearby_hotel.Location = new System.Drawing.Point(168, 243);
+            this.lnknearby_hotel.Location = new System.Drawing.Point(168, 249);
             this.lnknearby_hotel.Name = "lnknearby_hotel";
             this.lnknearby_hotel.Size = new System.Drawing.Size(29, 12);
             this.lnknearby_hotel.TabIndex = 18;
@@ -234,7 +234,7 @@
             // lnknearby_eatting
             // 
             this.lnknearby_eatting.AutoSize = true;
-            this.lnknearby_eatting.Location = new System.Drawing.Point(203, 243);
+            this.lnknearby_eatting.Location = new System.Drawing.Point(203, 249);
             this.lnknearby_eatting.Name = "lnknearby_eatting";
             this.lnknearby_eatting.Size = new System.Drawing.Size(29, 12);
             this.lnknearby_eatting.TabIndex = 19;
@@ -245,7 +245,7 @@
             // lnknearby_bank
             // 
             this.lnknearby_bank.AutoSize = true;
-            this.lnknearby_bank.Location = new System.Drawing.Point(238, 243);
+            this.lnknearby_bank.Location = new System.Drawing.Point(238, 249);
             this.lnknearby_bank.Name = "lnknearby_bank";
             this.lnknearby_bank.Size = new System.Drawing.Size(29, 12);
             this.lnknearby_bank.TabIndex = 20;
@@ -256,7 +256,7 @@
             // lnknearby_hospital
             // 
             this.lnknearby_hospital.AutoSize = true;
-            this.lnknearby_hospital.Location = new System.Drawing.Point(273, 243);
+            this.lnknearby_hospital.Location = new System.Drawing.Point(273, 249);
             this.lnknearby_hospital.Name = "lnknearby_hospital";
             this.lnknearby_hospital.Size = new System.Drawing.Size(29, 12);
             this.lnknearby_hospital.TabIndex = 21;
@@ -267,7 +267,7 @@
             // lnknearby_bus_station
             // 
             this.lnknearby_bus_station.AutoSize = true;
-            this.lnknearby_bus_station.Location = new System.Drawing.Point(308, 243);
+            this.lnknearby_bus_station.Location = new System.Drawing.Point(308, 249);
             this.lnknearby_bus_station.Name = "lnknearby_bus_station";
             this.lnknearby_bus_station.Size = new System.Drawing.Size(41, 12);
             this.lnknearby_bus_station.TabIndex = 22;
@@ -281,7 +281,7 @@
             this.bPlaceBox.CurrentCity = "天津";
             this.bPlaceBox.Enter2Search = false;
             this.bPlaceBox.InputFont = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bPlaceBox.Location = new System.Drawing.Point(41, 211);
+            this.bPlaceBox.Location = new System.Drawing.Point(41, 217);
             this.bPlaceBox.Name = "bPlaceBox";
             this.bPlaceBox.QueryText = "";
             this.bPlaceBox.Size = new System.Drawing.Size(193, 21);
@@ -314,7 +314,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
             this.Name = "BPOITipControl";
-            this.Size = new System.Drawing.Size(360, 284);
+            this.Size = new System.Drawing.Size(360, 291);
             this.Load += new System.EventHandler(this.BPOITipControl_Load);
             this.Click += new System.EventHandler(this.BPOITipControl_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.BPOITipControl_Paint);

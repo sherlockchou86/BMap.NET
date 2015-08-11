@@ -109,6 +109,7 @@
             // 
             this.txtRemarks.BackColor = System.Drawing.Color.White;
             this.txtRemarks.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtRemarks.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtRemarks.Location = new System.Drawing.Point(12, 47);
             this.txtRemarks.Multiline = true;
             this.txtRemarks.Name = "txtRemarks";
@@ -180,6 +181,7 @@
             this.btnsearch.Text = "搜索";
             this.btnsearch.UseVisualStyleBackColor = true;
             this.btnsearch.Visible = false;
+            this.btnsearch.Click += new System.EventHandler(this.btnsearch_Click);
             // 
             // txtNearby
             // 
@@ -209,6 +211,7 @@
             this.btndriving.TabIndex = 25;
             this.btndriving.Text = "驾车";
             this.btndriving.UseVisualStyleBackColor = true;
+            this.btndriving.Click += new System.EventHandler(this.btndriving_Click);
             // 
             // btntransit
             // 
@@ -219,6 +222,7 @@
             this.btntransit.TabIndex = 24;
             this.btntransit.Text = "公交";
             this.btntransit.UseVisualStyleBackColor = true;
+            this.btntransit.Click += new System.EventHandler(this.btntransit_Click);
             // 
             // bPlaceBox
             // 
@@ -255,7 +259,7 @@
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.label1);
             this.Name = "BMarkerTipControl";
-            this.Size = new System.Drawing.Size(360, 219);
+            this.Size = new System.Drawing.Size(360, 229);
             this.Load += new System.EventHandler(this.BMarkerTipControl_Load);
             this.Click += new System.EventHandler(this.BMarkerTipControl_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.BMarkerTipControl_Paint);

@@ -130,7 +130,7 @@ namespace BMap.NET.WindowsForm
         /// </summary>
         private FlowLayoutPanel _suggestion_places = new FlowLayoutPanel();
         /// <summary>
-        /// 当前可否发出API请求
+        /// 当前可否发出位置建议请求
         /// </summary>
         private bool _search = true;
         /// <summary>
@@ -182,14 +182,20 @@ namespace BMap.NET.WindowsForm
                             }
                             if (_suggestion_places.Controls.Count > 0)
                             {
-                                _suggestion_places.Location = new Point(Left, Top + Height);
-                                _suggestion_places.Height = _suggestion_places.Controls.Count * _suggestion_places.Controls[0].Height + 10;
-                                if (!Parent.Controls.Contains(_suggestion_places))
+                                Control top = FindTheTopControl();
+                                if (top != null)
                                 {
-                                    Parent.Controls.Add(_suggestion_places);
+                                    Point p = new Point(txtInput.Left - 1, txtInput.Top + txtInput.Height);  //文本框在BPlaceBox中的位置
+                                    Point location = top.PointToClient(PointToScreen(p));   //文本框位置转换为最顶层控件坐标系中对应位置
+                                    _suggestion_places.Location = location;
+                                    _suggestion_places.Height = _suggestion_places.Controls.Count * _suggestion_places.Controls[0].Height + 10;
+                                    if (!top.Controls.Contains(_suggestion_places))
+                                    {
+                                        top.Controls.Add(_suggestion_places);
+                                    }
+                                    _suggestion_places.Visible = true;
+                                    _suggestion_places.BringToFront();
                                 }
-                                _suggestion_places.Visible = true;
-                                _suggestion_places.BringToFront();
                             }
                             else
                             {
@@ -203,6 +209,19 @@ namespace BMap.NET.WindowsForm
             {
                 _suggestion_places.Visible = false;
             }
+        }
+        /// <summary>
+        /// 遍历获得顶层控件
+        /// </summary>
+        /// <returns></returns>
+        private Control FindTheTopControl()
+        {
+            Control top = this.Parent;
+            while (top.Parent != null)
+            {
+                top = top.Parent;
+            }
+            return top;
         }
         /// <summary>
         /// 鼠标点击建议位置列表
@@ -278,6 +297,15 @@ namespace BMap.NET.WindowsForm
         private void BPlaceBox_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(0, 0, Width - 1, Height - 1));
+        }
+        /// <summary>
+        /// 失去焦点 隐藏建议下拉框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtInput_Leave(object sender, EventArgs e)
+        {
+            _suggestion_places.Visible = false;
         }
     }
 }

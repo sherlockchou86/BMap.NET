@@ -196,6 +196,9 @@
   <data name="ico_mapshot" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_mapshot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ico_marker" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_marker.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ico_narrow_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_narrow_menu.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

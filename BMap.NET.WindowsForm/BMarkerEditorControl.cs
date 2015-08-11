@@ -7,14 +7,40 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using BMap.NET.WindowsForm.BMapElements;
 
 namespace BMap.NET.WindowsForm
 {
     /// <summary>
     /// 标记点信息编辑控件
     /// </summary>
-    public partial class BMarkerEditorControl : UserControl
+    partial class BMarkerEditorControl : UserControl
     {
+        /// <summary>
+        /// 只是是否已保存
+        /// </summary>
+        public bool Saved
+        {
+            get;
+            set;
+        }
+        private BMarker _marker;
+        /// <summary>
+        /// 与之对应的标记点
+        /// </summary>
+        public BMarker Marker
+        {
+            get
+            {
+                return _marker;
+            }
+            set
+            {
+                _marker = value;
+                txtName.Text = _marker.Name;
+                txtRemarks.Text = _marker.Remarks;
+            }
+        }
         /// <summary>
         /// 构造方法
         /// </summary>
@@ -76,7 +102,10 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void btnOK_Click(object sender, EventArgs e)
         {
-
+            _marker.Name = txtName.Text;
+            _marker.Remarks = txtRemarks.Text;
+            Saved = true;
+            Visible = false;
         }
         /// <summary>
         /// 取消
@@ -85,7 +114,7 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void btnCancel_Click(object sender, EventArgs e)
         {
-
+            Visible = false;
         }
         #endregion
     }

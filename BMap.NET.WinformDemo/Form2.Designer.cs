@@ -28,26 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.bMarkerTipControl1 = new BMap.NET.WindowsForm.BMarkerTipControl();
             this.bPlaceBox1 = new BMap.NET.WindowsForm.BPlaceBox();
             this.bTabControl1 = new BMap.NET.WindowsForm.FunctionalControls.BTabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.bPlacesBoard1 = new BMap.NET.WindowsForm.BPlacesBoard();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.bDirectionBoard1 = new BMap.NET.WindowsForm.BDirectionBoard();
-            this.bpoiTipControl1 = new BMap.NET.WindowsForm.BPOITipControl();
             this.bTabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // bMarkerTipControl1
-            // 
-            this.bMarkerTipControl1.BackColor = System.Drawing.Color.White;
-            this.bMarkerTipControl1.Location = new System.Drawing.Point(391, 16);
-            this.bMarkerTipControl1.Name = "bMarkerTipControl1";
-            this.bMarkerTipControl1.Size = new System.Drawing.Size(360, 235);
-            this.bMarkerTipControl1.TabIndex = 5;
             // 
             // bPlaceBox1
             // 
@@ -116,22 +106,13 @@
             this.bDirectionBoard1.Name = "bDirectionBoard1";
             this.bDirectionBoard1.Size = new System.Drawing.Size(275, 516);
             this.bDirectionBoard1.TabIndex = 0;
-            // 
-            // bpoiTipControl1
-            // 
-            this.bpoiTipControl1.BackColor = System.Drawing.Color.White;
-            this.bpoiTipControl1.Location = new System.Drawing.Point(529, 228);
-            this.bpoiTipControl1.Name = "bpoiTipControl1";
-            this.bpoiTipControl1.Size = new System.Drawing.Size(360, 284);
-            this.bpoiTipControl1.TabIndex = 6;
+
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1139, 732);
-            this.Controls.Add(this.bpoiTipControl1);
-            this.Controls.Add(this.bMarkerTipControl1);
             this.Controls.Add(this.bPlaceBox1);
             this.Controls.Add(this.bTabControl1);
             this.Name = "Form2";
@@ -151,7 +132,5 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private WindowsForm.BPlaceBox bPlaceBox1;
-        private WindowsForm.BMarkerTipControl bMarkerTipControl1;
-        private WindowsForm.BPOITipControl bpoiTipControl1;
     }
 }

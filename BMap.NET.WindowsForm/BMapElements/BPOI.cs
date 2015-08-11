@@ -59,6 +59,17 @@ namespace BMap.NET.WindowsForm.BMapElements
                 _selected = value;
             }
         }
+        private Rectangle _rect;
+        /// <summary>
+        /// POI在屏幕中的范围
+        /// </summary>
+        public Rectangle Rect
+        {
+            get
+            {
+                return _rect;
+            }
+        }
         /// <summary>
         /// 绘制方法
         /// </summary>
@@ -69,6 +80,7 @@ namespace BMap.NET.WindowsForm.BMapElements
         public override void Draw(System.Drawing.Graphics g, LatLngPoint center, int zoom, System.Drawing.Size screen_size)
         {
             Point p = MapHelper.GetScreenLocationByLatLng(Location, center, zoom, screen_size);  //屏幕坐标
+
             Bitmap b;
             if (_selected)
             {
@@ -78,11 +90,12 @@ namespace BMap.NET.WindowsForm.BMapElements
             {
                 b = Properties.BMap.ico_red_point_small;
             }
-            g.DrawImage(b, new Point(p.X - b.Width / 2, p.Y - b.Height));
+            g.DrawImage(b, new Rectangle(p.X - b.Width / 2, p.Y - b.Height,b.Width,b.Height));
             using (Font f = new Font("微软雅黑", 10, FontStyle.Bold))
             {
-                g.DrawString(((Char)(Index + 65)).ToString(), f, Brushes.White, new PointF(_selected ? (p.X - 2) : (p.X - 3), _selected ? (p.Y - 25) : (p.Y - 20)));
+                g.DrawString(((Char)(Index + 65)).ToString(), f, Brushes.White, new PointF(_selected ? (p.X - 2) : (p.X - 6), _selected ? (p.Y - 25) : (p.Y - 26)));
             }
+            _rect = new Rectangle(p.X - b.Width / 2, p.Y - b.Height, b.Width, b.Height);
         }
     }
 }

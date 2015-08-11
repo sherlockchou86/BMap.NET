@@ -27,6 +27,14 @@ namespace BMap.NET.WindowsForm.BMapElements
             set;
             get;
         }
+        /// <summary>
+        /// 标记点实际详细位置
+        /// </summary>
+        public string Address
+        {
+            get;
+            set;
+        }
         private bool _selected;
         /// <summary>
         /// 当前POI是否被选中
@@ -58,6 +66,17 @@ namespace BMap.NET.WindowsForm.BMapElements
             get;
             set;
         }
+        private Rectangle _rect;
+        /// <summary>
+        /// 标记点在屏幕中的范围
+        /// </summary>
+        public Rectangle Rect
+        {
+            get
+            {
+                return _rect;
+            }
+        }
         /// <summary>
         /// 绘制方法
         /// </summary>
@@ -68,20 +87,9 @@ namespace BMap.NET.WindowsForm.BMapElements
         public override void Draw(System.Drawing.Graphics g, LatLngPoint center, int zoom, System.Drawing.Size screen_size)
         {
             Point p = MapHelper.GetScreenLocationByLatLng(Location, center, zoom, screen_size);  //屏幕坐标
-            Bitmap b;
-            if (_selected)
-            {
-                b = Properties.BMap.ico_blue_point_big;
-            }
-            else
-            {
-                b = Properties.BMap.ico_red_point_small;
-            }
-            g.DrawImage(b, new Point(p.X - b.Width / 2, p.Y - b.Height));
-            using (Font f = new Font("微软雅黑", 10, FontStyle.Bold))
-            {
-                g.DrawString(((Char)(Index + 65)).ToString(), f, Brushes.White, new PointF(_selected ? (p.X - 2) : (p.X - 3), _selected ? (p.Y - 25) : (p.Y - 20)));
-            }
+            Bitmap b = Properties.BMap.ico_marker;
+            g.DrawImage(b, new Rectangle(p.X - b.Width / 2, p.Y - b.Height, b.Width, b.Height));
+            _rect = new Rectangle(p.X - b.Width / 2, p.Y - b.Height, b.Width, b.Height);
         }
     }
 }
