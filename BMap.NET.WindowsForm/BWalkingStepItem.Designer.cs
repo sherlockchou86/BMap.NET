@@ -1,6 +1,6 @@
 ﻿namespace BMap.NET.WindowsForm
 {
-    partial class BRouteItem
+    partial class BWalkingStepItem
     {
         /// <summary> 
         /// Required designer variable.

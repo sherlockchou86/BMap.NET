@@ -117,27 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="picClose.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        R0lGODlhDQANAIEBAAkkPP///wAAAAAAACH/C05FVFNDQVBFMi4wAwEBAAAh+QQBAAABACwAAAAADQAN
-        AAAIMQADBABAsGBBgQMNKgSQcKFDhg0FLkQIsaFBhBIfUtSI0SHFjRcjWnx4kSRBkBMDBAQAOw==
-</value>
-  </data>
-  <data name="picEdit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAIAAADZrBkAAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAAAHpJREFUOE9j+EkWGGzaCqfdBiIoBwYIaANquPP0G4QBEYEAfNqAStcdfg3XgKwT
-        pza4HggC2klYG5qepXtfIOsBAizaCOoBAnRtxOgBAhRtROoBAoQ2uGoIwqMHCFC0QUiCeoAA3TZkBh6A
-        3ZFQIdwAJUiIB/TU9vMnAAJ9dlDhEyA8AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="picDelete.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAIAAADZrBkAAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAAAGtJREFUOE/FkMENgDAMA1mZZViOSfIjCm4J6T0QIDj50dqxonayW/xbm5dVp8Ro
-        nmoe79I9QPOo9TgPoenwNpSGAngbSnGj1pxScClIvFQrhS7FjcdfgkNoOrxN9wBNeJtOidGstYt8WTPb
-        ADBiWqahAo/nAAAAAElFTkSuQmCC
-</value>
-  </data>
 </root>

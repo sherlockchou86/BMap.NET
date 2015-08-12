@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace BMap.NET.WindowsForm
 {
-    partial class BStepItem : UserControl
+    public partial class BStepStartAndEndItem : UserControl
     {
-        public BStepItem()
+        public BStepStartAndEndItem()
         {
             InitializeComponent();
         }

@@ -131,6 +131,26 @@ namespace BMap.NET.WindowsForm.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ico_bytransit {
+            get {
+                object obj = ResourceManager.GetObject("ico_bytransit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ico_bywalk {
+            get {
+                object obj = ResourceManager.GetObject("ico_bywalk", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ico_cache {
             get {
                 object obj = ResourceManager.GetObject("ico_cache", resourceCulture);

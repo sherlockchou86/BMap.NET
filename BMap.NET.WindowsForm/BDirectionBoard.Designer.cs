@@ -62,7 +62,7 @@
             this.lblSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblSearch.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lblSearch.ForeColor = System.Drawing.Color.DarkGray;
-            this.lblSearch.Location = new System.Drawing.Point(251, 46);
+            this.lblSearch.Location = new System.Drawing.Point(266, 46);
             this.lblSearch.Name = "lblSearch";
             this.lblSearch.Size = new System.Drawing.Size(46, 59);
             this.lblSearch.TabIndex = 3;
@@ -75,7 +75,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(33, 52);
+            this.pictureBox2.Location = new System.Drawing.Point(33, 50);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(17, 17);
             this.pictureBox2.TabIndex = 4;
@@ -84,7 +84,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(33, 82);
+            this.pictureBox3.Location = new System.Drawing.Point(33, 85);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(17, 17);
             this.pictureBox3.TabIndex = 5;
@@ -97,7 +97,7 @@
             this.label2.BackColor = System.Drawing.Color.LightGray;
             this.label2.Location = new System.Drawing.Point(2, 120);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(295, 1);
+            this.label2.Size = new System.Drawing.Size(310, 1);
             this.label2.TabIndex = 6;
             this.label2.Text = "label2";
             // 
@@ -106,10 +106,13 @@
             this.flpRoutes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.flpRoutes.AutoScroll = true;
+            this.flpRoutes.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpRoutes.Location = new System.Drawing.Point(0, 181);
             this.flpRoutes.Name = "flpRoutes";
-            this.flpRoutes.Size = new System.Drawing.Size(298, 276);
+            this.flpRoutes.Size = new System.Drawing.Size(313, 276);
             this.flpRoutes.TabIndex = 7;
+            this.flpRoutes.WrapContents = false;
             // 
             // bPlaceBoxDestination
             // 
@@ -119,9 +122,10 @@
             this.bPlaceBoxDestination.CurrentCity = null;
             this.bPlaceBoxDestination.Enter2Search = false;
             this.bPlaceBoxDestination.InputFont = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bPlaceBoxDestination.Location = new System.Drawing.Point(51, 79);
+            this.bPlaceBoxDestination.Location = new System.Drawing.Point(51, 83);
             this.bPlaceBoxDestination.Name = "bPlaceBoxDestination";
-            this.bPlaceBoxDestination.Size = new System.Drawing.Size(197, 26);
+            this.bPlaceBoxDestination.QueryText = "停车场";
+            this.bPlaceBoxDestination.Size = new System.Drawing.Size(212, 21);
             this.bPlaceBoxDestination.TabIndex = 1;
             // 
             // bPlaceBoxSource
@@ -134,7 +138,8 @@
             this.bPlaceBoxSource.InputFont = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bPlaceBoxSource.Location = new System.Drawing.Point(51, 46);
             this.bPlaceBoxSource.Name = "bPlaceBoxSource";
-            this.bPlaceBoxSource.Size = new System.Drawing.Size(197, 26);
+            this.bPlaceBoxSource.QueryText = "停车场";
+            this.bPlaceBoxSource.Size = new System.Drawing.Size(212, 21);
             this.bPlaceBoxSource.TabIndex = 0;
             // 
             // BDirectionBoard
@@ -151,7 +156,7 @@
             this.Controls.Add(this.bPlaceBoxDestination);
             this.Controls.Add(this.bPlaceBoxSource);
             this.Name = "BDirectionBoard";
-            this.Size = new System.Drawing.Size(298, 457);
+            this.Size = new System.Drawing.Size(313, 457);
             this.Click += new System.EventHandler(this.BDirectionBoard_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.BDirectionBoard_Paint);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BDirectionBoard_MouseMove);

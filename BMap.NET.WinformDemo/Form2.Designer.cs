@@ -54,6 +54,8 @@
             // bTabControl1
             // 
             this.bTabControl1.Alignment = System.Windows.Forms.TabAlignment.Left;
+            this.bTabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.bTabControl1.Controls.Add(this.tabPage1);
             this.bTabControl1.Controls.Add(this.tabPage2);
             this.bTabControl1.ItemSize = new System.Drawing.Size(70, 70);
@@ -61,7 +63,7 @@
             this.bTabControl1.Multiline = true;
             this.bTabControl1.Name = "bTabControl1";
             this.bTabControl1.SelectedIndex = 0;
-            this.bTabControl1.Size = new System.Drawing.Size(359, 530);
+            this.bTabControl1.Size = new System.Drawing.Size(389, 708);
             this.bTabControl1.TabIndex = 2;
             // 
             // tabPage1
@@ -70,7 +72,7 @@
             this.tabPage1.Location = new System.Drawing.Point(74, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(281, 522);
+            this.tabPage1.Size = new System.Drawing.Size(355, 700);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -83,7 +85,7 @@
             this.bPlacesBoard1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bPlacesBoard1.Location = new System.Drawing.Point(3, 3);
             this.bPlacesBoard1.Name = "bPlacesBoard1";
-            this.bPlacesBoard1.Size = new System.Drawing.Size(275, 516);
+            this.bPlacesBoard1.Size = new System.Drawing.Size(349, 694);
             this.bPlacesBoard1.TabIndex = 1;
             // 
             // tabPage2
@@ -92,7 +94,7 @@
             this.tabPage2.Location = new System.Drawing.Point(74, 4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(281, 522);
+            this.tabPage2.Size = new System.Drawing.Size(311, 700);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -104,9 +106,8 @@
             this.bDirectionBoard1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bDirectionBoard1.Location = new System.Drawing.Point(3, 3);
             this.bDirectionBoard1.Name = "bDirectionBoard1";
-            this.bDirectionBoard1.Size = new System.Drawing.Size(275, 516);
+            this.bDirectionBoard1.Size = new System.Drawing.Size(305, 694);
             this.bDirectionBoard1.TabIndex = 0;
-
             // 
             // Form2
             // 

@@ -9,9 +9,12 @@ using System.Windows.Forms;
 
 namespace BMap.NET.WindowsForm
 {
-    partial class BRouteItem : UserControl
+    /// <summary>
+    /// 步行路线步骤控件
+    /// </summary>
+    partial class BWalkingStepItem : UserControl
     {
-        public BRouteItem()
+        public BWalkingStepItem()
         {
             InitializeComponent();
         }

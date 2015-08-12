@@ -127,6 +127,12 @@
   <data name="ico_blue_point_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_blue_point_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ico_bytransit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_bytransit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ico_bywalk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_bywalk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ico_cache" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_cache.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

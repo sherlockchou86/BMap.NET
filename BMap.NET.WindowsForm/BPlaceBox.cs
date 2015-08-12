@@ -17,14 +17,32 @@ namespace BMap.NET.WindowsForm
     /// </summary>
     public partial class BPlaceBox : UserControl
     {
+        private string _city = "";
         /// <summary>
         /// 目标搜索城市
         /// </summary>
-        private string _city = "";
-        /// <summary>
-        /// 目标搜索区
-        /// </summary>
+        [Browsable(false)]
+        public string City
+        {
+            get
+            {
+                return _city;
+            }
+        }
+
         private string _district = "";
+        /// <summary>
+        /// 目标搜索区县
+        /// </summary>
+        [Browsable(false)]
+        public string District
+        {
+            get
+            {
+                return _district;
+            }
+        }
+
 
         private Font _intputFont;
         /// <summary>

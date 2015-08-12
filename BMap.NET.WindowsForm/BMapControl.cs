@@ -1136,16 +1136,16 @@ namespace BMap.NET.WindowsForm
                             {
                                 _currentCity = (string)(_location["result"]["addressComponent"]["province"]);  //返回JSON结构请参见百度API文档
                             }
-                            else if (_zoom <= 12) //定位到城市
+                            else if (_zoom <= 18) //定位到城市
                             {
                                 if (_location["result"]["addressComponent"]["city"] != null)
                                     _currentCity = (string)(_location["result"]["addressComponent"]["city"]);  //返回JSON结构请参见百度API文档
                             }
-                            else  //定位到县区
-                            {
-                                if (_location["result"]["addressComponent"]["district"] != null)
-                                    _currentCity = (string)(_location["result"]["addressComponent"]["district"]); //返回JSON结构请参见百度API文档
-                            }
+                            //else  //定位到县区
+                            //{
+                            //    if (_location["result"]["addressComponent"]["district"] != null)
+                            //        _currentCity = (string)(_location["result"]["addressComponent"]["district"]); //返回JSON结构请参见百度API文档
+                            //}
                         }
                     }                   
                 }
@@ -1492,6 +1492,7 @@ namespace BMap.NET.WindowsForm
                 if (city_location != null)
                 {
                     Center = new LatLngPoint(double.Parse((string)city_location["result"]["location"]["lng"]), double.Parse((string)city_location["result"]["location"]["lat"]));
+                    Locate(false);
                 }
                 this.Invoke((Action)delegate()
                 {

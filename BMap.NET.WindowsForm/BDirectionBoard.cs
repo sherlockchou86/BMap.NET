@@ -6,6 +6,8 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json.Linq;
+using BMap.NET.HTTPService;
 
 namespace BMap.NET.WindowsForm
 {
@@ -38,7 +40,7 @@ namespace BMap.NET.WindowsForm
         /// </summary>
         private int _current_method = 0;
         /// <summary>
-        /// 方案类型 0时间短 1少换乘 2少步行        3最短路程 4最短时间 5不走高速
+        /// 方案类型 0时间短 1少换乘 2少步行  3最短路程 4最短时间 5不走高速
         /// </summary>
         private int _method_filter = 0;
         /// <summary>
@@ -96,52 +98,52 @@ namespace BMap.NET.WindowsForm
             {
                 if (_method_filter == 0) //时间短
                 {
-                    e.Graphics.FillRectangle(Brushes.WhiteSmoke, new Rectangle(5, 135, (Width - 10) / 3, 25));
-                    e.Graphics.DrawImage(Properties.BMap.ico_select, new Point(5 + 3, 135 + 5));
+                    e.Graphics.FillRectangle(Brushes.WhiteSmoke, new Rectangle(3, 135, (Width - 25) / 3, 25));
+                    e.Graphics.DrawImage(Properties.BMap.ico_select, new Point(3 + 3, 135 + 5));
                 }
                 else if (_method_filter == 1) //少换乘
                 {
-                    e.Graphics.FillRectangle(Brushes.WhiteSmoke, new Rectangle(5 + (Width - 10) / 3, 135, (Width - 10) / 3, 25));
-                    e.Graphics.DrawImage(Properties.BMap.ico_select, new Point(5 + (Width - 10) / 3 + 3, 135 + 5));
+                    e.Graphics.FillRectangle(Brushes.WhiteSmoke, new Rectangle(3 + (Width - 25) / 3, 135, (Width - 25) / 3, 25));
+                    e.Graphics.DrawImage(Properties.BMap.ico_select, new Point(3 + (Width - 25) / 3 + 3, 135 + 5));
                 }
                 else if (_method_filter == 2) //少步行
                 {
-                    e.Graphics.FillRectangle(Brushes.WhiteSmoke, new Rectangle(5 + 2 * (Width - 10) / 3, 135, (Width - 10) / 3, 25));
-                    e.Graphics.DrawImage(Properties.BMap.ico_select, new Point(5 + 2 * (Width - 10) / 3 + 3, 135 + 5));
+                    e.Graphics.FillRectangle(Brushes.WhiteSmoke, new Rectangle(3 + 2 * (Width - 25) / 3, 135, (Width - 25) / 3, 25));
+                    e.Graphics.DrawImage(Properties.BMap.ico_select, new Point(3 + 2 * (Width - 25) / 3 + 3, 135 + 5));
                 }
-                e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(5, 135, (Width - 10) / 3, 25));
-                e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(5 + (Width - 10) / 3, 135, (Width - 10) / 3, 25));
-                e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(5 + 2 * (Width - 10) / 3, 135, (Width - 10) / 3, 25));
+                e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(3, 135, (Width - 25) / 3, 25));
+                e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(3 + (Width - 25) / 3, 135, (Width - 25) / 3, 25));
+                e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(3 + 2 * (Width - 25) / 3, 135, (Width - 25) / 3, 25));
 
-                e.Graphics.DrawString("时间短", new Font("微软雅黑", 10), Brushes.Gray, new PointF(5 + 21, 135 + 3));
-                e.Graphics.DrawString("少换乘", new Font("微软雅黑", 10), Brushes.Gray, new PointF(5 + (Width - 10) / 3 + 21, 135 + 3));
-                e.Graphics.DrawString("少步行", new Font("微软雅黑", 10), Brushes.Gray, new PointF(5 + 2 * (Width - 10) / 3 + 21, 135 + 3));
+                e.Graphics.DrawString("时间短", new Font("微软雅黑", 10), Brushes.Gray, new PointF(3 + 21, 135 + 3));
+                e.Graphics.DrawString("少换乘", new Font("微软雅黑", 10), Brushes.Gray, new PointF(3 + (Width - 25) / 3 + 21, 135 + 3));
+                e.Graphics.DrawString("少步行", new Font("微软雅黑", 10), Brushes.Gray, new PointF(3 + 2 * (Width - 25) / 3 + 21, 135 + 3));
             }
             else if (_current_method == 1) //驾车
             {
                 if (_method_filter == 3) //最短路程
                 {
-                    e.Graphics.FillRectangle(Brushes.WhiteSmoke, new Rectangle(5, 135, (Width - 10) / 3, 25));
-                    e.Graphics.DrawImage(Properties.BMap.ico_select, new Point(5 + 3, 135 + 5));
+                    e.Graphics.FillRectangle(Brushes.WhiteSmoke, new Rectangle(3, 135, (Width - 25) / 3, 25));
+                    e.Graphics.DrawImage(Properties.BMap.ico_select, new Point(3 + 3, 135 + 5));
                 }
                 else if (_method_filter == 4) //最短距离
                 {
-                    e.Graphics.FillRectangle(Brushes.WhiteSmoke, new Rectangle(5 + (Width - 10) / 3, 135, (Width - 10) / 3, 25));
-                    e.Graphics.DrawImage(Properties.BMap.ico_select, new Point(5 + (Width - 10) / 3 + 3, 135 + 5));
+                    e.Graphics.FillRectangle(Brushes.WhiteSmoke, new Rectangle(3 + (Width - 25) / 3, 135, (Width - 25) / 3, 25));
+                    e.Graphics.DrawImage(Properties.BMap.ico_select, new Point(3 + (Width - 25) / 3 + 3, 135 + 5));
                 }
                 else if (_method_filter == 5) //不走高速
                 {
-                    e.Graphics.FillRectangle(Brushes.WhiteSmoke, new Rectangle(5 + 2 * (Width - 10) / 3, 135, (Width - 10) / 3, 25));
-                    e.Graphics.DrawImage(Properties.BMap.ico_select, new Point(5 + 2 * (Width - 10) / 3 + 3, 135 + 5));
+                    e.Graphics.FillRectangle(Brushes.WhiteSmoke, new Rectangle(3 + 2 * (Width - 25) / 3, 135, (Width - 25) / 3, 25));
+                    e.Graphics.DrawImage(Properties.BMap.ico_select, new Point(3 + 2 * (Width - 25) / 3 + 3, 135 + 5));
                 }
 
-                e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(5, 135, (Width - 10) / 3, 25));
-                e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(5 + (Width - 10) / 3, 135, (Width - 10) / 3, 25));
-                e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(5 + 2 * (Width - 10) / 3, 135, (Width - 10) / 3, 25));
+                e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(3, 135, (Width - 25) / 3, 25));
+                e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(3 + (Width - 25) / 3, 135, (Width - 25) / 3, 25));
+                e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(3 + 2 * (Width - 25) / 3, 135, (Width - 25) / 3, 25));
 
-                e.Graphics.DrawString("最短时间", new Font("微软雅黑", 10), Brushes.Gray, new PointF(5 + 20, 135 + 3));
-                e.Graphics.DrawString("最短路程", new Font("微软雅黑", 10), Brushes.Gray, new PointF(5 + (Width - 10) / 3 + 20, 135 + 3));
-                e.Graphics.DrawString("不走高速", new Font("微软雅黑", 10), Brushes.Gray, new PointF(5 + 2 * (Width - 10) / 3 + 20, 135 + 3));
+                e.Graphics.DrawString("最短时间", new Font("微软雅黑", 10), Brushes.Gray, new PointF(3 + 20, 135 + 3));
+                e.Graphics.DrawString("最短路程", new Font("微软雅黑", 10), Brushes.Gray, new PointF(3 + (Width - 25) / 3 + 20, 135 + 3));
+                e.Graphics.DrawString("不走高速", new Font("微软雅黑", 10), Brushes.Gray, new PointF(3 + 2 * (Width - 25) / 3 + 20, 135 + 3));
             }
             //步行没有方案类型
         }
@@ -258,7 +260,81 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void lblSearch_Click(object sender, EventArgs e)
         {
+            StartSearch();
+        }
+        #endregion
 
+        #region 公开方法
+        /// <summary>
+        /// 开启搜索
+        /// </summary>
+        public void StartSearch()
+        {
+            ((Action)delegate()
+            {
+                JObject routes;
+                DirectionService ds = new DirectionService();
+                if (_current_method == 0) //公交
+                {
+                    if (bPlaceBoxSource.City != bPlaceBoxDestination.City)
+                    {
+                        MessageBox.Show("公交导航时，两地城市必须一致！");
+                        return;
+                    }
+                    routes = ds.DirectionByTransit(bPlaceBoxSource.QueryText, bPlaceBoxDestination.QueryText, _currentCity);
+                }
+                else if (_current_method == 1) //驾车
+                {
+                    routes = ds.DirectionByDriving(bPlaceBoxSource.QueryText, bPlaceBoxDestination.QueryText, bPlaceBoxSource.City, bPlaceBoxDestination.City);
+                }
+                else //步行
+                {
+                    if (bPlaceBoxSource.City != bPlaceBoxDestination.City)
+                    {
+                        MessageBox.Show("步行导航时，两地城市必须一致！");
+                        return;
+                    }
+                    routes = ds.DirectionByWalking(bPlaceBoxSource.QueryText, bPlaceBoxDestination.QueryText, _currentCity);
+                }
+                if (routes != null && (string)routes["status"] == "0") //搜索成功
+                {
+                    this.Invoke((Action)delegate()
+                    {
+                        if ((string)routes["type"] == "2") //正常结果
+                        {
+                            flpRoutes.Controls.Clear();
+                            if (_current_method == 0) //公交
+                            {
+                                foreach (JObject route in routes["result"]["routes"])
+                                {
+                                    BTransitRouteItem item = new BTransitRouteItem();
+                                    item.DataSource = route;
+                                    flpRoutes.Controls.Add(item);
+                                    item.Width = flpRoutes.Width - 25;
+                                }
+                            }
+                            else if (_current_method == 1) //驾车
+                            {
+                                foreach (JObject route in routes["result"]["routes"])
+                                {
+                                    BDrivingRouteItem item = new BDrivingRouteItem();
+                                    item.DataSource = route;
+                                    flpRoutes.Controls.Add(item);
+                                    item.Width = flpRoutes.Width - 25;
+                                }
+                            }
+                            else
+                            {
+
+                            }
+                        }
+                        else //地址模糊 需重新选择
+                        {
+                            //
+                        }
+                    });
+                }
+            }).BeginInvoke(null, null);
         }
         #endregion
 

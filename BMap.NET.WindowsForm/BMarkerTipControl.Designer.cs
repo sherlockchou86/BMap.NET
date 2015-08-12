@@ -127,6 +127,7 @@
             this.lnknearby_bus_station.TabStop = true;
             this.lnknearby_bus_station.Text = "公交站";
             this.lnknearby_bus_station.Visible = false;
+            this.lnknearby_bus_station.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnk_LinkClicked);
             // 
             // lnknearby_hospital
             // 
@@ -138,6 +139,7 @@
             this.lnknearby_hospital.TabStop = true;
             this.lnknearby_hospital.Text = "医院";
             this.lnknearby_hospital.Visible = false;
+            this.lnknearby_hospital.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnk_LinkClicked);
             // 
             // lnknearby_bank
             // 
@@ -149,6 +151,7 @@
             this.lnknearby_bank.TabStop = true;
             this.lnknearby_bank.Text = "银行";
             this.lnknearby_bank.Visible = false;
+            this.lnknearby_bank.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnk_LinkClicked);
             // 
             // lnknearby_eatting
             // 
@@ -160,6 +163,7 @@
             this.lnknearby_eatting.TabStop = true;
             this.lnknearby_eatting.Text = "餐馆";
             this.lnknearby_eatting.Visible = false;
+            this.lnknearby_eatting.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnk_LinkClicked);
             // 
             // lnknearby_hotel
             // 
@@ -171,6 +175,7 @@
             this.lnknearby_hotel.TabStop = true;
             this.lnknearby_hotel.Text = "酒店";
             this.lnknearby_hotel.Visible = false;
+            this.lnknearby_hotel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnk_LinkClicked);
             // 
             // btnsearch
             // 

@@ -293,6 +293,15 @@ namespace BMap.NET.WindowsForm
         {
 
         }
+        /// <summary>
+        /// 快速搜索周边
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lnk_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+        }
         #endregion
     }
 }

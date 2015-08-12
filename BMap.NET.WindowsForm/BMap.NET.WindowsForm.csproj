@@ -58,6 +58,18 @@
     <Compile Include="BDirectionBoard.Designer.cs">
       <DependentUpon>BDirectionBoard.cs</DependentUpon>
     </Compile>
+    <Compile Include="BDrivingRouteItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BDrivingRouteItem.Designer.cs">
+      <DependentUpon>BDrivingRouteItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BDrivingStepItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BDrivingStepItem.Designer.cs">
+      <DependentUpon>BDrivingStepItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="BLoadMapModeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -119,11 +131,17 @@
     <Compile Include="BPOITipControl.Designer.cs">
       <DependentUpon>BPOITipControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="BRouteItem.cs">
+    <Compile Include="BStepStartAndEndItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="BRouteItem.Designer.cs">
-      <DependentUpon>BRouteItem.cs</DependentUpon>
+    <Compile Include="BStepStartAndEndItem.Designer.cs">
+      <DependentUpon>BStepStartAndEndItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BTransitRouteItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BTransitRouteItem.Designer.cs">
+      <DependentUpon>BTransitRouteItem.cs</DependentUpon>
     </Compile>
     <Compile Include="BScreenshotMenu.cs">
       <SubType>UserControl</SubType>
@@ -138,11 +156,23 @@
     <Compile Include="BMapElements\BPOI.cs" />
     <Compile Include="BMapElements\BRoute.cs" />
     <Compile Include="BMapElements\BTile.cs" />
-    <Compile Include="BStepItem.cs">
+    <Compile Include="BTransitStepItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="BStepItem.Designer.cs">
-      <DependentUpon>BStepItem.cs</DependentUpon>
+    <Compile Include="BTransitStepItem.Designer.cs">
+      <DependentUpon>BTransitStepItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BWalkingRouteItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BWalkingRouteItem.Designer.cs">
+      <DependentUpon>BWalkingRouteItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BWalkingStepItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BWalkingStepItem.Designer.cs">
+      <DependentUpon>BWalkingStepItem.cs</DependentUpon>
     </Compile>
     <Compile Include="DrawingObjects\BCircle.cs" />
     <Compile Include="DrawingObjects\BLine.cs" />
@@ -180,6 +210,12 @@
     <EmbeddedResource Include="BDirectionBoard.resx">
       <DependentUpon>BDirectionBoard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BDrivingRouteItem.resx">
+      <DependentUpon>BDrivingRouteItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BDrivingStepItem.resx">
+      <DependentUpon>BDrivingStepItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BLoadMapModeControl.resx">
       <DependentUpon>BLoadMapModeControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -213,6 +249,12 @@
     <EmbeddedResource Include="BScreenshotMenu.resx">
       <DependentUpon>BScreenshotMenu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BTransitRouteItem.resx">
+      <DependentUpon>BTransitRouteItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BTransitStepItem.resx">
+      <DependentUpon>BTransitStepItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FunctionalControls\CityList.resx">
       <DependentUpon>CityList.cs</DependentUpon>
     </EmbeddedResource>
@@ -233,6 +275,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="libs\Newtonsoft.Json.dll" />
+    <None Include="Resources\ico_bywalk.png" />
+    <None Include="Resources\ico_bytransit.png" />
     <None Include="Resources\ico_marker.png" />
     <None Include="Resources\ico_poi_logo.png" />
     <None Include="Resources\ico_edit_marker.png" />
