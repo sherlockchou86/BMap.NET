@@ -56,6 +56,7 @@
             this.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Name = "BDrivingStepItem";
             this.Size = new System.Drawing.Size(306, 56);
+            this.Click += new System.EventHandler(this.lblStepInfo_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.BDrivingStepItem_Paint);
             this.MouseEnter += new System.EventHandler(this.BDrivingStepItem_MouseEnter);
             this.MouseLeave += new System.EventHandler(this.BDrivingStepItem_MouseLeave);

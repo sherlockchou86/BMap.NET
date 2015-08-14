@@ -15,6 +15,10 @@ namespace BMap.NET.WindowsForm
     /// </summary>
     partial class BTransitStepItem : UserControl
     {
+        /// <summary>
+        /// 鼠标进入或点击时激发该事件
+        /// </summary>
+        public event StepSelectedEventHandler StepSelected;
         private JArray _dataSource;
         /// <summary>
         /// 步骤数据源
@@ -154,6 +158,10 @@ namespace BMap.NET.WindowsForm
         private void BTransitStepItem_MouseEnter(object sender, EventArgs e)
         {
             BackColor = Color.FromArgb(235, 241, 251);
+            if (StepSelected != null)
+            {
+                StepSelected(Paths, false);
+            }
         }
         /// <summary>
         /// 鼠标移出
@@ -163,6 +171,18 @@ namespace BMap.NET.WindowsForm
         private void BTransitStepItem_MouseLeave(object sender, EventArgs e)
         {
             BackColor = Color.White;
+        }
+        /// <summary>
+        /// 鼠标点击
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BTransitStepItem_Click(object sender, EventArgs e)
+        {
+            if (StepSelected != null)
+            {
+                StepSelected(Paths, true);
+            }
         }
     }
 }

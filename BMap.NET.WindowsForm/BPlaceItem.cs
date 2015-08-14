@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
+using BMap.NET.WindowsForm.BMapElements;
 
 namespace BMap.NET.WindowsForm
 {
     /// <summary>
-    /// 位置项
+    /// POI显示项
     /// </summary>
     partial class BPlaceItem : UserControl
     {
@@ -27,40 +28,39 @@ namespace BMap.NET.WindowsForm
             }
             set
             {
-                _selected = value;
-                if (!_selected)  //收缩
+                if (_selected != value)
                 {
-                    Height = 104;
-                    BackColor = Color.White;
-                    txtAddress.BackColor = Color.White;
-                    txtPhone.BackColor = Color.White;
-                    txtPrice.BackColor = Color.White;
-                    txtTag.BackColor = Color.White;
-                    btn_here.BackColor = Color.White;
-                    btn_there.BackColor = Color.White;
-                }
-                else //展开
-                {
-                    Height = 145;
-                    BackColor = Color.FromArgb(235, 245, 250);
-                    txtAddress.BackColor = Color.FromArgb(235, 245, 250);
-                    txtPhone.BackColor = Color.FromArgb(235, 245, 250);
-                    txtPrice.BackColor = Color.FromArgb(235, 245, 250);
-                    txtTag.BackColor = Color.FromArgb(235, 245, 250);
-                    btn_there.BackColor = Color.White;
-                    btn_here.BackColor = Color.White;
-                }
-                Invalidate();
-                if (PlaceSelectedChanged != null)
-                {
-                    PlaceSelectedChanged((string)DataSource["uid"], _selected);
+                    _selected = value;
+                    if (!_selected)  //收缩
+                    {
+                        Height = 104;
+                        BackColor = Color.White;
+                        txtAddress.BackColor = Color.White;
+                        txtPhone.BackColor = Color.White;
+                        txtPrice.BackColor = Color.White;
+                        txtTag.BackColor = Color.White;
+                        btn_here.BackColor = Color.White;
+                        btn_there.BackColor = Color.White;
+                    }
+                    else //展开
+                    {
+                        Height = 145;
+                        BackColor = Color.FromArgb(235, 245, 250);
+                        txtAddress.BackColor = Color.FromArgb(235, 245, 250);
+                        txtPhone.BackColor = Color.FromArgb(235, 245, 250);
+                        txtPrice.BackColor = Color.FromArgb(235, 245, 250);
+                        txtTag.BackColor = Color.FromArgb(235, 245, 250);
+                        btn_there.BackColor = Color.White;
+                        btn_here.BackColor = Color.White;
+                    }
+                    Invalidate();
                 }
             }
         }
         /// <summary>
         /// 数据源
         /// </summary>
-        public JObject DataSource
+        public BPOI POI
         {
             get;
             set;
@@ -128,7 +128,7 @@ namespace BMap.NET.WindowsForm
         {
             if (SetDestinationPlace != null)
             {
-                SetDestinationPlace((string)DataSource["name"]); //具体json格式参见api文档
+                SetDestinationPlace((string)POI.DataSource["name"]); //具体json格式参见api文档
             }
         }
         /// <summary>
@@ -140,7 +140,7 @@ namespace BMap.NET.WindowsForm
         {
             if (SetSourcePlace != null)
             {
-                SetSourcePlace((string)DataSource["name"]);  //具体json格式参见api文档
+                SetSourcePlace((string)POI.DataSource["name"]);  //具体json格式参见api文档
             }
         }
         /// <summary>
@@ -169,7 +169,14 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param> 
         private void BPlaceItem_Click(object sender, EventArgs e)
         {
-            Selected = !Selected;
+            Selected = true;
+            if (_selected)
+            {
+                if (PlaceSelectedChanged != null)
+                {
+                    PlaceSelectedChanged(POI);
+                }
+            }
         }
         /// <summary>
         /// 控件加载
@@ -178,22 +185,22 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void BPlaceItem_Load(object sender, EventArgs e)
         {
-            if (DataSource != null)
+            if (POI.DataSource != null)
             {
-                lnkName.Text = (string)DataSource["name"] + " -详情";  //具体json格式参见api文档
-                txtAddress.Text = (string)DataSource["address"];
-                txtPhone.Text = (string)DataSource["telephone"];
-                if (DataSource["detail_info"] != null && DataSource["detail_info"]["tag"] != null)
+                lnkName.Text = (string)POI.DataSource["name"] + " -详情";  //具体json格式参见api文档
+                txtAddress.Text = (string)POI.DataSource["address"];
+                txtPhone.Text = (string)POI.DataSource["telephone"];
+                if (POI.DataSource["detail_info"] != null && POI.DataSource["detail_info"]["tag"] != null)
                 {
-                    txtTag.Text = (string)DataSource["detail_info"]["tag"];
+                    txtTag.Text = (string)POI.DataSource["detail_info"]["tag"];
                 }
                 else
                 {
                     txtTag.Visible = false;
                 }
-                if (DataSource["detail_info"] != null && DataSource["detail_info"]["price"] != null)
+                if (POI.DataSource["detail_info"] != null && POI.DataSource["detail_info"]["price"] != null)
                 {
-                    txtPrice.Text = "人均 ￥" + (string)DataSource["detail_info"]["price"];
+                    txtPrice.Text = "人均 ￥" + (string)POI.DataSource["detail_info"]["price"];
                 }
                 else
                 {
@@ -215,7 +222,6 @@ namespace BMap.NET.WindowsForm
     /// <summary>
     /// 表示处理选择某位置事件的方法
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="selected"></param>
-    delegate void PlaceSelectedChangedEventHandler(string uid, bool selected);
+    /// <param name="poi"></param>
+    delegate void PlaceSelectedChangedEventHandler(BPOI poi);
 }

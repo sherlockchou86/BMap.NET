@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
+using BMap.NET.WindowsForm.BMapElements;
 
 namespace BMap.NET.WindowsForm
 {
@@ -15,11 +16,23 @@ namespace BMap.NET.WindowsForm
     /// </summary>
     partial class BDrivingRouteItem : UserControl
     {
-        private JObject _dataSource;
+        /// <summary>
+        /// 步骤选择时激发该事件
+        /// </summary>
+        public event StepSelectedEventHandler StepSelected;
+        /// <summary>
+        /// 路线选择时激发该事件
+        /// </summary>
+        public event RouteSelectedEventHandler RouteSelected;
+        /// <summary>
+        /// 路线起点终点选中时激发该事件
+        /// </summary>
+        public event StepEndPointSelectedEventHandler StepEndPointSelected;
+        private BRoute _dataSource;
         /// <summary>
         /// 路线数据源
         /// </summary>
-        public JObject DataSource
+        public BRoute DataSource
         {
             get
             {
@@ -30,18 +43,29 @@ namespace BMap.NET.WindowsForm
                 _dataSource = value;
                 if (_dataSource != null) //解析 具体json格式参见api文档
                 {
-                    _distance = double.Parse((string)_dataSource["distance"]);
-                    _duration = double.Parse((string)_dataSource["duration"]);
-                    _toll = double.Parse((string)_dataSource["toll"]);
-                    foreach (JObject step in _dataSource["steps"])
+                    _distance = double.Parse((string)_dataSource.DataSource["distance"]);
+                    _duration = double.Parse((string)_dataSource.DataSource["duration"]);
+                    _toll = double.Parse((string)_dataSource.DataSource["toll"]);
+                    if (Origin != null)  //起点
+                    {
+                        flpSteps.Controls.Add(Origin);
+                        Origin.StepEndPointSelected+=new StepEndPointSelectedEventHandler(Origin_StepEndPointSelected);
+                    }
+                    foreach (JObject step in _dataSource.DataSource["steps"])
                     {
                         BDrivingStepItem item = new BDrivingStepItem();
                         item.DataSource = step;
                         item.Width = flpSteps.Width - 17;
                         flpSteps.Controls.Add(item);
                         item.Margin = new Padding(0);
+                        item.StepSelected+=new StepSelectedEventHandler(item_StepSelected);
                         if (item.Step_POIs != null)
                             _pois_near += item.Step_POIs + ",";
+                    }
+                    if (Destination != null) //终点
+                    {
+                        flpSteps.Controls.Add(Destination);
+                        Destination.StepEndPointSelected+=new StepEndPointSelectedEventHandler(Destination_StepEndPointSelected);
                     }
                     if (_pois_near != null)
                     {
@@ -55,6 +79,7 @@ namespace BMap.NET.WindowsForm
                 }
             }
         }
+
         private double _distance;
         private double _duration;
         private string _pois_near;
@@ -88,6 +113,22 @@ namespace BMap.NET.WindowsForm
             }
         }
         /// <summary>
+        /// 起点
+        /// </summary>
+        public BStepStartAndEndItem Origin
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 终点
+        /// </summary>
+        public BStepStartAndEndItem Destination
+        {
+            get;
+            set;
+        }
+        /// <summary>
         /// 构造方法
         /// </summary>
         public BDrivingRouteItem()
@@ -95,6 +136,7 @@ namespace BMap.NET.WindowsForm
             InitializeComponent();
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
         }
+
         #region 事件处理
         /// <summary>
         /// 鼠标进入
@@ -123,7 +165,14 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void BDrivingRouteItem_Click(object sender, EventArgs e)
         {
-            Selected = !Selected;
+            Selected = true;
+            if (_selected)
+            {
+                if (RouteSelected != null)
+                {
+                    RouteSelected(_dataSource);
+                }
+            }
         }
         /// <summary>
         /// 重绘
@@ -145,6 +194,40 @@ namespace BMap.NET.WindowsForm
                 e.Graphics.DrawString(Math.Round(_duration / 60, 0) + "分钟 | " + Math.Round(_distance / 1000, 1) + "公里 | 过路费" + Math.Round(_toll,1) + "元", f, Brushes.Gray, new PointF(20, 10));
                 e.Graphics.DrawString("途径：" + _pois_near, f, Brushes.DarkGray, new PointF(20, 35));
             }           
+        }
+        /// <summary>
+        /// 路线步骤选中
+        /// </summary>
+        /// <param name="stepPath"></param>
+        /// <param name="enlarge"></param>
+        void item_StepSelected(string stepPath, bool enlarge)
+        {
+            if (StepSelected != null)
+            {
+                StepSelected(stepPath, enlarge);
+            }
+        }
+        /// <summary>
+        /// 路线终点选中
+        /// </summary>
+        /// <param name="bPoint"></param>
+        void Destination_StepEndPointSelected(BPoint bPoint)
+        {
+            if (StepEndPointSelected != null)
+            {
+                StepEndPointSelected(bPoint);
+            }
+        }
+        /// <summary>
+        /// 路线起点选中
+        /// </summary>
+        /// <param name="bPoint"></param>
+        void Origin_StepEndPointSelected(BPoint bPoint)
+        {
+            if (StepEndPointSelected != null)
+            {
+                StepEndPointSelected(bPoint);
+            }
         }
         #endregion
     }

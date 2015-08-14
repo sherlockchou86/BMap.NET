@@ -6,25 +6,21 @@ using System.Text;
 namespace BMap.NET.WindowsForm
 {
     /// <summary>
-    /// POI类型
+    /// 地图中导航路线类型
     /// </summary>
-    enum POIType
+    enum RouteType
     {
         /// <summary>
-        /// 普通POI
+        /// 公交
         /// </summary>
-        Normal,
+        Transit,
         /// <summary>
-        /// 路线起点
+        /// 驾车
         /// </summary>
-        RouteStart,
+        Driving,
         /// <summary>
-        /// 路线终点
+        /// 步行
         /// </summary>
-        RouteEnd,
-        /// <summary>
-        /// 未知点
-        /// </summary>
-        Strange
+        Walking
     }
 }

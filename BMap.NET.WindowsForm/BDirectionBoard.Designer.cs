@@ -108,9 +108,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpRoutes.AutoScroll = true;
             this.flpRoutes.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpRoutes.Location = new System.Drawing.Point(0, 181);
+            this.flpRoutes.Location = new System.Drawing.Point(0, 171);
             this.flpRoutes.Name = "flpRoutes";
-            this.flpRoutes.Size = new System.Drawing.Size(313, 276);
+            this.flpRoutes.Size = new System.Drawing.Size(313, 286);
             this.flpRoutes.TabIndex = 7;
             this.flpRoutes.WrapContents = false;
             // 
@@ -124,7 +124,7 @@
             this.bPlaceBoxDestination.InputFont = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bPlaceBoxDestination.Location = new System.Drawing.Point(51, 83);
             this.bPlaceBoxDestination.Name = "bPlaceBoxDestination";
-            this.bPlaceBoxDestination.QueryText = "停车场";
+            this.bPlaceBoxDestination.QueryText = "";
             this.bPlaceBoxDestination.Size = new System.Drawing.Size(212, 21);
             this.bPlaceBoxDestination.TabIndex = 1;
             // 
@@ -138,7 +138,7 @@
             this.bPlaceBoxSource.InputFont = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bPlaceBoxSource.Location = new System.Drawing.Point(51, 46);
             this.bPlaceBoxSource.Name = "bPlaceBoxSource";
-            this.bPlaceBoxSource.QueryText = "停车场";
+            this.bPlaceBoxSource.QueryText = "";
             this.bPlaceBoxSource.Size = new System.Drawing.Size(212, 21);
             this.bPlaceBoxSource.TabIndex = 0;
             // 

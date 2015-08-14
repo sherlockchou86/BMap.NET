@@ -39,8 +39,10 @@
             this.cmsLarge = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsSmall = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmdRegionSaveAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.cmsClearDrawings = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmsClearMarks = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsClearMarkers = new System.Windows.Forms.ToolStripMenuItem();
             this.cm_popup.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,17 +57,19 @@
             this.cmsLarge,
             this.cmsSmall,
             this.toolStripSeparator2,
+            this.cmdRegionSaveAs,
+            this.toolStripSeparator3,
             this.cmsClearDrawings,
-            this.cmsClearMarks});
+            this.cmsClearMarkers});
             this.cm_popup.Name = "cm_popup";
-            this.cm_popup.Size = new System.Drawing.Size(149, 192);
+            this.cm_popup.Size = new System.Drawing.Size(180, 220);
             // 
             // cmsWhere
             // 
             this.cmsWhere.Image = ((System.Drawing.Image)(resources.GetObject("cmsWhere.Image")));
             this.cmsWhere.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.cmsWhere.Name = "cmsWhere";
-            this.cmsWhere.Size = new System.Drawing.Size(148, 22);
+            this.cmsWhere.Size = new System.Drawing.Size(179, 22);
             this.cmsWhere.Text = "这是哪里?";
             this.cmsWhere.Click += new System.EventHandler(this.cm_popup_Click);
             // 
@@ -74,7 +78,7 @@
             this.cmsSetStart.Image = ((System.Drawing.Image)(resources.GetObject("cmsSetStart.Image")));
             this.cmsSetStart.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.cmsSetStart.Name = "cmsSetStart";
-            this.cmsSetStart.Size = new System.Drawing.Size(148, 22);
+            this.cmsSetStart.Size = new System.Drawing.Size(179, 22);
             this.cmsSetStart.Text = "以此为起点";
             this.cmsSetStart.Click += new System.EventHandler(this.cm_popup_Click);
             // 
@@ -83,21 +87,21 @@
             this.cmsSetEnd.Image = ((System.Drawing.Image)(resources.GetObject("cmsSetEnd.Image")));
             this.cmsSetEnd.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.cmsSetEnd.Name = "cmsSetEnd";
-            this.cmsSetEnd.Size = new System.Drawing.Size(148, 22);
+            this.cmsSetEnd.Size = new System.Drawing.Size(179, 22);
             this.cmsSetEnd.Text = "以此为终点";
             this.cmsSetEnd.Click += new System.EventHandler(this.cm_popup_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
             // 
             // cmsCenter
             // 
             this.cmsCenter.Image = ((System.Drawing.Image)(resources.GetObject("cmsCenter.Image")));
             this.cmsCenter.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.cmsCenter.Name = "cmsCenter";
-            this.cmsCenter.Size = new System.Drawing.Size(148, 22);
+            this.cmsCenter.Size = new System.Drawing.Size(179, 22);
             this.cmsCenter.Text = "居中";
             this.cmsCenter.Click += new System.EventHandler(this.cm_popup_Click);
             // 
@@ -105,7 +109,7 @@
             // 
             this.cmsLarge.Image = ((System.Drawing.Image)(resources.GetObject("cmsLarge.Image")));
             this.cmsLarge.Name = "cmsLarge";
-            this.cmsLarge.Size = new System.Drawing.Size(148, 22);
+            this.cmsLarge.Size = new System.Drawing.Size(179, 22);
             this.cmsLarge.Text = "放大";
             this.cmsLarge.Click += new System.EventHandler(this.cm_popup_Click);
             // 
@@ -114,32 +118,44 @@
             this.cmsSmall.Image = ((System.Drawing.Image)(resources.GetObject("cmsSmall.Image")));
             this.cmsSmall.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.cmsSmall.Name = "cmsSmall";
-            this.cmsSmall.Size = new System.Drawing.Size(148, 22);
+            this.cmsSmall.Size = new System.Drawing.Size(179, 22);
             this.cmsSmall.Text = "缩小";
             this.cmsSmall.Click += new System.EventHandler(this.cm_popup_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(176, 6);
+            // 
+            // cmdRegionSaveAs
+            // 
+            this.cmdRegionSaveAs.Name = "cmdRegionSaveAs";
+            this.cmdRegionSaveAs.Size = new System.Drawing.Size(179, 22);
+            this.cmdRegionSaveAs.Text = "\"可视区域\"另存为...";
+            this.cmdRegionSaveAs.Click += new System.EventHandler(this.cm_popup_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(176, 6);
             // 
             // cmsClearDrawings
             // 
             this.cmsClearDrawings.Image = ((System.Drawing.Image)(resources.GetObject("cmsClearDrawings.Image")));
             this.cmsClearDrawings.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.cmsClearDrawings.Name = "cmsClearDrawings";
-            this.cmsClearDrawings.Size = new System.Drawing.Size(148, 22);
+            this.cmsClearDrawings.Size = new System.Drawing.Size(179, 22);
             this.cmsClearDrawings.Text = "清空所有绘图";
             this.cmsClearDrawings.Click += new System.EventHandler(this.cm_popup_Click);
             // 
-            // cmsClearMarks
+            // cmsClearMarkers
             // 
-            this.cmsClearMarks.Image = ((System.Drawing.Image)(resources.GetObject("cmsClearMarks.Image")));
-            this.cmsClearMarks.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.cmsClearMarks.Name = "cmsClearMarks";
-            this.cmsClearMarks.Size = new System.Drawing.Size(148, 22);
-            this.cmsClearMarks.Text = "清空所有标记";
-            this.cmsClearMarks.Click += new System.EventHandler(this.cm_popup_Click);
+            this.cmsClearMarkers.Image = ((System.Drawing.Image)(resources.GetObject("cmsClearMarkers.Image")));
+            this.cmsClearMarkers.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.cmsClearMarkers.Name = "cmsClearMarkers";
+            this.cmsClearMarkers.Size = new System.Drawing.Size(179, 22);
+            this.cmsClearMarkers.Text = "清空所有标记";
+            this.cmsClearMarkers.Click += new System.EventHandler(this.cm_popup_Click);
             // 
             // BMapControl
             // 
@@ -163,7 +179,10 @@
         private System.Windows.Forms.ToolStripMenuItem cmsLarge;
         private System.Windows.Forms.ToolStripMenuItem cmsSmall;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem cmsClearMarkers;
+        //private System.Windows.Forms.ToolStripMenuItem cmsClearDrawings;
         private System.Windows.Forms.ToolStripMenuItem cmsClearDrawings;
-        private System.Windows.Forms.ToolStripMenuItem cmsClearMarks;
+        private System.Windows.Forms.ToolStripMenuItem cmdRegionSaveAs;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

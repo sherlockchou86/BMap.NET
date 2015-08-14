@@ -83,6 +83,7 @@
       <DependentUpon>BMapControl.cs</DependentUpon>
     </Compile>
     <Compile Include="BMapElements\BMarker.cs" />
+    <Compile Include="BMapElements\BPoint.cs" />
     <Compile Include="BMarkerTipControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -100,6 +101,12 @@
     </Compile>
     <Compile Include="BMarkerEditorControl.Designer.cs">
       <DependentUpon>BMarkerEditorControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BPointTipControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BPointTipControl.Designer.cs">
+      <DependentUpon>BPointTipControl.cs</DependentUpon>
     </Compile>
     <Compile Include="BQuickSearchBoardcs.cs">
       <SubType>UserControl</SubType>
@@ -136,6 +143,12 @@
     </Compile>
     <Compile Include="BStepStartAndEndItem.Designer.cs">
       <DependentUpon>BStepStartAndEndItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BTaxiTipControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BTaxiTipControl.Designer.cs">
+      <DependentUpon>BTaxiTipControl.cs</DependentUpon>
     </Compile>
     <Compile Include="BTransitRouteItem.cs">
       <SubType>UserControl</SubType>
@@ -190,7 +203,7 @@
       <DependentUpon>CityList.cs</DependentUpon>
     </Compile>
     <Compile Include="LatLngPoint.cs" />
-    <Compile Include="POIType.cs" />
+    <Compile Include="PointType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\BMap.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -202,6 +215,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RouteType.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BCityControl.resx">
@@ -237,6 +251,9 @@
     <EmbeddedResource Include="BPlacesBoard.resx">
       <DependentUpon>BPlacesBoard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BPointTipControl.resx">
+      <DependentUpon>BPointTipControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BPOITipControl.resx">
       <DependentUpon>BPOITipControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -249,11 +266,23 @@
     <EmbeddedResource Include="BScreenshotMenu.resx">
       <DependentUpon>BScreenshotMenu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BStepStartAndEndItem.resx">
+      <DependentUpon>BStepStartAndEndItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BTaxiTipControl.resx">
+      <DependentUpon>BTaxiTipControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BTransitRouteItem.resx">
       <DependentUpon>BTransitRouteItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BTransitStepItem.resx">
       <DependentUpon>BTransitStepItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BWalkingRouteItem.resx">
+      <DependentUpon>BWalkingRouteItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BWalkingStepItem.resx">
+      <DependentUpon>BWalkingStepItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FunctionalControls\CityList.resx">
       <DependentUpon>CityList.cs</DependentUpon>
@@ -275,6 +304,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="libs\Newtonsoft.Json.dll" />
+    <None Include="Resources\ico_bysubway.png" />
+    <None Include="Resources\ico_bybus.png" />
+    <None Include="Resources\ico_strange_point.png" />
+    <None Include="Resources\ico_route_start.png" />
+    <None Include="Resources\ico_route_end.png" />
     <None Include="Resources\ico_bywalk.png" />
     <None Include="Resources\ico_bytransit.png" />
     <None Include="Resources\ico_marker.png" />

@@ -38,6 +38,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flpSteps.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpSteps.Location = new System.Drawing.Point(0, 70);
+            this.flpSteps.Margin = new System.Windows.Forms.Padding(0);
             this.flpSteps.Name = "flpSteps";
             this.flpSteps.Size = new System.Drawing.Size(298, 303);
             this.flpSteps.TabIndex = 0;

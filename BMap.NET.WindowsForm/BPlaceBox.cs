@@ -22,7 +22,7 @@ namespace BMap.NET.WindowsForm
         /// 目标搜索城市
         /// </summary>
         [Browsable(false)]
-        public string City
+        internal string City
         {
             get
             {
@@ -35,7 +35,7 @@ namespace BMap.NET.WindowsForm
         /// 目标搜索区县
         /// </summary>
         [Browsable(false)]
-        public string District
+        internal string District
         {
             get
             {

@@ -16,6 +16,10 @@ namespace BMap.NET.WindowsForm
     /// </summary>
     partial class BDrivingStepItem : UserControl
     {
+        /// <summary>
+        /// 路线步骤选中时激发该事件
+        /// </summary>
+        public event StepSelectedEventHandler StepSelected;
         private JObject _dataSource;
         /// <summary>
         /// 步骤数据源
@@ -31,7 +35,7 @@ namespace BMap.NET.WindowsForm
                 _dataSource = value;
                 if (_dataSource != null) //解析 详细json结构参见api文档
                 {
-                    _step_direction = int.Parse((string)_dataSource["direction"]);
+                    _step_direction = int.Parse((string)_dataSource["turn"]);
                     _step_info = (string)_dataSource["instructions"];
                     Paths = (string)_dataSource["path"];
                     foreach (JObject poi in _dataSource["pois"])
@@ -41,7 +45,7 @@ namespace BMap.NET.WindowsForm
                     if (Step_POIs != null)
                         Step_POIs = Step_POIs.TrimEnd(new char[] { ',' });
                     Regex reg = new Regex(@"<(!|/)?\w+( ((.|\n)*?"")?)? *>");
-                    _step_info = reg.Replace(_step_info, "");
+                    _step_info = reg.Replace(_step_info, "").Replace("<br/>","");
                     lblStepInfo.Text = _step_info;
                 }
             }
@@ -80,7 +84,7 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void BDrivingStepItem_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(0, 0, Width - 2, Height));
+            //e.Graphics.DrawRectangle(Pens.LightGray, new Rectangle(0, 0, Width - 2, Height));
 
         }
         /// <summary>
@@ -91,6 +95,10 @@ namespace BMap.NET.WindowsForm
         private void BDrivingStepItem_MouseEnter(object sender, EventArgs e)
         {
             BackColor = Color.FromArgb(235, 241, 251);
+            if (StepSelected != null)
+            {
+                StepSelected(Paths, false);
+            }
         }
         /// <summary>
         /// 鼠标移出
@@ -108,7 +116,10 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void lblStepInfo_Click(object sender, EventArgs e)
         {
-
+            if (StepSelected != null)
+            {
+                StepSelected(Paths, true);
+            }
         }
         #endregion
 

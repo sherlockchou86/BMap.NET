@@ -36,6 +36,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "BTransitStepItem";
             this.Size = new System.Drawing.Size(298, 70);
+            this.Click += new System.EventHandler(this.BTransitStepItem_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.BTransitStepItem_Paint);
             this.MouseEnter += new System.EventHandler(this.BTransitStepItem_MouseEnter);
             this.MouseLeave += new System.EventHandler(this.BTransitStepItem_MouseLeave);

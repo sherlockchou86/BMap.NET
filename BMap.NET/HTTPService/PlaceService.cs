@@ -29,14 +29,14 @@ namespace BMap.NET.HTTPService
             {
                 if (_vm == VerificationMode.IPWhiteList)  //IP 白名单校验
                 {                    
-                    string url = _search_url + "?query=" + query + "&region=" + region + "&output=json&scope=2&ak=" + _ak;
+                    string url = _search_url + "?query=" + query + "&region=" + region + "&output=json&page_size=20&scope=2&ak=" + _ak;
                     string json = DownloadString(url);
                     return JsonConvert.DeserializeObject(json) as JObject;
                 }
                 else  //SN校验
                 {
-                    string url = _search_url + "?query=" + query + "&region=" + region + "&output=json&scope=2&ak=" + _ak;
-                    IDictionary<string, string> param = new Dictionary<string, string> { { "query", query }, { "region", region }, { "output", "json" }, { "scope", "2" }, { "ak", _ak } };
+                    string url = _search_url + "?query=" + query + "&region=" + region + "&output=json&page_size=20&scope=2&ak=" + _ak;
+                    IDictionary<string, string> param = new Dictionary<string, string> { { "query", query }, { "region", region }, { "output", "json" }, {"page_size","20"}, { "scope", "2" }, { "ak", _ak } };
                     string sn = AKSNCaculater.CaculateAKSN(_ak, _sk, _search_url.Split(new string[] { ".com" }, StringSplitOptions.None)[1], param);  //计算sn
                     string json = DownloadString(url + "&sn=" + sn);
                     return JsonConvert.DeserializeObject(json) as JObject;
@@ -59,14 +59,14 @@ namespace BMap.NET.HTTPService
             {
                 if (_vm == VerificationMode.IPWhiteList) //IP 白名单校验
                 {
-                    string url = _search_url + "?query=" + query + "&bounds=" + bounds + "&output=json&scope=2&ak=" + _ak;
+                    string url = _search_url + "?query=" + query + "&bounds=" + bounds + "&output=json&page_size=20&scope=2&ak=" + _ak;
                     string json = DownloadString(url);
                     return JsonConvert.DeserializeObject(json) as JObject;
                 }
                 else  //SN校验
                 {
-                    string url = _search_url + "?query=" + query + "&bounds=" + bounds + "&output=json&scope=2&ak=" + _ak;
-                    IDictionary<string, string> param = new Dictionary<string, string> { { "query", query }, { "bounds", bounds }, { "output", "json" }, { "scope", "2" }, { "ak", _ak } };
+                    string url = _search_url + "?query=" + query + "&bounds=" + bounds + "&output=json&page_size=20&scope=2&ak=" + _ak;
+                    IDictionary<string, string> param = new Dictionary<string, string> { { "query", query }, { "bounds", bounds }, { "output", "json" }, {"page_size","20"}, { "scope", "2" }, { "ak", _ak } };
                     string sn = AKSNCaculater.CaculateAKSN(_ak, _sk, _search_url.Split(new string[] { ".com" }, StringSplitOptions.None)[1], param);  //计算sn
                     string json = DownloadString(url + "&sn=" + sn);
                     return JsonConvert.DeserializeObject(json) as JObject;
@@ -90,14 +90,14 @@ namespace BMap.NET.HTTPService
             {
                 if (_vm == VerificationMode.IPWhiteList) //IP 白名单校验
                 {
-                    string url = _search_url + "?query=" + query + "&location=" + location + "&radius=" + radius + "&output=json&scope=2&ak=" + _ak;
+                    string url = _search_url + "?query=" + query + "&location=" + location + "&radius=" + radius + "&output=json&page_size=20&scope=2&ak=" + _ak;
                     string json = DownloadString(url);
                     return JsonConvert.DeserializeObject(json) as JObject;
                 }
                 else  //SN校验
                 {
-                    string url = _search_url + "?query=" + query + "&location=" + location + "&radius=" + radius + "&output=json&scope=2&ak=" + _ak;
-                    IDictionary<string, string> param = new Dictionary<string, string> { { "query", query }, { "location",location }, {"radius",radius.ToString()}, { "output", "json" }, { "scope", "2" }, { "ak", _ak } };
+                    string url = _search_url + "?query=" + query + "&location=" + location + "&radius=" + radius + "&output=json&page_size=20&scope=2&ak=" + _ak;
+                    IDictionary<string, string> param = new Dictionary<string, string> { { "query", query }, { "location",location }, {"radius",radius.ToString()}, { "output", "json" }, {"page_size","20"},{ "scope", "2" }, { "ak", _ak } };
                     string sn = AKSNCaculater.CaculateAKSN(_ak, _sk, _search_url.Split(new string[] { ".com" }, StringSplitOptions.None)[1], param);  //计算sn
                     string json = DownloadString(url + "&sn=" + sn);
                     return JsonConvert.DeserializeObject(json) as JObject;
@@ -151,14 +151,14 @@ namespace BMap.NET.HTTPService
             {
                 if (_vm == VerificationMode.IPWhiteList) //IP 白名单校验
                 {
-                    string url = _eventsearch_url + "?query=" + query + "&event=" + events + "&region=" + region + "&bounds=" + bounds + "&output=json&scope=2&ak=" + _ak;
+                    string url = _eventsearch_url + "?query=" + query + "&event=" + events + "&region=" + region + "&bounds=" + bounds + "&output=json&page_size=20&scope=2&ak=" + _ak;
                     string json = DownloadString(url);
                     return JsonConvert.DeserializeObject(json) as JObject;
                 }
                 else  //SN校验
                 {
-                    string url = _eventsearch_url + "?query=" + query + "&event=" + events + "&region=" + region + "&bounds=" + bounds + "&output=json&scope=2&ak=" + _ak;
-                    IDictionary<string, string> param = new Dictionary<string, string> { { "query", query }, { "event", events }, { "region", region }, { "bounds", bounds }, { "output", "json" }, { "scope", "2" }, { "ak", _ak } };
+                    string url = _eventsearch_url + "?query=" + query + "&event=" + events + "&region=" + region + "&bounds=" + bounds + "&output=json&page_size=20&scope=2&ak=" + _ak;
+                    IDictionary<string, string> param = new Dictionary<string, string> { { "query", query }, { "event", events }, { "region", region }, { "bounds", bounds }, { "output", "json" }, {"page_size","20"}, { "scope", "2" }, { "ak", _ak } };
                     string sn = AKSNCaculater.CaculateAKSN(_ak, _sk, _eventsearch_url.Split(new string[] { ".com" }, StringSplitOptions.None)[1], param);  //计算sn
                     string json = DownloadString(url + "&sn=" + sn);
                     return JsonConvert.DeserializeObject(json) as JObject;
@@ -184,14 +184,14 @@ namespace BMap.NET.HTTPService
             {
                 if (_vm == VerificationMode.IPWhiteList) //IP 白名单校验
                 {
-                    string url = _eventsearch_url + "?query=" + query + "&event=" + events + "&region=" + region + "&location=" + location + "&radius=" + radius + "&output=json&scope=2&ak=" + _ak;
+                    string url = _eventsearch_url + "?query=" + query + "&event=" + events + "&region=" + region + "&location=" + location + "&radius=" + radius + "&output=json&page_size=20&scope=2&ak=" + _ak;
                     string json = DownloadString(url);
                     return JsonConvert.DeserializeObject(json) as JObject;
                 }
                 else  //SN校验
                 {
-                    string url = _eventsearch_url + "?query=" + query + "&event=" + events + "&region=" + region + "&location=" + location + "&radius=" + radius + "&output=json&scope=2&ak=" + _ak;
-                    IDictionary<string, string> param = new Dictionary<string, string> { { "query", query }, { "event", events }, { "region", region }, { "location", location }, {"radius",radius.ToString()}, { "output", "json" }, { "scope", "2" }, { "ak", _ak } };
+                    string url = _eventsearch_url + "?query=" + query + "&event=" + events + "&region=" + region + "&location=" + location + "&radius=" + radius + "&output=json&page_size=20&scope=2&ak=" + _ak;
+                    IDictionary<string, string> param = new Dictionary<string, string> { { "query", query }, { "event", events }, { "region", region }, { "location", location }, {"radius",radius.ToString()}, { "output", "json" }, {"page_size","20"}, { "scope", "2" }, { "ak", _ak } };
                     string sn = AKSNCaculater.CaculateAKSN(_ak, _sk, _eventsearch_url.Split(new string[] { ".com" }, StringSplitOptions.None)[1], param);  //计算sn
                     string json = DownloadString(url + "&sn=" + sn);
                     return JsonConvert.DeserializeObject(json) as JObject;

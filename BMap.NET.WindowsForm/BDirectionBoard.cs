@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using BMap.NET.HTTPService;
+using BMap.NET.WindowsForm.BMapElements;
 
 namespace BMap.NET.WindowsForm
 {
@@ -32,6 +33,72 @@ namespace BMap.NET.WindowsForm
                 _currentCity = value;
                 bPlaceBoxSource.CurrentCity = _currentCity;
                 bPlaceBoxDestination.CurrentCity = _currentCity;
+            }
+        }
+        /// <summary>
+        /// 与之关联的地图控件
+        /// </summary>
+        [Description("与之关联的地图控件"),Category("BMap.NET")]
+        public BMapControl BMapControl
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 与之关联的位置列表控件
+        /// </summary>
+        [Description("与之关联的位置列表控件"),Category("BMap.NET")]
+        public BPlacesBoard BPlacesBoard
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// 导航起始位置
+        /// </summary>
+        [Description("导航起始位置"),Category("BMap.NET")]
+        internal string SourcePlace
+        {
+            get
+            {
+                return bPlaceBoxSource.QueryText;
+            }
+            set
+            {
+                bPlaceBoxSource.DontSearchNextTime();
+                bPlaceBoxSource.QueryText = value;
+                if (bPlaceBoxSource.QueryText != "" && bPlaceBoxDestination.QueryText != "") //导航起点、终点不为空
+                {
+                    StartSearch();
+                }
+                if (Parent != null && Parent is TabPage) //如果父控件是tabpage 则选中
+                {
+                    ((Parent as TabPage).Parent as TabControl).SelectedTab = (Parent as TabPage);
+                }
+            }
+        }
+        /// <summary>
+        /// 导航结束位置
+        /// </summary>
+        [Description("导航结束位置"),Category("BMap.NET")]
+        internal string DestinationPlace
+        {
+            get
+            {
+                return bPlaceBoxDestination.QueryText;
+            }
+            set
+            {
+                bPlaceBoxDestination.DontSearchNextTime();
+                bPlaceBoxDestination.QueryText = value;
+                if (bPlaceBoxDestination.QueryText != "" && bPlaceBoxSource.QueryText != "")  //导航起点、终点不为空
+                {
+                    StartSearch();
+                }
+                if (Parent != null && Parent is TabPage) //如果父控件是tabpage 则选中
+                {
+                    ((Parent as TabPage).Parent as TabControl).SelectedTab = (Parent as TabPage);
+                }
             }
         }
 
@@ -174,17 +241,41 @@ namespace BMap.NET.WindowsForm
             Point p = this.PointToClient(Cursor.Position);
             if (new Rectangle(0, 0, Width / 3, 33).Contains(p))  //公交模式
             {
-                _current_method = 0;
-                _method_filter = 0;
+                if (_current_method != 0)
+                {
+                    if (_current_method == 2)
+                    {
+                        flpRoutes.Height = flpRoutes.Height - (171 - 138);
+                    }
+                    _current_method = 0;
+                    _method_filter = 0;                  
+                    flpRoutes.Location = new Point(flpRoutes.Location.X, 171);
+                    StartSearch(); //开启搜索
+                }
             }
             else if (new Rectangle(Width / 3, 0, Width / 3, 33).Contains(p)) //驾车模式
             {
-                _current_method = 1;
-                _method_filter = 3;
+                if (_current_method != 1)
+                {
+                    if (_current_method == 2)
+                    {
+                        flpRoutes.Height = flpRoutes.Height - (171 - 138);
+                    }
+                    _current_method = 1;
+                    _method_filter = 3;
+                    flpRoutes.Location = new Point(flpRoutes.Location.X, 171);
+                    StartSearch(); //开启搜索
+                }
             }
             else if (new Rectangle(Width * 2 / 3, 0, Width / 3, 33).Contains(p))  //步行模式
             {
-                _current_method = 2;
+                if (_current_method != 2)
+                {
+                    _current_method = 2;
+                    flpRoutes.Height = flpRoutes.Height + (171 - 138);
+                    flpRoutes.Location = new Point(flpRoutes.Location.X, 138);
+                    StartSearch(); //开启搜索
+                }
             }
 
             if (_current_method == 0) //公交
@@ -262,14 +353,70 @@ namespace BMap.NET.WindowsForm
         {
             StartSearch();
         }
+
+        /// <summary>
+        /// 路线选中
+        /// </summary>
+        /// <param name="bRoute"></param>
+        void item_RouteSelected(BRoute bRoute)
+        {
+            foreach (Control c in flpRoutes.Controls)
+            {
+                if (c as BTransitRouteItem != null && (c as BTransitRouteItem).DataSource != bRoute)
+                {
+                    (c as BTransitRouteItem).Selected = false;
+                }
+                if (c as BWalkingRouteItem != null && (c as BWalkingRouteItem).DataSource != bRoute)
+                {
+                    (c as BWalkingRouteItem).Selected = false;
+                }
+                if (c as BDrivingRouteItem != null && (c as BDrivingRouteItem).DataSource != bRoute)
+                {
+                    (c as BDrivingRouteItem).Selected = false;
+                }
+            }
+            if (BMapControl != null)
+            {
+                BMapControl.SetRoute(bRoute); //更新地图中的路线
+            }
+        }
+        /// <summary>
+        /// 路线步骤选中
+        /// </summary>
+        /// <param name="stepPath"></param>
+        /// <param name="enlarge"></param>
+        void item_StepSelected(string stepPath, bool enlarge)
+        {
+            if (BMapControl != null)
+            {
+                BMapControl.SetHighlightPath(stepPath, enlarge); //高亮设置
+            }
+        }
+        /// <summary>
+        /// 路线起点终点选中
+        /// </summary>
+        /// <param name="bPoint"></param>
+        void item_StepEndPointSelected(BPoint bPoint)
+        {
+            //
+            if (BMapControl != null)
+            {
+                BMapControl.SelectBPoint(bPoint);
+            }
+        }
         #endregion
 
         #region 公开方法
         /// <summary>
         /// 开启搜索
         /// </summary>
-        public void StartSearch()
+        internal void StartSearch()
         {
+            flpRoutes.Controls.Clear();
+            if (BPlacesBoard != null) //位置列表初始化
+            {
+                BPlacesBoard.Clear();
+            }
             ((Action)delegate()
             {
                 JObject routes;
@@ -302,30 +449,90 @@ namespace BMap.NET.WindowsForm
                     {
                         if ((string)routes["type"] == "2") //正常结果
                         {
-                            flpRoutes.Controls.Clear();
+                            //生成起点终点
+                            BPoint start = new BPoint { Type = PointType.RouteStart, Selected = false, Address = bPlaceBoxSource.QueryText, Location = new LatLngPoint(double.Parse((string)routes["result"]["origin"]["originPt"]["lng"]), double.Parse((string)routes["result"]["origin"]["originPt"]["lat"])) };
+                            BPoint end = new BPoint { Type = PointType.RouteEnd, Selected = false, Address = bPlaceBoxDestination.QueryText, Location = new LatLngPoint(double.Parse((string)routes["result"]["destination"]["destinationPt"]["lng"]), double.Parse((string)routes["result"]["destination"]["destinationPt"]["lat"])) };
+                            if (BMapControl != null)
+                            {
+                                BMapControl.SetRouteStartAndEnd(start, end); //设置地图中对应的起点 终点
+                            } 
                             if (_current_method == 0) //公交
                             {
+                                BTaxiTipControl taxi = new BTaxiTipControl();
+                                taxi.DataSource = routes["result"]["taxi"]; //打车信息
+                                taxi.Width = flpRoutes.Width - 25;
+                                flpRoutes.Controls.Add(taxi);
                                 foreach (JObject route in routes["result"]["routes"])
                                 {
                                     BTransitRouteItem item = new BTransitRouteItem();
-                                    item.DataSource = route;
+
+                                    BStepStartAndEndItem origin = new BStepStartAndEndItem();
+                                    origin.EndPoint = start;                             
+                                    item.Origin = origin; //起点
+
+                                    BStepStartAndEndItem destination = new BStepStartAndEndItem();
+                                    destination.EndPoint = end;
+                                    item.Destination = destination; //终点
+
+                                    item.DataSource = new BRoute { Type = RouteType.Transit, DataSource = route };
                                     flpRoutes.Controls.Add(item);
                                     item.Width = flpRoutes.Width - 25;
+
+                                    item.StepEndPointSelected += new StepEndPointSelectedEventHandler(item_StepEndPointSelected);
+                                    item.StepSelected += new StepSelectedEventHandler(item_StepSelected);
+                                    item.RouteSelected += new RouteSelectedEventHandler(item_RouteSelected);
                                 }
                             }
                             else if (_current_method == 1) //驾车
                             {
+                                BTaxiTipControl taxi = new BTaxiTipControl();
+                                taxi.DataSource = routes["result"]["taxi"]; //打车信息
+                                taxi.Width = flpRoutes.Width - 25;
+                                flpRoutes.Controls.Add(taxi);
                                 foreach (JObject route in routes["result"]["routes"])
                                 {
                                     BDrivingRouteItem item = new BDrivingRouteItem();
-                                    item.DataSource = route;
+
+                                    BStepStartAndEndItem origin = new BStepStartAndEndItem();
+                                    origin.EndPoint = start;
+                                    item.Origin = origin; //起点
+
+                                    BStepStartAndEndItem destination = new BStepStartAndEndItem();
+                                    destination.EndPoint = end;
+                                    item.Destination = destination; //终点
+
+                                    item.DataSource = new BRoute { DataSource = route, Type = RouteType.Driving };
                                     flpRoutes.Controls.Add(item);
                                     item.Width = flpRoutes.Width - 25;
+
+                                    item.StepEndPointSelected += new StepEndPointSelectedEventHandler(item_StepEndPointSelected);
+                                    item.StepSelected += new StepSelectedEventHandler(item_StepSelected);
+                                    item.RouteSelected += new RouteSelectedEventHandler(item_RouteSelected);
                                 }
                             }
-                            else
+                            else  //步行
                             {
+                                //步行没有打车信息
+                                foreach (JObject route in routes["result"]["routes"])
+                                {
+                                    BWalkingRouteItem item = new BWalkingRouteItem();
 
+                                    BStepStartAndEndItem origin = new BStepStartAndEndItem();
+                                    origin.EndPoint = start;
+                                    item.Origin = origin; //起点
+
+                                    BStepStartAndEndItem destination = new BStepStartAndEndItem();
+                                    destination.EndPoint = end;
+                                    item.Destination = destination; //终点
+
+                                    item.DataSource = new BRoute { DataSource = route, Type = RouteType.Walking };
+                                    flpRoutes.Controls.Add(item);
+                                    item.Width = flpRoutes.Width - 25;
+
+                                    item.StepEndPointSelected += new StepEndPointSelectedEventHandler(item_StepEndPointSelected);
+                                    item.StepSelected += new StepSelectedEventHandler(item_StepSelected);
+                                    item.RouteSelected += new RouteSelectedEventHandler(item_RouteSelected);
+                                }
                             }
                         }
                         else //地址模糊 需重新选择
@@ -335,6 +542,18 @@ namespace BMap.NET.WindowsForm
                     });
                 }
             }).BeginInvoke(null, null);
+        }
+        /// <summary>
+        /// 清空导航控件（初始化）
+        /// </summary>
+        public void Clear()
+        {
+            flpRoutes.Controls.Clear();
+            if (BMapControl != null)
+            {
+                BMapControl.SetRoute(null); //
+                BMapControl.SetRouteStartAndEnd(null, null);
+            }
         }
         #endregion
 
