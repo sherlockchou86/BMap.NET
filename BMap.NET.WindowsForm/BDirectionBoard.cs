@@ -404,6 +404,24 @@ namespace BMap.NET.WindowsForm
                 BMapControl.SelectBPoint(bPoint);
             }
         }
+        /// <summary>
+        /// 选择终点
+        /// </summary>
+        /// <param name="placeName"></param>
+        /// <param name="type"></param>
+        void sugg_end_EndPointSelected(string placeName, PointType type)
+        {
+            DestinationPlace = placeName;
+        }
+        /// <summary>
+        /// 选择起点
+        /// </summary>
+        /// <param name="placeName"></param>
+        /// <param name="type"></param>
+        void sugg_start_EndPointSelected(string placeName, PointType type)
+        {
+            SourcePlace = placeName;
+        }
         #endregion
 
         #region 公开方法
@@ -413,6 +431,11 @@ namespace BMap.NET.WindowsForm
         internal void StartSearch()
         {
             flpRoutes.Controls.Clear();
+            if (BMapControl != null)
+            {
+                BMapControl.SetRoute(null); //
+                BMapControl.SetRouteStartAndEnd(null, null);
+            }
             if (BPlacesBoard != null) //位置列表初始化
             {
                 BPlacesBoard.Clear();
@@ -535,9 +558,64 @@ namespace BMap.NET.WindowsForm
                                 }
                             }
                         }
-                        else //地址模糊 需重新选择
+                        else //地址模糊 需重新选择  具体json格式参见api文档
                         {
                             //
+                            string start_keyword = (string)routes["result"]["originInfo"]["wd"];
+                            string end_keyword = (string)routes["result"]["destinationInfo"]["wd"];
+                            Label l = new Label();
+                            l.AutoSize = false;
+                            l.ForeColor = Color.Red;
+                            l.Width = flpRoutes.Width - 25; l.Height = 20;
+                            l.TextAlign = ContentAlignment.MiddleCenter;
+                            l.Text = "请选择准确的位置";
+                            flpRoutes.Controls.Add(l);
+                            if (routes["result"]["origin"] != null) //起点模糊
+                            {
+                                if (routes["result"]["origin"] is JArray) //公交
+                                {
+                                    BPlacesSuggestionControl sugg_start = new BPlacesSuggestionControl();
+                                    sugg_start.Type = PointType.RouteStart;
+                                    sugg_start.KeyWord = start_keyword;
+                                    sugg_start.Content = routes["result"]["origin"];
+                                    sugg_start.Width = flpRoutes.Width - 25;
+                                    sugg_start.EndPointSelected += new EndPointSelectedEventHandler(sugg_start_EndPointSelected);
+                                    flpRoutes.Controls.Add(sugg_start);
+                                }
+                                else //驾车 步行
+                                {
+                                    BPlacesSuggestionControl sugg_start = new BPlacesSuggestionControl();
+                                    sugg_start.Type = PointType.RouteStart;
+                                    sugg_start.KeyWord = start_keyword;
+                                    sugg_start.Content = routes["result"]["origin"]["content"];
+                                    sugg_start.Width = flpRoutes.Width - 25;
+                                    sugg_start.EndPointSelected += new EndPointSelectedEventHandler(sugg_start_EndPointSelected);
+                                    flpRoutes.Controls.Add(sugg_start);
+                                }
+                            }
+                            if (routes["result"]["destination"] != null) //终点模糊
+                            {
+                                if (routes["result"]["destination"] is JArray) //公交
+                                {
+                                    BPlacesSuggestionControl sugg_end = new BPlacesSuggestionControl();
+                                    sugg_end.Type = PointType.RouteEnd;
+                                    sugg_end.KeyWord = end_keyword;
+                                    sugg_end.Content = routes["result"]["destination"];
+                                    sugg_end.Width = flpRoutes.Width - 25;
+                                    sugg_end.EndPointSelected += new EndPointSelectedEventHandler(sugg_end_EndPointSelected);
+                                    flpRoutes.Controls.Add(sugg_end);
+                                }
+                                else
+                                {
+                                    BPlacesSuggestionControl sugg_end = new BPlacesSuggestionControl();
+                                    sugg_end.Type = PointType.RouteEnd;
+                                    sugg_end.KeyWord = end_keyword;
+                                    sugg_end.Content = routes["result"]["destination"]["content"];
+                                    sugg_end.Width = flpRoutes.Width - 25;
+                                    sugg_end.EndPointSelected += new EndPointSelectedEventHandler(sugg_end_EndPointSelected);
+                                    flpRoutes.Controls.Add(sugg_end);
+                                }
+                            }
                         }
                     });
                 }

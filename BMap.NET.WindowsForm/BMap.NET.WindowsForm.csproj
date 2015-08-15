@@ -102,6 +102,18 @@
     <Compile Include="BMarkerEditorControl.Designer.cs">
       <DependentUpon>BMarkerEditorControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="BPlacesSuggestionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BPlacesSuggestionControl.Designer.cs">
+      <DependentUpon>BPlacesSuggestionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BPlacesSuggestionItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BPlacesSuggestionItem.Designer.cs">
+      <DependentUpon>BPlacesSuggestionItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="BPointTipControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -250,6 +262,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BPlacesBoard.resx">
       <DependentUpon>BPlacesBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BPlacesSuggestionControl.resx">
+      <DependentUpon>BPlacesSuggestionControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BPlacesSuggestionItem.resx">
+      <DependentUpon>BPlacesSuggestionItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BPointTipControl.resx">
       <DependentUpon>BPointTipControl.cs</DependentUpon>
