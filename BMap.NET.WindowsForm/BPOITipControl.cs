@@ -17,6 +17,8 @@ namespace BMap.NET.WindowsForm
     /// </summary>
     partial class BPOITipControl : UserControl
     {
+        public event SearchNearbyStartedEventHandler SearchNearbyStarted;
+        public event DirectionStartedEventHandler DirecttionStarted;
         /// <summary>
         /// 选项卡
         /// </summary>
@@ -250,6 +252,68 @@ namespace BMap.NET.WindowsForm
             using (SolidBrush sb = new SolidBrush(Color.FromArgb(200, Color.White)))
             {
                 e.Graphics.FillRectangle(sb, e.ClipRectangle);
+            }
+        }
+        /// <summary>
+        /// 公交导航
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btntransit_Click(object sender, EventArgs e)
+        {
+            if (DirecttionStarted != null)
+            {
+                if (_tab_index == 0) //到这里去
+                {
+                    DirecttionStarted(bPlaceBox.QueryText, (string)_poi.DataSource["name"], RouteType.Transit);
+                }
+                else //从这里出发
+                {
+                    DirecttionStarted((string)_poi.DataSource["name"], bPlaceBox.QueryText, RouteType.Transit);
+                }
+            }
+        }
+        /// <summary>
+        /// 驾车导航
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btndriving_Click(object sender, EventArgs e)
+        {
+            if (DirecttionStarted != null && bPlaceBox.QueryText != "")
+            {
+                if (_tab_index == 0) //到这里去
+                {
+                    DirecttionStarted(bPlaceBox.QueryText, (string)_poi.DataSource["name"], RouteType.Driving);
+                }
+                else //从这里出发
+                {
+                    DirecttionStarted((string)_poi.DataSource["name"], bPlaceBox.QueryText, RouteType.Driving);
+                }
+            }
+        }
+        /// <summary>
+        /// 周边搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnsearch_Click(object sender, EventArgs e)
+        {
+            if (SearchNearbyStarted != null && txtNearby.Text != "")
+            {
+                SearchNearbyStarted(txtNearby.Text, _poi.Location);
+            }
+        }
+        /// <summary>
+        /// 快速周边搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lnk_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (SearchNearbyStarted != null)
+            {
+                SearchNearbyStarted((sender as LinkLabel).Text, _poi.Location);
             }
         }
         #endregion

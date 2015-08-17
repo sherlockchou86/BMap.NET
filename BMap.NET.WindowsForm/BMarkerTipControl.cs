@@ -16,6 +16,8 @@ namespace BMap.NET.WindowsForm
     /// </summary>
     partial class BMarkerTipControl : UserControl
     {
+        public event SearchNearbyStartedEventHandler SearchNearbyStarted;
+        public event DirectionStartedEventHandler DirecttionStarted;
         /// <summary>
         /// 选项卡
         /// </summary>
@@ -273,7 +275,10 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void btnsearch_Click(object sender, EventArgs e)
         {
-
+            if (SearchNearbyStarted != null && txtNearby.Text != "")
+            {
+                SearchNearbyStarted(txtNearby.Text, _marker.Location);
+            }
         }
         /// <summary>
         /// 公交
@@ -282,7 +287,17 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void btntransit_Click(object sender, EventArgs e)
         {
-
+            if (DirecttionStarted != null)
+            {
+                if (_tab_index == 0) //到这里去
+                {
+                    DirecttionStarted(bPlaceBox.QueryText, _marker.Address, RouteType.Transit);
+                }
+                else //从这里出发
+                {
+                    DirecttionStarted(_marker.Address, bPlaceBox.QueryText, RouteType.Transit);
+                }
+            }
         }
         /// <summary>
         /// 驾车
@@ -291,7 +306,17 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void btndriving_Click(object sender, EventArgs e)
         {
-
+            if (DirecttionStarted != null && bPlaceBox.QueryText != "")
+            {
+                if (_tab_index == 0) //到这里去
+                {
+                    DirecttionStarted(bPlaceBox.QueryText, _marker.Address, RouteType.Driving);
+                }
+                else //从这里出发
+                {
+                    DirecttionStarted(_marker.Address, bPlaceBox.QueryText, RouteType.Driving);
+                }
+            }
         }
         /// <summary>
         /// 快速搜索周边
@@ -300,7 +325,10 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void lnk_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            if (SearchNearbyStarted != null)
+            {
+                SearchNearbyStarted((sender as LinkLabel).Text, _marker.Location);
+            }
         }
         #endregion
     }

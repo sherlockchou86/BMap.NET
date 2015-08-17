@@ -45,12 +45,35 @@ namespace BMap.NET.WindowsForm
             get;
             set;
         }
+
+        private Label _wait = new Label(); //等待框
         /// <summary>
         /// 构造方法
         /// </summary>
         public BPlacesBoard()
         {
             InitializeComponent();
+            _wait.AutoSize = false; _wait.Font = new System.Drawing.Font("微软雅黑", 10);
+            _wait.Width = Width; _wait.Height = Height; _wait.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            _wait.BackColor = Color.FromArgb(200, Color.White);
+            _wait.TextAlign = ContentAlignment.MiddleCenter;
+            _wait.Text = "正在搜索,请稍候...";
+            _wait.Visible = false;
+            _wait.Location = new Point(0, 0);
+            Controls.Add(_wait);
+            _wait.BringToFront();
+        }
+        /// <summary>
+        /// 清空所有位置（初始化控件）
+        /// </summary>
+        public void Clear()
+        {
+            flpPlaces.Controls.Clear(); //清空所有位置
+            flpPlaces.Controls.Add(bQuickSearch);  //重新加载快速搜索控件
+            if (BMapControl != null)
+            {
+                BMapControl.ClearPlaces();
+            }
         }
         /// <summary>
         /// 将位置显示在列表中
@@ -94,15 +117,25 @@ namespace BMap.NET.WindowsForm
             }
         }
         /// <summary>
-        /// 清空所有位置（初始化控件）
+        /// 选中POI
         /// </summary>
-        public void Clear()
+        internal void SelectPlace(BPOI poi)
         {
-            flpPlaces.Controls.Clear(); //清空所有位置
-            flpPlaces.Controls.Add(bQuickSearch);  //重新加载快速搜索控件
-            if (BMapControl != null)
+            foreach (Control c in flpPlaces.Controls)
             {
-                BMapControl.ClearPlaces();
+                if (c is BPlaceItem)
+                {
+                    BPlaceItem p = c as BPlaceItem;
+                    if (p.POI == poi)
+                    {
+                        p.Selected = true;
+                        flpPlaces.ScrollControlIntoView(c);
+                    }
+                    else
+                    {
+                        p.Selected = false;
+                    }
+                }
             }
         }
         /// <summary>
@@ -111,6 +144,7 @@ namespace BMap.NET.WindowsForm
         /// <param name="searchName"></param>
         private void bQuickSearch_QuickSearch(string searchName)
         {
+            _wait.Visible = true;
             ((Action)delegate()
             {
                 PlaceService ps = new PlaceService();
@@ -119,6 +153,7 @@ namespace BMap.NET.WindowsForm
                 {
                     this.Invoke((Action)delegate()
                     {
+                        _wait.Visible = false;
                         flpPlaces.Controls.Remove(bQuickSearch);
                         AddPlaces(places["results"]);  //具体json格式参见api文档
                     });

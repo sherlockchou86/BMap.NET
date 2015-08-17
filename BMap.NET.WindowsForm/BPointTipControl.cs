@@ -16,6 +16,8 @@ namespace BMap.NET.WindowsForm
     /// </summary>
     partial class BPointTipControl : UserControl
     {
+        public event SearchNearbyStartedEventHandler SearchNearbyStarted;
+        public event DirectionStartedEventHandler DirecttionStarted;
         private int _tab_index;
         private BPoint _bpoint;
         /// <summary>
@@ -56,22 +58,42 @@ namespace BMap.NET.WindowsForm
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
         }
         /// <summary>
-        /// 公交
+        /// 公交导航
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btntransit_Click(object sender, EventArgs e)
         {
-
+            if (DirecttionStarted != null)
+            {
+                if (_tab_index == 0) //到这里去
+                {
+                    DirecttionStarted(bPlaceBox.QueryText, _bpoint.Address, RouteType.Transit);
+                }
+                else //从这里出发
+                {
+                    DirecttionStarted(_bpoint.Address, bPlaceBox.QueryText, RouteType.Transit);
+                }
+            }
         }
         /// <summary>
-        /// 驾车
+        /// 驾车导航
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btndriving_Click(object sender, EventArgs e)
         {
-
+            if (DirecttionStarted != null && bPlaceBox.QueryText != "")
+            {
+                if (_tab_index == 0) //到这里去
+                {
+                    DirecttionStarted(bPlaceBox.QueryText, _bpoint.Address, RouteType.Driving);
+                }
+                else //从这里出发
+                {
+                    DirecttionStarted(_bpoint.Address, bPlaceBox.QueryText, RouteType.Driving);
+                }
+            }
         }
         /// <summary>
         /// 周边搜索
@@ -80,7 +102,10 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void btnsearch_Click(object sender, EventArgs e)
         {
-
+            if (SearchNearbyStarted != null && txtNearby.Text != "")
+            {
+                SearchNearbyStarted(txtNearby.Text, _bpoint.Location);
+            }
         }
         /// <summary>
         /// 加载
@@ -115,7 +140,10 @@ namespace BMap.NET.WindowsForm
         /// <param name="e"></param>
         private void lnk_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            if (SearchNearbyStarted != null)
+            {
+                SearchNearbyStarted((sender as LinkLabel).Text, _bpoint.Location);
+            }
         }
         /// <summary>
         /// 绘制
@@ -260,4 +288,17 @@ namespace BMap.NET.WindowsForm
             Invalidate();
         }
     }
+    /// <summary>
+    /// 表示处理开始导航这一事件的方法
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="destination"></param>
+    /// <param name="type"></param>
+    delegate void DirectionStartedEventHandler(string source,string destination,RouteType type);
+    /// <summary>
+    /// 标出处理周边搜索这一事件的方法
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="center"></param>
+    delegate void SearchNearbyStartedEventHandler(string query,LatLngPoint center);
 }

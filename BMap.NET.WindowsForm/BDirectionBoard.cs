@@ -110,6 +110,8 @@ namespace BMap.NET.WindowsForm
         /// 方案类型 0时间短 1少换乘 2少步行  3最短路程 4最短时间 5不走高速
         /// </summary>
         private int _method_filter = 0;
+
+        private Label _wait = new Label(); //等待框
         /// <summary>
         /// 构造方法
         /// </summary>
@@ -118,6 +120,16 @@ namespace BMap.NET.WindowsForm
             InitializeComponent();
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer, true);
             UpdateStyles();
+
+            _wait.AutoSize = false; _wait.Font = new System.Drawing.Font("微软雅黑", 10);
+            _wait.Width = Width; _wait.Height = Height; _wait.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            _wait.BackColor = Color.FromArgb(200, Color.White);
+            _wait.TextAlign = ContentAlignment.MiddleCenter;
+            _wait.Text = "正在搜索,请稍候...";
+            _wait.Visible = false;
+            _wait.Location = new Point(0, 0);
+            Controls.Add(_wait);
+            _wait.BringToFront();
         }
 
         #region 事件处理
@@ -440,6 +452,7 @@ namespace BMap.NET.WindowsForm
             {
                 BPlacesBoard.Clear();
             }
+            _wait.Visible = true; //等待
             ((Action)delegate()
             {
                 JObject routes;
@@ -470,6 +483,7 @@ namespace BMap.NET.WindowsForm
                 {
                     this.Invoke((Action)delegate()
                     {
+                        _wait.Visible = false;
                         if ((string)routes["type"] == "2") //正常结果
                         {
                             //生成起点终点

@@ -116,7 +116,7 @@ namespace BMap.NET.WindowsForm.BMapElements
                                     {
                                         using (Font f = new Font("微软雅黑", 8))
                                         {
-                                            string info = start_name + "上车\n乘坐" + transits + " \n车程约" + Math.Round(duration / 60, 0) + "分钟";
+                                            string info = start_name + " 上车\n乘坐" + transits + " \n车程约" + Math.Round(duration / 60, 0) + "分钟";
                                             Size info_size = TextRenderer.MeasureText(info, f);
 
                                             GraphicsPath pt = new GraphicsPath();

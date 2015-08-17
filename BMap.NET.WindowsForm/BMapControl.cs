@@ -577,10 +577,22 @@ namespace BMap.NET.WindowsForm
                             p.Value.Selected = true;
                             Point point = MapHelper.GetScreenLocationByLatLng(p.Value.Location, _center, _zoom, ClientSize);
                             _bPOITipControl.POI = _current_selected_poi;
-                            _bPOITipControl.Location = new Point(point.X - _bPOITipControl.Width / 3 + 35, point.Y - _bPOITipControl.Height - _current_selected_poi.Rect.Height);
+                            _bPOITipControl.Location = new Point(point.X - _bPOITipControl.Width / 3 + 35, point.Y - _bPOITipControl.Height - _current_selected_poi.Rect.Height - 5);
                             _bPOITipControl.Visible = true;
+
+                            foreach (KeyValuePair<string, BPOI> pp in _pois)
+                            {
+                                if (pp.Value != p.Value)
+                                {
+                                    pp.Value.Selected = false;
+                                }
+                            }
                             Invalidate();
-                            //通知BPlacesBoard
+                            //通知BPlacesBoard  同步选择
+                            if (BPlacesBoard != null)
+                            {
+                                BPlacesBoard.SelectPlace(p.Value);
+                            }
                             return;
                         }
                     }
@@ -927,6 +939,21 @@ namespace BMap.NET.WindowsForm
             int z = _zoom + e.Delta / 100;
             if (z >= 3 && z <= 19)
             {
+                LatLngPoint p = MapHelper.GetLatLngByScreenLocation(e.Location, _center, _zoom, ClientSize);  //鼠标经纬度坐标
+                Point pt = MapHelper.GetLocationByLatLng(p, z);  //鼠标像素坐标
+                Point pt_center = new Point(pt.X + (ClientSize.Width/2 - e.Location.X), pt.Y + (e.Location.Y - ClientSize.Height / 2)); //缩放后中心点像素坐标
+
+                double c = (2 * Math.PI * MapHelper.EARTH_RADIUS * 1000) / Math.Pow(2, 18 - z);//地图背景宽高
+
+                double y = 2 * Math.PI * (1 - (c / 2 - pt_center.Y) / (c / 2));
+                double z2 = Math.Pow(Math.E, y);
+                double siny = (z2 - 1) / (z2 + 1);
+
+
+                //转换成经纬度坐标
+                LatLngPoint p_center = new LatLngPoint(pt_center.X / (c / 360), Math.Asin(siny) * 180 / Math.PI);
+                Center = p_center;
+
                 Zoom = z;
                 Locate(false);
                 SyncControlsLocation();
@@ -1046,6 +1073,8 @@ namespace BMap.NET.WindowsForm
                 _bMarkerTipControl.Visible = false;
                 Controls.Add(_bMarkerTipControl);
                 _bMarkerEditorControl.VisibleChanged += new EventHandler(_bMarkerEditorControl_VisibleChanged);
+                _bMarkerTipControl.SearchNearbyStarted += new SearchNearbyStartedEventHandler(_bTipControl_SearchNearbyStarted);
+                _bMarkerTipControl.DirecttionStarted += new DirectionStartedEventHandler(_bTipControl_DirecttionStarted);
                 //标记点信息编辑控件
                 _bMarkerEditorControl.Visible = false;
                 Controls.Add(_bMarkerEditorControl);
@@ -1054,10 +1083,14 @@ namespace BMap.NET.WindowsForm
                 _bPOITipControl.Visible = false;
                 Controls.Add(_bPOITipControl);
                 _bPOITipControl.VisibleChanged+=new EventHandler(_bPOITipControl_VisibleChanged);
+                _bPOITipControl.SearchNearbyStarted+=new SearchNearbyStartedEventHandler(_bTipControl_SearchNearbyStarted);
+                _bPOITipControl.DirecttionStarted+=new DirectionStartedEventHandler(_bTipControl_DirecttionStarted);
                 //位置点BPoint信息显示控件
                 _bPointTipControl.Visible = false;
                 Controls.Add(_bPointTipControl);
                 _bPointTipControl.VisibleChanged += new EventHandler(_bPointTipControl_VisibleChanged);
+                _bPointTipControl.SearchNearbyStarted+=new SearchNearbyStartedEventHandler(_bTipControl_SearchNearbyStarted);
+                _bPointTipControl.DirecttionStarted+=new DirectionStartedEventHandler(_bTipControl_DirecttionStarted);
             }
         }
         /// <summary>
@@ -1540,10 +1573,14 @@ namespace BMap.NET.WindowsForm
                     _bPOITipControl.Location = new Point(point.X - _bPOITipControl.Width / 3 + 35, point.Y - _bPOITipControl.Height - _current_selected_poi.Rect.Height);
                     _bPOITipControl.Visible = true;
 
-                    Center = p.Value.Location;
-                    Zoom = 13;
-                    Locate(false);
-                    SyncControlsLocation();
+                    //显示在屏幕区域
+                    if (!ClientRectangle.Contains(new Rectangle(_bPOITipControl.Left, _bPOITipControl.Top, _bPOITipControl.Width, _bPOITipControl.Height)))
+                    {
+                        Center = p.Value.Location;
+                        Zoom = 13;
+                        Locate(false);
+                        SyncControlsLocation();
+                    }
                 }
                 else
                 {
@@ -1569,10 +1606,13 @@ namespace BMap.NET.WindowsForm
                 _bPointTipControl.Location = new Point(point.X - _bPointTipControl.Width / 3 + 35, point.Y - _bPointTipControl.Height - _current_selected_point.Rect.Height);
                 _bPointTipControl.Visible = true;
 
-                Center = _theRouteEnd.Location;
-                Zoom = 15;
-                Locate(false);
-                SyncControlsLocation();
+                if (!ClientRectangle.Contains(new Rectangle(_bPointTipControl.Left, _bPointTipControl.Top, _bPointTipControl.Width, _bPointTipControl.Height)))
+                {
+                    Center = _theRouteEnd.Location;
+                    Zoom = 15;
+                    Locate(false);
+                    SyncControlsLocation();
+                }
             }
             else if (_theRouteStart == bpoint)
             {
@@ -1585,10 +1625,13 @@ namespace BMap.NET.WindowsForm
                 _bPointTipControl.Location = new Point(point.X - _bPointTipControl.Width / 3 + 35, point.Y - _bPointTipControl.Height - _current_selected_point.Rect.Height);
                 _bPointTipControl.Visible = true;
 
-                Center = _theRouteStart.Location;
-                Zoom = 13;
-                Locate(false);
-                SyncControlsLocation();
+                if (!ClientRectangle.Contains(new Rectangle(_bPointTipControl.Left, _bPointTipControl.Top, _bPointTipControl.Width, _bPointTipControl.Height)))
+                {
+                    Center = _theRouteStart.Location;
+                    Zoom = 15;
+                    Locate(false);
+                    SyncControlsLocation();
+                }
             }
             Invalidate();
         }
@@ -1623,7 +1666,7 @@ namespace BMap.NET.WindowsForm
             {
                 GeocodingService gs = new GeocodingService();
                 JObject city_location = gs.Geocoding(_currentCity);
-                if (city_location != null)
+                if (city_location != null && city_location["result"] != null)
                 {
                     Center = new LatLngPoint(double.Parse((string)city_location["result"]["location"]["lng"]), double.Parse((string)city_location["result"]["location"]["lat"]));
                     Locate(false);
@@ -1672,7 +1715,9 @@ namespace BMap.NET.WindowsForm
             {
                 using (SaveFileDialog sfd = new SaveFileDialog())
                 {
-                    sfd.Filter = "JPEG文件(*.jpeg,jpg)|*.JPEG;*.JPG";
+                    sfd.Filter = "PNG文件(*.png)|*.png";
+                    sfd.CheckPathExists = true;
+                    sfd.DefaultExt = ".png";
                     if (sfd.ShowDialog() == DialogResult.OK)
                     {
                         BScreenShotRectangle r = _current_drawing as BScreenShotRectangle;
@@ -1833,7 +1878,18 @@ namespace BMap.NET.WindowsForm
             }
             else if (item.Name == "cmsRegionSaveAs") //可视区域另存为
             {
-
+                using (SaveFileDialog sf = new SaveFileDialog())
+                {
+                    sf.CheckPathExists = true;
+                    sf.Filter = "PNG文件(*.png)|*.png";
+                    sf.DefaultExt = ".png";
+                    if (sf.ShowDialog() == DialogResult.OK)
+                    {
+                        Bitmap b = new Bitmap(Width, Height);
+                        this.DrawToBitmap(b, ClientRectangle);
+                        b.Save(sf.FileName);
+                    }
+                }
             }
             Invalidate();
         }
@@ -1914,6 +1970,41 @@ namespace BMap.NET.WindowsForm
                 }
             }
         }
+        /// <summary>
+        /// 导航开始
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="destination"></param>
+        /// <param name="type"></param>
+        void _bTipControl_DirecttionStarted(string source, string destination, RouteType type)
+        {
+            if (BDirectionBoard != null)
+            {
+                BDirectionBoard.SourcePlace = source;
+                BDirectionBoard.DestinationPlace = destination;
+            }
+        }
+        /// <summary>
+        /// 周边搜索
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="center"></param>
+        void _bTipControl_SearchNearbyStarted(string query, LatLngPoint center)
+        {
+            ((Action)delegate()
+            {
+                PlaceService ps = new PlaceService();
+                JObject places = ps.SearchInCircle(query, center.Lat + "," + center.Lng, 5000); //默认周边5km
+                this.Invoke((Action)delegate()
+                {
+                    if (BPlacesBoard != null)
+                    {
+                        BPlacesBoard.AddPlaces(places["results"]);  //具体json格式参见api文档
+                    }
+                });
+
+            }).BeginInvoke(null, null);
+        }
         #endregion
 
     }
@@ -1922,7 +2013,7 @@ namespace BMap.NET.WindowsForm
     /// </summary>
     class MapHelper
     {
-        private const double EARTH_RADIUS = 6378.137;//地球半径
+        public const double EARTH_RADIUS = 6378.137;//地球半径
         private static double rad(double d)
         {
             return d * Math.PI / 180.0;
@@ -1992,7 +2083,7 @@ namespace BMap.NET.WindowsForm
             
 
             //转换成经纬度坐标 并返回
-            return new LatLngPoint(dp.X / (c / 360), Math.Asin(siny) * 180 / Math.PI + 0.17);
+            return new LatLngPoint(dp.X / (c / 360), Math.Asin(siny) * 180 / Math.PI);
         }
         /// <summary>
         /// 根据经纬度坐标计算该点的像素坐标
@@ -2004,9 +2095,9 @@ namespace BMap.NET.WindowsForm
         {
             double c = (2 * Math.PI * EARTH_RADIUS * 1000) / Math.Pow(2, 18 - zoom);//地图背景宽高
 
-            int x = (int)(p.Lng * (c / 360));  //X像素坐标   经度均匀分布
+            int x = (int)((p.Lng) * (c / 360));  //X像素坐标   经度均匀分布
 
-            double siny = Math.Sin((p.Lat-0.17) * Math.PI / 180);
+            double siny = Math.Sin((p.Lat) * Math.PI / 180);
             double a = Math.Log((1 + siny) / (1 - siny));
             int y = (int)(c / 2 - (c / 2) * (1 - a / (2 * Math.PI)));  //Y像素坐标
 

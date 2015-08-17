@@ -39,7 +39,7 @@
             this.cmsLarge = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsSmall = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.cmdRegionSaveAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmsRegionSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.cmsClearDrawings = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsClearMarkers = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,12 +57,12 @@
             this.cmsLarge,
             this.cmsSmall,
             this.toolStripSeparator2,
-            this.cmdRegionSaveAs,
+            this.cmsRegionSaveAs,
             this.toolStripSeparator3,
             this.cmsClearDrawings,
             this.cmsClearMarkers});
             this.cm_popup.Name = "cm_popup";
-            this.cm_popup.Size = new System.Drawing.Size(180, 220);
+            this.cm_popup.Size = new System.Drawing.Size(180, 242);
             // 
             // cmsWhere
             // 
@@ -127,12 +127,12 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(176, 6);
             // 
-            // cmdRegionSaveAs
+            // cmsRegionSaveAs
             // 
-            this.cmdRegionSaveAs.Name = "cmdRegionSaveAs";
-            this.cmdRegionSaveAs.Size = new System.Drawing.Size(179, 22);
-            this.cmdRegionSaveAs.Text = "\"可视区域\"另存为...";
-            this.cmdRegionSaveAs.Click += new System.EventHandler(this.cm_popup_Click);
+            this.cmsRegionSaveAs.Name = "cmsRegionSaveAs";
+            this.cmsRegionSaveAs.Size = new System.Drawing.Size(179, 22);
+            this.cmsRegionSaveAs.Text = "\"可视区域\"另存为...";
+            this.cmsRegionSaveAs.Click += new System.EventHandler(this.cm_popup_Click);
             // 
             // toolStripSeparator3
             // 
@@ -182,7 +182,7 @@
         private System.Windows.Forms.ToolStripMenuItem cmsClearMarkers;
         //private System.Windows.Forms.ToolStripMenuItem cmsClearDrawings;
         private System.Windows.Forms.ToolStripMenuItem cmsClearDrawings;
-        private System.Windows.Forms.ToolStripMenuItem cmdRegionSaveAs;
+        private System.Windows.Forms.ToolStripMenuItem cmsRegionSaveAs;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
