@@ -943,15 +943,7 @@ namespace BMap.NET.WindowsForm
                 Point pt = MapHelper.GetLocationByLatLng(p, z);  //鼠标像素坐标
                 Point pt_center = new Point(pt.X + (ClientSize.Width/2 - e.Location.X), pt.Y + (e.Location.Y - ClientSize.Height / 2)); //缩放后中心点像素坐标
 
-                double c = (2 * Math.PI * MapHelper.EARTH_RADIUS * 1000) / Math.Pow(2, 18 - z);//地图背景宽高
-
-                double y = 2 * Math.PI * (1 - (c / 2 - pt_center.Y) / (c / 2));
-                double z2 = Math.Pow(Math.E, y);
-                double siny = (z2 - 1) / (z2 + 1);
-
-
-                //转换成经纬度坐标
-                LatLngPoint p_center = new LatLngPoint(pt_center.X / (c / 360), Math.Asin(siny) * 180 / Math.PI);
+                LatLngPoint p_center = MapHelper.GetLatLngByLocation(pt_center, z); //像素坐标到经纬度坐标
                 Center = p_center;
 
                 Zoom = z;
@@ -1172,10 +1164,10 @@ namespace BMap.NET.WindowsForm
             PointF left_down = new PointF(center.X -  ClientSize.Width / 2, center.Y - ClientSize.Height / 2); //左下角像素坐标
             PointF right_up = new PointF(center.X + ClientSize.Width / 2, center.Y + ClientSize.Height / 2); //右上角像素坐标
 
-            int tile_left_down_x = (int)Math.Floor(left_down.X / 256);  //左下角瓦片X坐标
-            int tile_left_down_y = (int)Math.Floor(left_down.Y / 256);  //左下角瓦片Y坐标
-            int tile_right_up_x = (int)Math.Floor(right_up.X / 256);    //右上角瓦片X坐标
-            int tile_right_up_y = (int)Math.Floor(right_up.Y / 256);    //右上角瓦片Y坐标
+            int tile_left_down_x = (int)Math.Floor((left_down.X ) / 256);  //左下角瓦片X坐标
+            int tile_left_down_y = (int)Math.Floor((left_down.Y) / 256);  //左下角瓦片Y坐标
+            int tile_right_up_x = (int)Math.Floor((right_up.X) / 256);    //右上角瓦片X坐标
+            int tile_right_up_y = (int)Math.Floor((right_up.Y) / 256);    //右上角瓦片Y坐标
 
             for (int i = tile_left_down_x; i <= tile_right_up_x; ++i)
             {
@@ -2075,15 +2067,7 @@ namespace BMap.NET.WindowsForm
 
             Point dp = new Point(cp.X + delta_x, cp.Y + delta_y * (-1));  //目标点像素坐标
 
-            double c = (2 * Math.PI * EARTH_RADIUS * 1000) / Math.Pow(2, 18 - zoom);//地图背景宽高
-
-            double y = 2 * Math.PI * (1 - (c / 2 - dp.Y) / (c / 2));
-            double z = Math.Pow(Math.E, y);
-            double siny = (z - 1) / (z + 1);
-            
-
-            //转换成经纬度坐标 并返回
-            return new LatLngPoint(dp.X / (c / 360), Math.Asin(siny) * 180 / Math.PI);
+            return GetLatLngByLocation(dp, zoom);
         }
         /// <summary>
         /// 根据经纬度坐标计算该点的像素坐标
@@ -2093,6 +2077,8 @@ namespace BMap.NET.WindowsForm
         /// <returns></returns>
         public static Point GetLocationByLatLng(LatLngPoint p, int zoom)
         {
+            LatLngPoint offset = Mercator2LonLat(OFFSET); //偏移值
+
             double c = (2 * Math.PI * EARTH_RADIUS * 1000) / Math.Pow(2, 18 - zoom);//地图背景宽高
 
             int x = (int)((p.Lng) * (c / 360));  //X像素坐标   经度均匀分布
@@ -2101,7 +2087,65 @@ namespace BMap.NET.WindowsForm
             double a = Math.Log((1 + siny) / (1 - siny));
             int y = (int)(c / 2 - (c / 2) * (1 - a / (2 * Math.PI)));  //Y像素坐标
 
-            return new Point(x, y);
+
+            int x2 = (int)((offset.Lng) * (c / 360));  //X偏移像素值
+
+            siny = Math.Sin((offset.Lat) * Math.PI / 180);
+            a = Math.Log((1 + siny) / (1 - siny));
+            int y2 = (int)(c / 2 - (c / 2) * (1 - a / (2 * Math.PI))); //Y偏移像素值
+
+            return new Point(x, y);  // 偏移处理
+        }
+        /// <summary>
+        /// 根据像素坐标计算该点的经纬度坐标
+        /// </summary>
+        /// <param name="p">要计算的像素坐标</param>
+        /// <param name="zoom">地图缩放级别</param>
+        /// <returns></returns>
+        public static LatLngPoint GetLatLngByLocation(Point p, int zoom)
+        {
+            LatLngPoint offset = Mercator2LonLat(OFFSET); //偏移值
+
+            double c = (2 * Math.PI * EARTH_RADIUS * 1000) / Math.Pow(2, 18 - zoom);//地图背景宽高
+
+            int x2 = (int)((offset.Lng) * (c / 360));  //X偏移像素值
+
+            double siny = Math.Sin((offset.Lat) * Math.PI / 180);
+            double a = Math.Log((1 + siny) / (1 - siny));
+            int y2 = (int)(c / 2 - (c / 2) * (1 - a / (2 * Math.PI))); //Y偏移像素值
+
+            double lng = (p.X) / (c / 360); //经度
+
+            double y = 2 * Math.PI * (1 - (c / 2 - (p.Y)) / (c / 2));
+            double z = Math.Pow(Math.E, y);
+            siny = (z - 1) / (z + 1);
+            double lat = Math.Asin(siny) * 180 / Math.PI; //纬度
+
+            return new LatLngPoint(lng, lat);    
+        }
+        /// <summary>
+        /// 百度地图原点与0经纬度点的偏移值（m为单位）
+        /// </summary>
+        public static PointF OFFSET = new PointF(-865, 15850);
+        //经纬度坐标转墨卡托坐标
+        public static PointF LonLat2Mercator(LatLngPoint lonLat)
+        {
+            PointF mercator = new Point();
+            double x = lonLat.Lng * 20037508.34 / 180;
+            double y = Math.Log(Math.Tan((90 + lonLat.Lat) * Math.PI / 360)) / (Math.PI / 180);
+            y = y * 20037508.34 / 180;
+            mercator.X = (float)x;
+            mercator.Y = (float)y;
+            return mercator;
+        }
+        //墨卡托坐标转经纬度坐标
+        public static LatLngPoint Mercator2LonLat(PointF mercator)
+        {
+            double x = mercator.X / 20037508.34 * 180;
+            double y = mercator.Y / 20037508.34 * 180;
+            y = 180 / Math.PI * (2 * Math.Atan(Math.Exp(y * Math.PI / 180)) - Math.PI / 2);
+            LatLngPoint lonLat = new LatLngPoint(x, y);
+            return lonLat;
         }
         /// <summary>
         /// 创建圆角矩形路径
