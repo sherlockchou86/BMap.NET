@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="BMapConfiguration.cs" />
     <Compile Include="HTTPService\AKSNCaculater.cs" />
+    <Compile Include="HTTPService\CoordinateTransService.cs" />
     <Compile Include="HTTPService\DirectionService.cs" />
     <Compile Include="HTTPService\GeocodingService.cs" />
     <Compile Include="HTTPService\IPService.cs" />

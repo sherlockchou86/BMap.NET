@@ -124,9 +124,13 @@ namespace BMap.NET.WindowsForm.BMapElements
         /// <param name="screen_size"></param>
         public override void Draw(System.Drawing.Graphics g, LatLngPoint center, int zoom, Size screen_size)
         {
+            //偏移处理
+            //LatLngPoint offset = new LatLngPoint(MapHelper.OFFSET_LNG, MapHelper.OFFSET_LAT);
+            //PointF offset_p = MapHelper.GetLocationByLatLng(offset, zoom);
+
             PointF center_p = MapHelper.GetLocationByLatLng(center, zoom); //中心点像素坐标
             PointF toleft_p = new PointF(X * 256, (Y + 1) * 256); //瓦片左上角像素坐标
-            PointF p = new PointF(screen_size.Width / 2 + (toleft_p.X - center_p.X), screen_size.Height / 2 + (toleft_p.Y - center_p.Y) * (-1));  //屏幕坐标
+            PointF p = new PointF((int)(screen_size.Width / 2 + (toleft_p.X - center_p.X)), (int)(screen_size.Height / 2 + (toleft_p.Y - center_p.Y) * (-1)));  //屏幕坐标
             //在绘制范围之内
             if (!new Rectangle(-256, -256, screen_size.Width + 256, screen_size.Height + 256).Contains(new Point((int)p.X, (int)p.Y)))
             {
