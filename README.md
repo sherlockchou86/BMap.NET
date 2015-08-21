@@ -23,6 +23,7 @@ the source code contains 3 projects: `BMap.NET`,`BMap.NET.WindowsForm` and
 	a demo showing how to use controls in BMap.NET.WindowsForm.
 	
 some screenshots below:
+
 1. autocomplete search box
 
 	![][2]
@@ -79,6 +80,7 @@ from baidu map server).
 `BMap.NET.WindowsForm` only opens 5 controls: `BPlaceBox`, `BMapControl`, 
 `BPlacesBoard`, `BDirectionBoard` and the `BTabControl`. you can drag them into
 form desinger and set few properties to let them build associations like this:
+
 1. BPlaceBox
 
 	![][8]
@@ -88,7 +90,7 @@ form desinger and set few properties to let them build associations like this:
 3. BMapControl
 
 	![][10]
-4. BDirectionDoard
+4. BDirectionBoard
 
 	![][11]
 
