@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="ServiceAK" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ygqnmYUFx7C6wW2xIcqpNrP2</Value>
+      <Value Profile="(Default)">TMzlZXetCzK9t9fSdKO7v35T</Value>
     </Setting>
     <Setting Name="ServiceSK" Type="System.String" Scope="User">
-      <Value Profile="(Default)">FE2I50qobewXb2t8fOLjQ7pS788gj9pE</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="VerificationMode" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>

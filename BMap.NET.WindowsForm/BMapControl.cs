@@ -23,7 +23,7 @@ namespace BMap.NET.WindowsForm
         private const double DISTANCE = 111319.49; //每（经纬）度距离m
 
         #region 属性
-        private LatLngPoint _center = new LatLngPoint(0, 0); 
+        private LatLngPoint _center = new LatLngPoint(117.217412, 39.142191);   //天津
         /// <summary>
         /// 地图显示中心经纬度坐标
         /// </summary>
