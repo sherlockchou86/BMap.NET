@@ -2077,15 +2077,6 @@ namespace BMap.NET.WindowsForm
         /// <returns></returns>
         public static PointF GetLocationByLatLng(LatLngPoint p, int zoom)
         {
-            //double c = (2 * Math.PI * EARTH_RADIUS * 1000) / Math.Pow(2, 18 - zoom);//地图背景宽高
-
-            //float x = (float)((p.Lng) * (c / 360));  //X像素坐标   经度均匀分布
-
-            //double siny = Math.Sin((p.Lat) * Math.PI / 180);
-            //double a = Math.Log((1 + siny) / (1 - siny));
-            //float y = (float)(c / 2 - (c / 2) * (1 - a / (2 * Math.PI)));  //Y像素坐标
-
-            //return new PointF(x, y);  
             PointF mer_p = LatLng2Mercator(p);  //墨卡托坐标
             return new PointF((float)(mer_p.X / Math.Pow(2, 18 - zoom)), (float)(mer_p.Y / Math.Pow(2, 18 - zoom)));
         }
@@ -2097,16 +2088,6 @@ namespace BMap.NET.WindowsForm
         /// <returns></returns>
         public static LatLngPoint GetLatLngByLocation(PointF p, int zoom)
         {
-            //double c = (2 * Math.PI * EARTH_RADIUS * 1000) / Math.Pow(2, 18 - zoom);//地图背景宽高
-
-            //double lng = (p.X) / (c / 360); //经度
-
-            //double y = 2 * Math.PI * (1 - (c / 2 - (p.Y)) / (c / 2));
-            //double z = Math.Pow(Math.E, y);
-            //double siny = (z - 1) / (z + 1);
-            //double lat = Math.Asin(siny) * 180 / Math.PI; //纬度
-
-            //return new LatLngPoint(lng, lat);
             PointF mer_p = new PointF((float)(p.X * Math.Pow(2, 18 - zoom)), (float)(p.Y * Math.Pow(2, 18 - zoom)));  //墨卡托坐标
             return Mercator2LatLng(mer_p);
         }
@@ -2177,6 +2158,7 @@ namespace BMap.NET.WindowsForm
             return "";
         }
 
+        //以下是根据百度地图JavaScript API破解得到 百度坐标<->墨卡托坐标 转换算法
         private static double[] array1 = { 75, 60, 45, 30, 15, 0 };
         private static double[] array3 = { 12890594.86, 8362377.87, 5591021, 3481989.83, 1678043.12, 0 };
         private static double[][] array2 = {new double[]{-0.0015702102444, 111320.7020616939, 1704480524535203, -10338987376042340, 26112667856603880, -35149669176653700, 26595700718403920, -10725012454188240, 1800819912950474, 82.5}

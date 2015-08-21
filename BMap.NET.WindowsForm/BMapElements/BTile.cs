@@ -6,6 +6,7 @@ using System.Drawing;
 using BMap.NET.HTTPService;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace BMap.NET.WindowsForm.BMapElements
 {
@@ -14,6 +15,13 @@ namespace BMap.NET.WindowsForm.BMapElements
     /// </summary>
     class BTile:BMapElement
     {
+        static BTile()
+        {
+            int minWorker, minIOC;
+            // 设置线程池最小线程数目
+            ThreadPool.GetMinThreads(out minWorker, out minIOC);
+            ThreadPool.SetMinThreads(100, minIOC);
+        }
         /// <summary>
         /// 瓦片X坐标
         /// </summary>

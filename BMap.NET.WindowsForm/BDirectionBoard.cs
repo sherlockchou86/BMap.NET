@@ -459,7 +459,7 @@ namespace BMap.NET.WindowsForm
                 DirectionService ds = new DirectionService();
                 if (_current_method == 0) //公交
                 {
-                    if (bPlaceBoxSource.City != bPlaceBoxDestination.City)
+                    if (bPlaceBoxSource.City != "" && bPlaceBoxDestination.City != "" && bPlaceBoxSource.City != bPlaceBoxDestination.City)
                     {
                         MessageBox.Show("公交导航时，两地城市必须一致！");
                         return;
@@ -468,11 +468,12 @@ namespace BMap.NET.WindowsForm
                 }
                 else if (_current_method == 1) //驾车
                 {
-                    routes = ds.DirectionByDriving(bPlaceBoxSource.QueryText, bPlaceBoxDestination.QueryText, bPlaceBoxSource.City, bPlaceBoxDestination.City);
+                    routes = ds.DirectionByDriving(bPlaceBoxSource.QueryText, bPlaceBoxDestination.QueryText, bPlaceBoxSource.City == "" ? bPlaceBoxSource.CurrentCity : bPlaceBoxSource.City
+                        , bPlaceBoxDestination.City == "" ? bPlaceBoxDestination.CurrentCity : bPlaceBoxDestination.City);
                 }
                 else //步行
                 {
-                    if (bPlaceBoxSource.City != bPlaceBoxDestination.City)
+                    if (bPlaceBoxSource.City != "" && bPlaceBoxDestination.City != "" && bPlaceBoxSource.City != bPlaceBoxDestination.City)
                     {
                         MessageBox.Show("步行导航时，两地城市必须一致！");
                         return;

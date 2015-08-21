@@ -321,7 +321,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="JScript1.js" />
+    <Content Include="BaiduJSAPI_cracker.js" />
     <Content Include="libs\Newtonsoft.Json.dll" />
     <None Include="Resources\ico_bysubway.png" />
     <None Include="Resources\ico_bybus.png" />
