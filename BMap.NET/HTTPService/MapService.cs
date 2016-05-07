@@ -158,11 +158,16 @@ namespace BMap.NET.HTTPService
             try
             {
                 string cache_path = Properties.BMap.Default.MapCachePath;
-                if (!Directory.Exists(cache_path + "\\" + map_mode.ToString()))
+                string map_path = cache_path + "\\" + map_mode.ToString();
+                if (!Directory.Exists(map_path))
                 {
-                    Directory.CreateDirectory(cache_path + "\\" + map_mode.ToString());
+                    Directory.CreateDirectory(map_path);
                 }
-                tile.Save(cache_path + "\\" + map_mode.ToString() + "\\" + zoom + "_" + x + "_" + y + ".bmp");
+                string tile_path = cache_path + "\\" + map_mode.ToString() + "\\" + zoom + "_" + x + "_" + y + ".bmp";
+                if (!Directory.Exists(tile_path))
+                {
+                    tile.Save(tile_path);
+                }
             }
             catch
             {
