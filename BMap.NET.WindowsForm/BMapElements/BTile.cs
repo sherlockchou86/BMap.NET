@@ -245,20 +245,20 @@ namespace BMap.NET.WindowsForm.BMapElements
                 })).BeginInvoke(null, null);
             }
 
-            string error = "正在加载图片...";
+            string error = "tile loading";
             if (_load_error)
             {
-                error = "图片加载失败...";
+                error = "loading failed";
             }
             if (Mode == MapMode.Normal)  //绘制普通地图
             {
                 if (_normal == null)
                 {
                     g.FillRectangle(Brushes.LightGray, new RectangleF(p, new SizeF(256, 256)));
-                    g.DrawRectangle(Pens.Gray, p.X, p.Y, 256, 256);
-                    using (Font f = new Font("微软雅黑", 10))
+                    g.DrawRectangle(Pens.LightGray, p.X, p.Y, 256, 256);
+                    using (Font f = new Font("微软雅黑", 9))
                     {
-                        g.DrawString(error, f, Brushes.Red, new PointF(p.X + 60, p.Y + 100));
+                        g.DrawString(error, f, _load_error ? Brushes.Red : Brushes.Green, new PointF(p.X + 100, p.Y + 120));
                     }
                 }
                 else

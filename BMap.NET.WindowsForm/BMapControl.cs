@@ -1249,7 +1249,7 @@ namespace BMap.NET.WindowsForm
                             LatLngPoint llp = MapHelper.GetLatLngByScreenLocation(p, _center, _zoom, ClientSize); //当前鼠标经纬度
                             g.DrawString(Math.Round(llp.Lat,5) + "，" + Math.Round(llp.Lng,5), f, Brushes.Teal, new PointF(20, Height - 100 + 35));
                         }
-                        g.DrawString("BMap.NET 2015", f, Brushes.Teal, new PointF(20, Height - 100 + 60));
+                        g.DrawString("BMap.NET 2015 by 周见智", f, Brushes.Teal, new PointF(20, Height - 100 + 60));
                     }
                 }
             }
@@ -2240,6 +2240,8 @@ namespace BMap.NET.WindowsForm
         DrawRectange,  //绘制矩形
         DrawCircle, //绘制圆形
         DrawLine, //绘制直线
-        DrawPolygon  //绘制多边形
+        DrawPolygon,  //绘制多边形
+
+        DrawDownloadArea //绘制下载区域
     }
 }
