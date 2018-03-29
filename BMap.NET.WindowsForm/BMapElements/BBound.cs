@@ -9,7 +9,7 @@ namespace BMap.NET.WindowsForm.BMapElements
     /// <summary>
     /// 矩形搜索区域
     /// </summary>
-    class BBound:BMapElement
+    public class BBound:BMapElement
     {
         /// <summary>
         /// 左上角点

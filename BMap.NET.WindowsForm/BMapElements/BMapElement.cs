@@ -9,7 +9,7 @@ namespace BMap.NET.WindowsForm.BMapElements
     /// <summary>
     /// 地图元素基类
     /// </summary>
-    abstract class BMapElement
+    public abstract class BMapElement
     {
         /// <summary>
         /// 绘制方法

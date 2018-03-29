@@ -8,7 +8,7 @@ namespace BMap.NET.WindowsForm
     /// <summary>
     /// 地图中BPoint位置点类型
     /// </summary>
-    enum PointType
+    public enum PointType
     {
         /// <summary>
         /// 路线起点

@@ -8,7 +8,7 @@ namespace BMap.NET.WindowsForm.BMapElements
     /// <summary>
     /// 附近区域
     /// </summary>
-    class BNearBy : BMapElement
+    public class BNearBy : BMapElement
     {
         /// <summary>
         /// 中心

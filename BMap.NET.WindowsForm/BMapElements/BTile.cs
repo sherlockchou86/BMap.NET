@@ -13,7 +13,7 @@ namespace BMap.NET.WindowsForm.BMapElements
     /// <summary>
     /// 地图瓦片
     /// </summary>
-    class BTile:BMapElement
+    public class BTile : BMapElement
     {
         static BTile()
         {

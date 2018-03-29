@@ -9,7 +9,7 @@ namespace BMap.NET.WindowsForm.DrawingObjects
     /// <summary>
     /// 绘制矩形类
     /// </summary>
-    class BRectangle:DrawingObject
+    public class BRectangle : DrawingObject
     {
         /// <summary>
         /// 左上角坐标

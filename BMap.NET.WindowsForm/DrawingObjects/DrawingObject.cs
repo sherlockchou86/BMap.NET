@@ -9,7 +9,7 @@ namespace BMap.NET.WindowsForm.DrawingObjects
     /// <summary>
     /// 地图中绘制图形基类
     /// </summary>
-    abstract class DrawingObject
+    public abstract class DrawingObject
     {
         /// <summary>
         /// 绘制方法

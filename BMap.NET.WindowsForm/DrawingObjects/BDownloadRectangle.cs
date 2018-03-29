@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace BMap.NET.WindowsForm.DrawingObjects
 {
-    class BDownloadRectangle : DrawingObject
+    public class BDownloadRectangle : DrawingObject
     {
         /// <summary>
         /// 左上角屏幕坐标

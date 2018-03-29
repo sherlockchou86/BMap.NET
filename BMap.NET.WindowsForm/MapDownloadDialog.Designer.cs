@@ -30,6 +30,8 @@
         {
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numZoomEnd = new System.Windows.Forms.NumericUpDown();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.numThread = new System.Windows.Forms.NumericUpDown();
@@ -43,6 +45,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numZoomEnd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numThread)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numZoom)).BeginInit();
             this.groupBox5.SuspendLayout();
@@ -61,6 +64,8 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.label1);
+            this.groupBox4.Controls.Add(this.numZoomEnd);
             this.groupBox4.Controls.Add(this.radioButton2);
             this.groupBox4.Controls.Add(this.radioButton1);
             this.groupBox4.Controls.Add(this.numThread);
@@ -73,6 +78,32 @@
             this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "范围";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(142, 51);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(17, 12);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "至";
+            // 
+            // numZoomEnd
+            // 
+            this.numZoomEnd.Location = new System.Drawing.Point(163, 48);
+            this.numZoomEnd.Maximum = new decimal(new int[] {
+            17,
+            0,
+            0,
+            0});
+            this.numZoomEnd.Name = "numZoomEnd";
+            this.numZoomEnd.Size = new System.Drawing.Size(50, 21);
+            this.numZoomEnd.TabIndex = 14;
+            this.numZoomEnd.Value = new decimal(new int[] {
+            13,
+            0,
+            0,
+            0});
             // 
             // radioButton2
             // 
@@ -114,7 +145,7 @@
             this.numThread.Size = new System.Drawing.Size(99, 21);
             this.numThread.TabIndex = 11;
             this.numThread.Value = new decimal(new int[] {
-            1,
+            2,
             0,
             0,
             0});
@@ -137,10 +168,10 @@
             0,
             0});
             this.numZoom.Name = "numZoom";
-            this.numZoom.Size = new System.Drawing.Size(99, 21);
+            this.numZoom.Size = new System.Drawing.Size(50, 21);
             this.numZoom.TabIndex = 9;
             this.numZoom.Value = new decimal(new int[] {
-            7,
+            13,
             0,
             0,
             0});
@@ -216,6 +247,7 @@
             this.linkLabel1.TabIndex = 8;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "合并成大图查看";
+            this.linkLabel1.Visible = false;
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // MapDownloadDialog
@@ -235,6 +267,7 @@
             this.Load += new System.EventHandler(this.MapDownloadDialog_Load);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numZoomEnd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numThread)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numZoom)).EndInit();
             this.groupBox5.ResumeLayout(false);
@@ -261,5 +294,7 @@
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numZoomEnd;
     }
 }

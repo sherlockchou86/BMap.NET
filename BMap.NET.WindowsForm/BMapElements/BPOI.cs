@@ -10,7 +10,7 @@ namespace BMap.NET.WindowsForm.BMapElements
     /// <summary>
     /// 地图中POI 信息点
     /// </summary>
-    class BPOI : BMapElement
+    public class BPOI : BMapElement
     {
         /// <summary>
         /// 位置

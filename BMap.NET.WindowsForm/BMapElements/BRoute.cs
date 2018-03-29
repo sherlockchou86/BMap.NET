@@ -12,7 +12,7 @@ namespace BMap.NET.WindowsForm.BMapElements
     /// <summary>
     /// 地图中的导航路线
     /// </summary>
-    class BRoute : BMapElement
+    public class BRoute : BMapElement
     {
         /// <summary>
         /// 路线类型

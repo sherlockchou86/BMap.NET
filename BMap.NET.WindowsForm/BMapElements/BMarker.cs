@@ -10,7 +10,7 @@ namespace BMap.NET.WindowsForm.BMapElements
     /// <summary>
     /// 地图中的标记点
     /// </summary>
-    class BMarker:BMapElement
+    public class BMarker : BMapElement
     {
         /// <summary>
         /// 索引号

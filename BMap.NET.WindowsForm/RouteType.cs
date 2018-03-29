@@ -8,7 +8,7 @@ namespace BMap.NET.WindowsForm
     /// <summary>
     /// 地图中导航路线类型
     /// </summary>
-    enum RouteType
+    public enum RouteType
     {
         /// <summary>
         /// 公交

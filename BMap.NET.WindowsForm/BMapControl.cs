@@ -2003,7 +2003,7 @@ namespace BMap.NET.WindowsForm
     /// <summary>
     /// 地图辅助类
     /// </summary>
-    class MapHelper
+    public class MapHelper
     {
         public const double EARTH_RADIUS = 6378.137;//地球半径
         private static double rad(double d)
@@ -2227,7 +2227,7 @@ namespace BMap.NET.WindowsForm
     /// <summary>
     /// 鼠标工作类型
     /// </summary>
-    enum MouseType
+    public enum MouseType
     {
         None,  //无
         DragMap,  //拖拽地图

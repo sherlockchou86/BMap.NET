@@ -9,7 +9,7 @@ namespace BMap.NET.WindowsForm.DrawingObjects
     /// <summary>
     /// 绘制椭圆类
     /// </summary>
-    class BCircle : DrawingObject
+    public class BCircle : DrawingObject
     {
         /// <summary>
         /// 椭圆中心

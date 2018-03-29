@@ -9,7 +9,7 @@ namespace BMap.NET.WindowsForm.DrawingObjects
     /// <summary>
     /// 绘制多边形类
     /// </summary>
-    class BPolygon:DrawingObject
+    public class BPolygon : DrawingObject
     {
         /// <summary>
         /// 点集

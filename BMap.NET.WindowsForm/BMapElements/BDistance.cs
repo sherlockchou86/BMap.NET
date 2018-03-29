@@ -9,7 +9,7 @@ namespace BMap.NET.WindowsForm.BMapElements
     /// <summary>
     /// 距离测量类
     /// </summary>
-    class BDistance : BMapElement
+    public class BDistance : BMapElement
     {
         /// <summary>
         /// 点集

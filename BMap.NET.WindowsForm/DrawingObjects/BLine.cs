@@ -9,7 +9,7 @@ namespace BMap.NET.WindowsForm.DrawingObjects
     /// <summary>
     /// 绘制直（折）线类
     /// </summary>
-    class BLine:DrawingObject
+    public class BLine : DrawingObject
     {
         /// <summary>
         /// 点集

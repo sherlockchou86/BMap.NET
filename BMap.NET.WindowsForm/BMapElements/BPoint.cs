@@ -9,7 +9,7 @@ namespace BMap.NET.WindowsForm.BMapElements
     /// <summary>
     /// 地图中位置点（与BPOI不同）
     /// </summary>
-    class BPoint:BMapElement
+    public class BPoint : BMapElement
     {
         /// <summary>
         /// 位置点类型

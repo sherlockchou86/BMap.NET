@@ -45,50 +45,65 @@ namespace BMap.NET.WindowsForm
                 MessageBox.Show("请选择存储路径！");
                 return;
             }
+            if (numZoom.Value > numZoomEnd.Value)
+            {
+                MessageBox.Show("地图级别设置不对！");
+                return;
+            }
 
-            int zoom = (int)numZoom.Value;
+            int zoomStart = (int)numZoom.Value;
+            int zoomEnd = (int)numZoomEnd.Value;
+
             int thread = (int)numThread.Value;
 
-            PointF point1 = MapHelper.GetLocationByLatLng(p1, zoom); //将第一个点经纬度转换成平面2D坐标
-            PointF point2 = MapHelper.GetLocationByLatLng(p2, zoom);  //将第二个点经纬度转换成平面2D坐标
-
-            int startX = (int)point1.X / 256;  //起始列
-            int endX = (int)point2.X / 256;   //结束列
-            if (endX == Math.Pow(2, zoom))  //结束列超出范围
-            {
-                endX--;
-            }
-            int startY = (int)point1.Y / 256;  //起始行
-            int endY = (int)point2.Y / 256;   //结束行
-            if (endY == Math.Pow(2, zoom))  //结束行超出范围
-            {
-                endY--;
-            }
-
-            _totalwidth = (endX - startX + 1) * 256;  //合并图的宽度
-            _totalheight = (endY - startY + 1) * 256;  //合并图的高度
-
-            int threadId = 0;
             _waittodownload.Clear();
-            for (int y = startY; y <= endY; y++)
+            for (int zoom = zoomStart; zoom <= zoomEnd; ++zoom)
             {
-                for (int x = startX; x <= endX; x++)
+
+
+                PointF point1 = MapHelper.GetLocationByLatLng(p1, zoom); //将第一个点经纬度转换成平面2D坐标
+                PointF point2 = MapHelper.GetLocationByLatLng(p2, zoom);  //将第二个点经纬度转换成平面2D坐标
+
+                int startX = (int)point1.X / 256;  //起始列
+                int endX = (int)point2.X / 256;   //结束列
+                if (endX == Math.Pow(2, zoom))  //结束列超出范围
                 {
-                    RectInfo ri = new RectInfo();
-                    ri.threadId = threadId;  //分别由不同的线程下载
-                    ri.x = x;
-                    ri.y = y;
-                    ri.z = zoom;
-                    ri.bComplete = false;
-                    _waittodownload.Add(ri);  //将每个小方块放入待下载集合
-                    threadId = (threadId + 1) % thread;  //由thread个不同线程下载图片
+                    endX--;
+                }
+                int startY = (int)point1.Y / 256;  //起始行
+                int endY = (int)point2.Y / 256;   //结束行
+                if (endY == Math.Pow(2, zoom))  //结束行超出范围
+                {
+                    endY--;
+                }
+
+                _totalwidth = (endX - startX + 1) * 256;  //合并图的宽度
+                _totalheight = (endY - startY + 1) * 256;  //合并图的高度
+
+                int threadId = 0;
+
+                for (int y = startY; y <= endY; y++)
+                {
+                    for (int x = startX; x <= endX; x++)
+                    {
+                        RectInfo ri = new RectInfo();
+                        ri.threadId = threadId;  //分别由不同的线程下载
+                        ri.x = x;
+                        ri.y = y;
+                        ri.z = zoom;
+                        ri.bComplete = false;
+                        _waittodownload.Add(ri);  //将每个小方块放入待下载集合
+                        threadId = (threadId + 1) % thread;  //由thread个不同线程下载图片
+                    }
                 }
             }
 
             if (MessageBox.Show("共有" + _waittodownload.Count + "张图片需要下载，确定下载吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.OK)
             {
                 _thread = thread;
-                _zoom = zoom;
+                _zoom = zoomStart;
+                _zoomEnd = zoomEnd;
+
                 _downloadnum = 0;
 
                 _normal = radioButton1.Checked;
@@ -193,24 +208,29 @@ namespace BMap.NET.WindowsForm
         {
             if (_downloadnum == _waittodownload.Count && _downloadnum != 0)  //全部下载完毕
             {
-                Bitmap b = new Bitmap((int)_totalwidth, (int)_totalheight);
-                Graphics g = Graphics.FromImage(b);
-                int startx = ((RectInfo)(_waittodownload[0])).x;
-                int starty = ((RectInfo)(_waittodownload[0])).y;
-                foreach (RectInfo rf in _waittodownload)
+                for (int zoom = _zoom; zoom <= _zoomEnd; ++zoom)
                 {
-                    g.DrawImage(rf.Bitmap, new Rectangle(new Point((rf.x - startx) * 256, (int)_totalheight - (rf.y - starty + 1) * 256), new Size(256, 256)));
+                    Bitmap b = new Bitmap((int)_totalwidth, (int)_totalheight);
+                    Graphics g = Graphics.FromImage(b);
+                    int startx = ((RectInfo)(_waittodownload[0])).x;
+                    int starty = ((RectInfo)(_waittodownload[0])).y;
+                    foreach (RectInfo rf in _waittodownload)
+                    {
+                        g.DrawImage(rf.Bitmap, new Rectangle(new Point((rf.x - startx) * 256, (int)_totalheight - (rf.y - starty + 1) * 256), new Size(256, 256)));
+                    }
+                    g.Dispose();
+                    b.Save(_path + "\\" + _zoom + "_total.jpg");
+                    b.Dispose();
+                    System.Diagnostics.Process.Start(_path + "\\" + _zoom + "_total.jpg");
                 }
-                g.Dispose();
-                b.Save(_path + "\\" + _zoom + "_total.jpg");
-                b.Dispose();
-                System.Diagnostics.Process.Start(_path + "\\" + _zoom + "_total.jpg");
             }
         }
 
         public int _totalwidth { get; set; }
 
         public int _totalheight { get; set; }
+
+        public int _zoomEnd { get; set; }
     }
 
 

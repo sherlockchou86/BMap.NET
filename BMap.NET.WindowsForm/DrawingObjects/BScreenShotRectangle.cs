@@ -9,7 +9,7 @@ namespace BMap.NET.WindowsForm.DrawingObjects
     /// <summary>
     /// 地图中截图矩形
     /// </summary>
-    class BScreenShotRectangle:DrawingObject
+    public class BScreenShotRectangle : DrawingObject
     {
         /// <summary>
         /// 左上角屏幕坐标
